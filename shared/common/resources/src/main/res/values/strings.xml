@@ -1,0 +1,16 @@
+<resources>
+    <string name="example">Example text</string>
+
+    <string name="validation_text_len_min">The minimum length is %d characters</string>
+    <string name="validation_text_len_max">The maximum length is %d characters</string>
+
+    <string name="validation_text_len_full">The allowed length is from %d to %d characters</string>
+
+    <string name="validation_no_letters">The password must contain letters</string>
+    <string name="validation_no_digits">The password must contain digits</string>
+    <string name="validation_letters_count">The recommended number of letters is %d</string>
+    <string name="validation_digits_count">The recommended number of digits is %d</string>
+    <string name="validation_no_special_chars">The password must contain special symbols</string>
+    <string name="validation_no_upper_letters">The password must contain capital letters</string>
+    <string name="validation_empty_value">Required field</string>
+</resources>

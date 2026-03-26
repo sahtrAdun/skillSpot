@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="example">Example text</string>
+    <string name="validation_text_len_full">Допустимая длина составляет от %d до %d символов</string>
+    <string name="validation_no_letters">Пароль должен содержать буквы</string>
+    <string name="validation_text_len_min">Минимальная длина %d символов</string>
+    <string name="validation_text_len_max">Максимальная длина %d символов</string>
+    <string name="validation_no_digits">Пароль должен содержать цифры</string>
+    <string name="validation_letters_count">Рекомендуемое количество букв — %d</string>
+    <string name="validation_digits_count">Рекомендуемое количество цифр — %d</string>
+    <string name="validation_no_special_chars">Пароль должен содержать специальные символы</string>
+    <string name="validation_no_upper_letters">Пароль должен содержать заглавные буквы</string>
+    <string name="validation_empty_value">Обязательно для заполнения</string>
+</resources>
