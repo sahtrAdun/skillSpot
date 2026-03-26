@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 data class Clickable(
     val onClick: () -> Unit,
     val onLongClick: () -> Unit = onClick,
+    val onDoubleClick: () -> Unit = onClick,
     val enabled: Boolean = true,
     val indicationEnabled: Boolean = true,
     val indication: Indication? = null,
@@ -23,8 +24,6 @@ data class Clickable(
 )
 
 object ClickableDefaults {
-    const val EFFECT_DELAY: Long = 250L
-
     @Composable
     fun interactionSource(): MutableInteractionSource {
         return remember { MutableInteractionSource() }
@@ -53,6 +52,7 @@ fun Modifier.click(
                 enabled = clickable.enabled,
                 onClick = clickable.onClick,
                 onLongClick = clickable.onLongClick,
+                onDoubleClick = clickable.onDoubleClick,
                 interactionSource = null,
                 indication = null
             )
@@ -61,6 +61,7 @@ fun Modifier.click(
                 enabled = clickable.enabled,
                 onClick = clickable.onClick,
                 onLongClick = clickable.onLongClick,
+                onDoubleClick = clickable.onDoubleClick,
                 indication = clickable.indication,
                 interactionSource = clickable.interactionSource
                     ?: ClickableDefaults.interactionSource(),
@@ -70,6 +71,7 @@ fun Modifier.click(
                 enabled = clickable.enabled,
                 onClick = clickable.onClick,
                 onLongClick = clickable.onLongClick,
+                onDoubleClick = clickable.onDoubleClick,
                 indication = ClickableDefaults.defaultIndication(),
                 interactionSource = ClickableDefaults.interactionSource(),
             )

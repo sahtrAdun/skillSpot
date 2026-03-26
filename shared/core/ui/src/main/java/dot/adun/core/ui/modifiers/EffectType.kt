@@ -28,7 +28,7 @@ enum class EffectType(val duration: Long) {
     Scale(250L), Highlight(900L), Shake(450L)
 }
 
-fun Modifier.itemEffect(
+fun Modifier.effect(
     effect: EffectType,
     cooldown: Long = effect.duration,
     trigger: () -> Boolean = { true },

@@ -61,7 +61,7 @@ open class StateViewModel<VS, VI: BaseViewIntents, R>(initialState: VS) : ViewMo
     protected fun <T> executeBlocking(body: suspend (VS) -> T): T =
         runBlocking(Dispatchers.IO) { body(_state.value) }
 
-    protected fun <V> observe(
+    protected fun <V> on(
         flow: Flow<V>,
         block: suspend (V) -> Unit
     ) {
@@ -87,12 +87,12 @@ open class StateViewModel<VS, VI: BaseViewIntents, R>(initialState: VS) : ViewMo
             .map { it.second as T }
 
     protected fun onIntent(intent: SimpleIntent, block: suspend () -> Unit) {
-        observe(intent(intent)) { block() }
+        on(intent(intent)) { block() }
     }
 
     @Suppress("UNCHECKED_CAST")
     protected fun <T> onIntent(intent: TypedIntent<T>, block: suspend (T) -> Unit) {
-        observe(intent(intent), block)
+        on(intent(intent), block)
     }
     protected fun navigateBack() {
         _events.trySend(ViewModelEvent.NavigateBack)

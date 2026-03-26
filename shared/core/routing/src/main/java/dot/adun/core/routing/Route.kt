@@ -31,13 +31,9 @@ interface Route<VM : StateViewModel<*, *, *>> : Navigation {
         }
 
         LaunchedEffect(viewModel.events) {
-            viewModel.events.collect {
-                when (val event = viewModel.events) {
-                    is ViewModelEvent -> {
-                        when (event) {
-                            ViewModelEvent.NavigateBack -> onNavigateBack()
-                        }
-                    }
+            viewModel.events.collect { event ->
+                when (event) {
+                    ViewModelEvent.NavigateBack -> onNavigateBack()
                 }
             }
         }

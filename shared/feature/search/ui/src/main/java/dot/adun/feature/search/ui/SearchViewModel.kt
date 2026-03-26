@@ -15,19 +15,15 @@ class SearchViewModel @Inject constructor(
 
     init {
         onIntent(intents.updateText) { newValue ->
-            update {
-                it.copy(textField = it.textField.update(newValue))
-            }
+            update { it.updateText(newValue) }
         }
 
-        observe(intent(intents.updateText).debounce(1.seconds)) {
+        on(intent(intents.updateText).debounce(1.seconds)) {
             println("delayed")
         }
 
         onIntent(intents.validateText) {
-            update {
-                it.copy(textField = it.textField.validate())
-            }
+            update { it.validate() }
         }
 
         onIntent(intents.navigateBack) {
@@ -36,4 +32,6 @@ class SearchViewModel @Inject constructor(
     }
 }
 
-sealed interface SearchScreenResult
+sealed interface SearchScreenResult {
+    data object Finish : SearchScreenResult
+}
