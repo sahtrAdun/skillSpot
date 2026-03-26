@@ -20,7 +20,7 @@ import dot.adun.core.ui.components.buttons.TertiaryTextButton
 import dot.adun.core.ui.components.textFields.PasswordTextField
 import dot.adun.core.ui.modifiers.click.Clickable
 import dot.adun.core.ui.modifiers.EffectType
-import dot.adun.core.ui.modifiers.itemEffect
+import dot.adun.core.ui.modifiers.effect
 import dot.adun.core.ui.theme.AppTheme
 
 @Composable
@@ -32,7 +32,7 @@ fun SearchScreen(
         appBar = {
             DefaultAppBar(
                 label = "Test search",
-                onBackClick = { intents.navigateBack() }
+                onBackClick = intents.navigateBack
             )
         }
     ) { offset ->
@@ -43,9 +43,9 @@ fun SearchScreen(
         ) {
             PasswordTextField(
                 data = state.textField,
-                onValueChange = { intents.updateText(it) },
+                onValueChange = intents.updateText,
                 modifier = Modifier
-                    .itemEffect(
+                    .effect(
                         effect = EffectType.Shake,
                         trigger = { state.textField.errorFocusRequired }
                     )
@@ -54,31 +54,31 @@ fun SearchScreen(
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 PrimaryTextButton(
                     label = "Validate",
-                    clickable = Clickable(onClick = { intents.validateText() }),
+                    clickable = Clickable(onClick = intents.validateText),
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 SecondaryTextButton(
                     label = "Validate",
-                    clickable = Clickable(onClick = {}),
+                    clickable = Clickable(onClick = intents.validateText),
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 TertiaryTextButton(
                     label = "Validate",
-                    clickable = Clickable(onClick = {}),
+                    clickable = Clickable(onClick = intents.validateText),
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 SurfaceTextButton(
                     label = "Validate",
-                    clickable = Clickable(onClick = {}),
+                    clickable = Clickable(onClick = intents.validateText),
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 BackgroundTextButton(
                     label = "Validate",
-                    clickable = Clickable(onClick = {}),
+                    clickable = Clickable(onClick = intents.validateText),
                     modifier = Modifier.fillMaxWidth()
                 )
             }

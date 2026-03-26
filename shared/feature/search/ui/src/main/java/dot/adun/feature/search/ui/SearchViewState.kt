@@ -10,4 +10,10 @@ data class SearchViewState(
         validationType = PasswordTextFieldValidation(),
         jitValidation = true
     )
-)
+) {
+    fun updateText(newValue: String): SearchViewState = copy(textField = textField.update(newValue))
+
+    fun validate(): SearchViewState {
+        return copy(textField = textField.validate())
+    }
+}
