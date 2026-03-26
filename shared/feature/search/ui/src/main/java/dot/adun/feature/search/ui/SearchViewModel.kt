@@ -3,7 +3,6 @@ package dot.adun.feature.search.ui
 import androidx.compose.runtime.Stable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dot.adun.core.ui.core.StateViewModel
-import kotlinx.coroutines.flow.debounce
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
@@ -18,7 +17,7 @@ class SearchViewModel @Inject constructor(
             update { it.updateText(newValue) }
         }
 
-        on(intent(intents.updateText).debounce(1.seconds)) {
+        1.seconds.debounceOn(intent(intents.updateText)) {
             println("delayed")
         }
 

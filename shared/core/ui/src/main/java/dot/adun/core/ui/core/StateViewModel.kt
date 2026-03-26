@@ -7,6 +7,7 @@ import dot.adun.core.ui.core.event.ViewEvent
 import dot.adun.core.ui.core.event.ViewModelEvent
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -23,6 +25,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import kotlin.time.Duration
 
 @Stable
 open class StateViewModel<VS, VI: BaseViewIntents, R>(initialState: VS) : ViewModel() {
@@ -94,6 +97,13 @@ open class StateViewModel<VS, VI: BaseViewIntents, R>(initialState: VS) : ViewMo
     protected fun <T> onIntent(intent: TypedIntent<T>, block: suspend (T) -> Unit) {
         on(intent(intent), block)
     }
+
+    @OptIn(FlowPreview::class)
+    protected fun <V> Duration.debounceOn(
+        flow: Flow<V>,
+        block: suspend (V) -> Unit
+    ) { on(flow.debounce(this), block) }
+
     protected fun navigateBack() {
         _events.trySend(ViewModelEvent.NavigateBack)
     }
