@@ -5,9 +5,11 @@ class ComposeConventionPlugin : BaseConventionPlugin() {
     override fun apply(project: Project): Unit = with(project) {
         super.apply(project)
 
-        android().apply {
-            buildFeatures {
-                compose = true
+        android {
+            apply {
+                buildFeatures {
+                    compose = true
+                }
             }
         }
     }
@@ -16,7 +18,6 @@ class ComposeConventionPlugin : BaseConventionPlugin() {
         val libs = libs()
 
         project.pluginManager.apply {
-            applyPlugin(libs, "kotlin-android")
             applyPlugin(libs, "android-library")
             applyPlugin(libs, "kotlin-compose")
             applyPlugin(libs, "serialization-json")

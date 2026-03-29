@@ -6,7 +6,6 @@ class SharedConventionPlugin : BaseConventionPlugin() {
         val libs = libs()
 
         project.pluginManager.apply {
-            applyPlugin(libs, "kotlin-android")
             applyPlugin(libs, "android-library")
             applyPlugin(libs, "serialization-json")
             applyPlugin(libs, "dagger-hilt")
