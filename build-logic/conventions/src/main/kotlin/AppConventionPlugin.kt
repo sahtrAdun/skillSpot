@@ -12,7 +12,6 @@ class AppConventionPlugin : Plugin<Project> {
         val libs = libs()
 
         project.pluginManager.apply {
-            applyPlugin(libs, "kotlin-android")
             applyPlugin(libs, "android-application")
             applyPlugin(libs, "kotlin-compose")
             applyPlugin(libs, "serialization-json")

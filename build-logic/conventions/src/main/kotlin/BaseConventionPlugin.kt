@@ -1,28 +1,31 @@
-import com.android.build.gradle.LibraryExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.internal.Actions.with
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.android.build.api.dsl.LibraryExtension as AndroidLibraryExtension
 
 abstract class BaseConventionPlugin : Plugin<Project> {
     private fun setProjectConfig(project: Project) = with(project) {
-        android().apply {
-            compileSdk = ProjectConfig.compileSdk
+        android {
+            apply {
+                compileSdk = ProjectConfig.compileSdk
 
-            defaultConfig {
-                minSdk = ProjectConfig.minSdk
-                testInstrumentationRunner = ProjectConfig.testInstrumentationRunner
+                defaultConfig {
+                    minSdk = ProjectConfig.minSdk
+                    testInstrumentationRunner = ProjectConfig.testInstrumentationRunner
+                }
+
+                compileOptions {
+                    sourceCompatibility = JavaVersion.VERSION_11
+                    targetCompatibility = JavaVersion.VERSION_11
+                }
+
+                configureKotlinJvm()
             }
-
-            compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_11
-                targetCompatibility = JavaVersion.VERSION_11
-            }
-
-            configureKotlinJvm()
         }
     }
 
@@ -34,9 +37,10 @@ abstract class BaseConventionPlugin : Plugin<Project> {
         }
     }
 
-    protected fun Project.android(): LibraryExtension {
-        return extensions.getByType(LibraryExtension::class.java)
+    fun Project.android(configure: AndroidLibraryExtension.() -> Unit) {
+        extensions.configure<AndroidLibraryExtension>(configure)
     }
+
 
     abstract fun applyPlugins(project: Project)
     abstract fun applyDependencies(project: Project)

@@ -1,40 +1,40 @@
 [versions]
 # Base
-agp = "8.11.2"
-kotlin = "2.2.21"
-core-ktx = "1.17.0"
+agp = "9.1.0"
+kotlin = "2.3.20"
+core-ktx = "1.18.0"
 junit = "4.13.2"
 junit-version = "1.3.0"
 espresso-core = "3.7.0"
 appcompat = "1.7.1"
 material = "1.13.0"
-serialization-json = "1.9.0"
-dagger-hilt = "2.57.2"
+serialization-json = "1.10.0"
+dagger-hilt = "2.59.2"
 hilt-navigation = "1.3.0"
-ksp = "2.3.2"
+ksp = "2.3.6"
 napier = "2.7.1"
 javapoet = "1.13.0"
-material3 = "1.4.0"
 
 # Compose
-compose-bom = "2025.11.00"
-compose-vm = "2.9.4"
-compose-activity = "1.11.0"
+material3 = "1.5.0-alpha16"
+compose-bom = "2026.03.01"
+compose-vm = "2.10.0"
+compose-activity = "1.13.0"
 nav3Core = "1.0.1"
 lifecycleViewmodelNav3 = "2.10.0"
-material3AdaptiveNav3 = "1.3.0-alpha08"
-compose-animations = "1.9.4"
-compose-coil = "3.3.0"
-lifecycle-runtime-ktx = "2.9.4"
-compose = "1.6.10"
-compose-icons = "1.7.7"
+material3AdaptiveNav3 = "1.3.0-alpha09"
+compose-animations = "1.10.6"
+compose-coil = "3.4.0"
+lifecycle-runtime-ktx = "2.10.0"
+compose-gradle = "1.10.3"
+compose-icons = "1.7.8"
 compose-cloudy = "0.5.0"
 compose-shimmer = "1.3.3"
 
 [libraries]
 gradleplugin-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }
-gradleplugin-compose = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose" }
-gradleplugin-composeCompiler = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "compose" }
+gradleplugin-compose = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-gradle" }
+gradleplugin-composeCompiler = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "compose-gradle" }
 gradleplugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 # === Base === #
@@ -93,9 +93,3 @@ dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hil
 convention-shared = { id = "dot.adun.convention.shared" }
 convention-compose = { id = "dot.adun.convention.compose" }
 convention-app = { id = "dot.adun.convention.app" }
-
-[bundles]
-hilt = ["hilt", "hilt-compose-navigation"]
-compose = ["compose-bom", "compose-activity", "compose-animations", "compose-coil", "compose-foundation", "compose-lifecycle-vm", "compose-material3", "compose-ui", "compose-ui-graphics", "compose-ui-tooling-preview"]
-compose-debug = ["compose-ui-tooling", "androidx-ui-test-manifest", "androidx-ui-test-junit4"]
-compose-android-test = ["androidx-junit", "androidx-espresso-core"]

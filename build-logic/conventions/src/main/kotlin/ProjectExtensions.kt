@@ -8,13 +8,6 @@ import org.gradle.kotlin.dsl.project
 import org.gradle.plugin.use.PluginDependency
 import java.util.Optional
 
-val Provider<PluginDependency?>.id: String
-    get() = get().pluginId
-
-fun pluginId(plugin: Provider<PluginDependency>): String {
-    return plugin.get().pluginId
-}
-
 fun Project.libs(): VersionCatalog = extensions.findByType(VersionCatalogsExtension::class.java)?.named("libs") ?: error("Version catalog 'libs' not found")
 
 fun Project.applyPlugin(libs: VersionCatalog, alias: String) {
