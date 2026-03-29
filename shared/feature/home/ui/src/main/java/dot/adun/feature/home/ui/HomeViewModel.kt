@@ -2,6 +2,7 @@ package dot.adun.feature.home.ui
 
 import androidx.compose.runtime.Stable
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dot.adun.core.domain.secret.SecretModel
 import dot.adun.core.ui.core.StateViewModel
 import dot.adun.feature.home.domain.HomeModel
 import kotlinx.coroutines.delay
@@ -13,6 +14,7 @@ import kotlin.time.Duration.Companion.seconds
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val model: HomeModel,
+    private val secretModel: SecretModel
 ) : StateViewModel<HomeViewState, HomeViewIntents, HomeScreenResult>(HomeViewState()) {
     override val intents = HomeViewIntents()
 
@@ -23,6 +25,7 @@ class HomeViewModel @Inject constructor(
 
         onIntent(intents.navToDetails) {
             model.test()
+            secretModel.test()
         }
     }
 }

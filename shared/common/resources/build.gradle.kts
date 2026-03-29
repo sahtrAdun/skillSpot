@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.convention.shared)
+    alias(libs.plugins.convention.common)
 }
 
 android {
