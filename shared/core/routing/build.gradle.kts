@@ -9,4 +9,5 @@ android {
 dependencies {
     implementation(projects.shared.core.ui)
     implementation(projects.shared.core.domain)
+    implementation(projects.shared.core.data)
 }

@@ -1,26 +1,23 @@
 package dot.adun.core.ui.components.buttons
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
-import dot.adun.core.ui.components.base.BorderVisibility
-import dot.adun.core.ui.modifiers.Border
 import dot.adun.core.ui.modifiers.click.Clickable
-import dot.adun.core.ui.theme.AppTheme
 
 @Composable
 fun PrimaryButton(
     clickable: Clickable,
     modifier: Modifier = Modifier,
+    state: ButtonState = rememberButtonState(),
+    config: ButtonConfig = ButtonConfig.primary(state),
     content: @Composable () -> Unit
 ) {
-    val colors = AppTheme.presets.buttons.common.primary
-
     BaseButton(
         clickable = clickable,
-        colors = colors,
+        config = config,
         modifier = modifier,
         content = content
     )
@@ -28,22 +25,23 @@ fun PrimaryButton(
 
 @Composable
 fun PrimaryTextButton(
-    label: String,
+    text: String,
     clickable: Clickable,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = AppTheme.typography.body1
+    state: ButtonState = rememberButtonState(),
+    config: ButtonConfig = ButtonConfig.primary(state),
 ) {
-    val colors = AppTheme.presets.buttons.common.primary
-
     BaseButton(
         clickable = clickable,
-        colors = colors,
-        modifier = modifier
+        config = config,
+        modifier = modifier.animateContentSize()
     ) {
-        Text(
-            text = label,
-            style = textStyle
-        )
+        AnimatedContent(text) { animated ->
+            Text(
+                text = animated,
+                style = config.textStyle()
+            )
+        }
     }
 }
 
@@ -51,13 +49,13 @@ fun PrimaryTextButton(
 fun SecondaryButton(
     clickable: Clickable,
     modifier: Modifier = Modifier,
+    state: ButtonState = rememberButtonState(),
+    config: ButtonConfig = ButtonConfig.secondary(state),
     content: @Composable () -> Unit
 ) {
-    val colors = AppTheme.presets.buttons.common.secondary
-
     BaseButton(
         clickable = clickable,
-        colors = colors,
+        config = config,
         modifier = modifier,
         content = content
     )
@@ -65,22 +63,23 @@ fun SecondaryButton(
 
 @Composable
 fun SecondaryTextButton(
-    label: String,
+    text: String,
     clickable: Clickable,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = AppTheme.typography.body1
+    state: ButtonState = rememberButtonState(),
+    config: ButtonConfig = ButtonConfig.secondary(state),
 ) {
-    val colors = AppTheme.presets.buttons.common.secondary
-
     BaseButton(
         clickable = clickable,
-        colors = colors,
-        modifier = modifier
+        config = config,
+        modifier = modifier.animateContentSize()
     ) {
-        Text(
-            text = label,
-            style = textStyle
-        )
+        AnimatedContent(text) { animated ->
+            Text(
+                text = animated,
+                style = config.textStyle()
+            )
+        }
     }
 }
 
@@ -88,38 +87,37 @@ fun SecondaryTextButton(
 fun TertiaryButton(
     clickable: Clickable,
     modifier: Modifier = Modifier,
+    state: ButtonState = rememberButtonState(),
+    config: ButtonConfig = ButtonConfig.tertiary(state),
     content: @Composable () -> Unit
 ) {
-    val colors = AppTheme.presets.buttons.common.tertiary
-
     BaseButton(
         clickable = clickable,
-        colors = colors,
+        config = config,
         modifier = modifier,
         content = content,
-        borderVisibility = BorderVisibility.Always
     )
 }
 
 @Composable
 fun TertiaryTextButton(
-    label: String,
+    text: String,
     clickable: Clickable,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = AppTheme.typography.body1
+    state: ButtonState = rememberButtonState(),
+    config: ButtonConfig = ButtonConfig.tertiary(state),
 ) {
-    val colors = AppTheme.presets.buttons.common.tertiary
-
     BaseButton(
         clickable = clickable,
-        colors = colors,
-        modifier = modifier,
-        borderVisibility = BorderVisibility.Always
+        config = config,
+        modifier = modifier.animateContentSize()
     ) {
-        Text(
-            text = label,
-            style = textStyle
-        )
+        AnimatedContent(text) { animated ->
+            Text(
+                text = animated,
+                style = config.textStyle()
+            )
+        }
     }
 }
 
@@ -127,48 +125,37 @@ fun TertiaryTextButton(
 fun SurfaceButton(
     clickable: Clickable,
     modifier: Modifier = Modifier,
+    state: ButtonState = rememberButtonState(),
+    config: ButtonConfig = ButtonConfig.surface(state),
     content: @Composable () -> Unit
 ) {
-    val colors = AppTheme.presets.buttons.common.onBackground
-
     BaseButton(
         clickable = clickable,
-        colors = colors,
+        config = config,
         modifier = modifier,
         content = content,
-        borderVisibility = BorderVisibility.Always,
-        border = Border(
-            color = colors.contentColor,
-            width = 0.5.dp,
-            shape = AppTheme.shapes.medium
-        )
     )
 }
 
 @Composable
 fun SurfaceTextButton(
-    label: String,
+    text: String,
     clickable: Clickable,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = AppTheme.typography.body1
+    state: ButtonState = rememberButtonState(),
+    config: ButtonConfig = ButtonConfig.surface(state),
 ) {
-    val colors = AppTheme.presets.buttons.common.onBackground
-
     BaseButton(
         clickable = clickable,
-        colors = colors,
-        modifier = modifier,
-        borderVisibility = BorderVisibility.Always,
-        border = Border(
-            color = colors.contentColor,
-            width = 0.5.dp,
-            shape = AppTheme.shapes.medium
-        )
+        config = config,
+        modifier = modifier.animateContentSize()
     ) {
-        Text(
-            text = label,
-            style = textStyle
-        )
+        AnimatedContent(text) { animated ->
+            Text(
+                text = animated,
+                style = config.textStyle()
+            )
+        }
     }
 }
 
@@ -176,47 +163,36 @@ fun SurfaceTextButton(
 fun BackgroundButton(
     clickable: Clickable,
     modifier: Modifier = Modifier,
+    state: ButtonState = rememberButtonState(),
+    config: ButtonConfig = ButtonConfig.background(state),
     content: @Composable () -> Unit
 ) {
-    val colors = AppTheme.presets.buttons.common.onSurface
-
     BaseButton(
         clickable = clickable,
-        colors = colors,
+        config = config,
         modifier = modifier,
         content = content,
-        borderVisibility = BorderVisibility.Always,
-        border = Border(
-            color = AppTheme.colors.layer.surface,
-            width = 1.dp,
-            shape = AppTheme.shapes.medium
-        )
     )
 }
 
 @Composable
 fun BackgroundTextButton(
-    label: String,
+    text: String,
     clickable: Clickable,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = AppTheme.typography.body1
+    state: ButtonState = rememberButtonState(),
+    config: ButtonConfig = ButtonConfig.background(state),
 ) {
-    val colors = AppTheme.presets.buttons.common.onSurface
-
     BaseButton(
         clickable = clickable,
-        colors = colors,
-        modifier = modifier,
-        borderVisibility = BorderVisibility.Always,
-        border = Border(
-            color = AppTheme.colors.layer.surface,
-            width = 1.dp,
-            shape = AppTheme.shapes.medium
-        )
+        config = config,
+        modifier = modifier.animateContentSize()
     ) {
-        Text(
-            text = label,
-            style = textStyle
-        )
+        AnimatedContent(text) { animated ->
+            Text(
+                text = animated,
+                style = config.textStyle()
+            )
+        }
     }
 }

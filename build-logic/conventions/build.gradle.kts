@@ -9,6 +9,11 @@ gradlePlugin {
             implementationClass = "SharedConventionPlugin"
         }
 
+        register("shared-common") {
+            id = libs.plugins.convention.common.get().pluginId
+            implementationClass = "CommonConventionPlugin"
+        }
+
         register("compose") {
             id = libs.plugins.convention.compose.get().pluginId
             implementationClass = "ComposeConventionPlugin"

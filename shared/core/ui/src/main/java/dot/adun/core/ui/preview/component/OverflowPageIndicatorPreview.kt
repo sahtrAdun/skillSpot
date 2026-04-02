@@ -20,18 +20,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dot.adun.core.ui.components.OverflowPageIndicator
 import dot.adun.core.ui.components.base.VSpacer
-import dot.adun.core.ui.preview.Preview
+import dot.adun.core.ui.preview.PreviewColumn
 
 @Preview
 @Composable
-fun OverflowPageIndicatorPreview() {
+fun OverflowPageIndicatorPreviewColumn() {
     val actualSize = cards.size * 400
     val pagerState = rememberPagerState(
         pageCount = { actualSize },
         initialPage = actualSize / 2
     )
 
-    Preview {
+    PreviewColumn {
         Box(
             modifier = Modifier
                 .fillMaxSize()

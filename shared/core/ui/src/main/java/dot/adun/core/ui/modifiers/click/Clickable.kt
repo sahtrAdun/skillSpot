@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 @Immutable
 data class Clickable(
     val onClick: () -> Unit,
-    val onLongClick: () -> Unit = onClick,
-    val onDoubleClick: () -> Unit = onClick,
+    val onLongClick: (() -> Unit)? = null,
+    val onDoubleClick: (() -> Unit)? = null,
     val enabled: Boolean = true,
     val indicationEnabled: Boolean = true,
     val indication: Indication? = null,

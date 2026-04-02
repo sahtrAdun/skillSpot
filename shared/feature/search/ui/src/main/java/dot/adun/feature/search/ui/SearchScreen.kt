@@ -53,13 +53,13 @@ fun SearchScreen(
             VSpacer(52.dp)
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 PrimaryTextButton(
-                    label = "Validate",
+                    text = "Validate",
                     clickable = Clickable(onClick = intents.validateText),
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 SecondaryTextButton(
-                    label = "Validate",
+                    text = "Validate",
                     clickable = Clickable(onClick = intents.validateText),
                     modifier = Modifier.fillMaxWidth()
                 )

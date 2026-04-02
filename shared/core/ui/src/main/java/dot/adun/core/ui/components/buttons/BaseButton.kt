@@ -1,12 +1,16 @@
 package dot.adun.core.ui.components.buttons
 
-import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -18,29 +22,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
-import dot.adun.core.ui.components.base.BorderVisibility
+import androidx.compose.ui.unit.dp
+import dot.adun.core.ui.components.loaders.Loader
 import dot.adun.core.ui.modifiers.Border
+import dot.adun.core.ui.modifiers.border
 import dot.adun.core.ui.modifiers.click.Clickable
 import dot.adun.core.ui.modifiers.click.ClickableDefaults
 import dot.adun.core.ui.modifiers.click.clickableEffect
-import dot.adun.core.ui.modifiers.surface
 import dot.adun.core.ui.theme.AppTheme
 
 @Composable
 fun BaseButton(
     clickable: Clickable,
-    colors: ButtonColors,
+    config: ButtonConfig,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
     shape: Shape = AppTheme.shapes.medium,
-    border: Border? = null,
-    contentPaddings: PaddingValues = AppTheme.paddings.inset.content,
-    borderVisibility: BorderVisibility = BorderVisibility.Newer,
     content: @Composable () -> Unit
 ) {
     val density = LocalDensity.current
-    val containerColor by animateColorAsState(if (enabled) colors.containerColor else colors.disabledContainerColor)
-    val contentColor by animateColorAsState(if (enabled) colors.contentColor else colors.disabledContentColor)
+    val containerColor = config.animatedContainerColor()
+    val contentColor = config.animatedContentColor()
 
     var buttonWidthPx by remember { mutableIntStateOf(0) }
     val radius = remember(buttonWidthPx) {
@@ -54,8 +55,10 @@ fun BaseButton(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .onPlaced { buttonWidthPx = it.size.width }
+            .minimumInteractiveComponentSize()
             .clickableEffect(
                 clickable = clickable.copy(
+                    enabled = config.state.enabled(),
                     interactionSource = ClickableDefaults.interactionSource(),
                     indication = ClickableDefaults.defaultIndication(
                         radius = radius,
@@ -64,20 +67,60 @@ fun BaseButton(
                 ),
                 scaleFactor = 0.97f
             )
-            .heightIn(min = ButtonsDefault.height)
-            .surface(
+            .heightIn(min = config.size.height)
+            .background(
                 color = containerColor,
-                shape = shape,
-                border = border ?: Border(
-                    color = contentColor,
-                    shape = shape
-                )
-                    .takeIf { borderVisibility.visible(false) }
+                shape = shape
             )
-            .padding(contentPaddings)
+            .then(
+                Modifier
+                    .border(
+                        border = config.border() ?: Border(
+                            color = contentColor,
+                            shape = shape
+                        )
+                    )
+                    .takeIf { config.borderVisibility.visible(false) }
+                    ?: Modifier
+            )
     ) {
-        CompositionLocalProvider(LocalContentColor provides contentColor) {
+        AnimatedContent(
+            targetState = config.state,
+            transitionSpec = {
+                fadeIn() togetherWith fadeOut()
+            },
+            contentAlignment = Alignment.Center
+        ) { state ->
+            when (state) {
+                is ButtonState.Loading -> Loader(
+                    appearance = AppTheme.presets.loaders.combined.primary,
+                    size = 42.dp
+                )
+                else -> MainContent(
+                    appearance = config,
+                    content = content,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun MainContent(
+    appearance: ButtonConfig,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    CompositionLocalProvider(
+        LocalContentColor provides appearance.animatedContentColor(),
+        LocalTextStyle provides appearance.textStyle()
+    ) {
+        Box(
+            modifier = modifier
+                .padding(appearance.size.contentPadding)
+        ) {
             content()
         }
     }
 }
+
