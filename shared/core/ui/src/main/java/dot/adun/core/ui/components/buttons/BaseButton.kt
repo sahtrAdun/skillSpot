@@ -22,8 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.dp
 import dot.adun.core.ui.components.loaders.Loader
+import dot.adun.core.ui.components.loaders.PolyShapes
 import dot.adun.core.ui.modifiers.Border
 import dot.adun.core.ui.modifiers.border
 import dot.adun.core.ui.modifiers.click.Clickable
@@ -86,15 +86,14 @@ fun BaseButton(
     ) {
         AnimatedContent(
             targetState = config.state,
-            transitionSpec = {
-                fadeIn() togetherWith fadeOut()
-            },
+            transitionSpec = { fadeIn() togetherWith fadeOut() },
             contentAlignment = Alignment.Center
         ) { state ->
             when (state) {
                 is ButtonState.Loading -> Loader(
-                    appearance = AppTheme.presets.loaders.combined.primary,
-                    size = 42.dp
+                    appearance = config.loaderAppearance(),
+                    polygons = PolyShapes.Polygons.Soft,
+                    size = config.size.loaderSize()
                 )
                 else -> MainContent(
                     appearance = config,

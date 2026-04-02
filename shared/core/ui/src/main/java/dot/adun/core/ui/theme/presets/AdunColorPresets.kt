@@ -3,8 +3,10 @@ package dot.adun.core.ui.theme.presets
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
 import dot.adun.core.ui.theme.AdunColors
 import dot.adun.core.ui.theme.ColorMode
+import dot.adun.core.ui.theme.ColorPalette
 import dot.adun.core.ui.theme.ColorTheme
 import dot.adun.core.ui.theme.MaterialPalette
 
@@ -174,20 +176,20 @@ data class AdunColorPresets(
         private fun createDarkMaterialGreen(colorMode: ColorMode): AdunColors {
             val text = AdunColors.Text(
                 primary = MaterialPalette.gray_100,
-                secondary = MaterialPalette.gray_400,
-                tertiary = MaterialPalette.gray_500,
+                secondary = ColorPalette.gray_500,
+                tertiary = ColorPalette.gray_700,
                 accent = MaterialPalette.green_primary_light,
-                hint = MaterialPalette.gray_500,
-                disabled = MaterialPalette.gray_700,
+                hint = ColorPalette.gray_600,
+                disabled = ColorPalette.gray_700,
                 error = MaterialPalette.soft_red,
                 warning = MaterialPalette.soft_amber,
                 onPrimary = MaterialPalette.green_900,
                 primaryInvert = MaterialPalette.gray_900
             )
             val border = AdunColors.Border(
-                primary = MaterialPalette.gray_800,
-                secondary = MaterialPalette.gray_900,
-                tertiary = MaterialPalette.black_pure,
+                primary = MaterialPalette.dark_border,
+                secondary = ColorPalette.gray_800.copy(alpha = 75f),
+                tertiary = ColorPalette.gray_900.copy(alpha = 75f),
                 hint = MaterialPalette.gray_700,
                 disabled = MaterialPalette.gray_800,
                 error = MaterialPalette.soft_red.copy(alpha = 0.5f),
@@ -241,4 +243,11 @@ data class AdunColorPresets(
             )
         }
     }
+}
+
+val disabledColor = ColorPalette.gray_500.copy(alpha = 0.25f)
+
+fun Color.disable(other: Color = disabledColor): Color {
+    return other
+        .compositeOver(this)
 }

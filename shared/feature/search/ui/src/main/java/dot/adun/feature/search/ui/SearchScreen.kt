@@ -65,19 +65,19 @@ fun SearchScreen(
                 )
 
                 TertiaryTextButton(
-                    label = "Validate",
+                    text = "Validate",
                     clickable = Clickable(onClick = intents.validateText),
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 SurfaceTextButton(
-                    label = "Validate",
+                    text = "Validate",
                     clickable = Clickable(onClick = intents.validateText),
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 BackgroundTextButton(
-                    label = "Validate",
+                    text = "Validate",
                     clickable = Clickable(onClick = intents.validateText),
                     modifier = Modifier.fillMaxWidth()
                 )

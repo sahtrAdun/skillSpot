@@ -264,7 +264,7 @@ object MaterialPalette {
 
     val dark_bg = Color(0xFF111111)
     val dark_surface = Color(0xFF1E1E1E)
-    val dark_border = Color(0xFF2C2C2C)
+    val dark_border = Color(0xbf2c2c2c)
 
     val soft_red = Color(0xFFE54B4B)
     val soft_amber = Color(0xFFF59E0B)

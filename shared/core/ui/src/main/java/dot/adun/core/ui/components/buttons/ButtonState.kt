@@ -12,6 +12,7 @@ sealed interface ButtonState {
     data object Loading : ButtonState
 
     fun enabled(): Boolean = this is Enabled
+    fun disabled(): Boolean = this is Disabled
     fun isLoading(): Boolean = this is Loading
 
     fun load(): ButtonState {
