@@ -158,11 +158,11 @@ fun AdunTypography.withFontFamilyAll(fontFamily: FontFamily): AdunTypography {
 
 fun AdunTypography.withFontFamily(
     default: FontFamily = font(R.font.abeezee_regular),
-    extrabold: FontFamily = font(R.font.benzin_extra_bold),
-    bold: FontFamily = font(R.font.benzin_bold),
-    semibold: FontFamily = font(R.font.benzin_semibold),
-    medium: FontFamily = font(R.font.benzin_medium),
-    normal: FontFamily = font(R.font.benzin_regular),
+    extrabold: FontFamily = font(R.font.abeezee_regular),
+    bold: FontFamily = font(R.font.abeezee_regular),
+    semibold: FontFamily = font(R.font.abeezee_regular),
+    medium: FontFamily = font(R.font.abeezee_regular),
+    normal: FontFamily = font(R.font.abeezee_regular),
 ): AdunTypography {
     return this.copy(
         headline1 = this.headline1.copy(fontFamily = extrabold),

@@ -6,9 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.compositeOver
 import dot.adun.core.ui.theme.AdunColors
-import dot.adun.core.ui.theme.ColorPalette
 
 @Immutable
 data class ButtonsColorPresets(
@@ -24,21 +22,21 @@ data class ButtonsColorPresets(
                     primary = IconButtonColors(
                         containerColor = colors.layer.primary,
                         contentColor = colors.layer.onPrimary,
-                        disabledContainerColor = colors.layer.primaryDisabled,
+                        disabledContainerColor = colors.layer.primary.disable(),
                         disabledContentColor = colors.text.disabled
                     ),
                     // Обычная кнопка на фоне (использует surface, чтобы чуть приподняться)
                     regular = IconButtonColors(
                         containerColor = colors.layer.surface,
                         contentColor = colors.text.primary,
-                        disabledContainerColor = colors.layer.background,
+                        disabledContainerColor = colors.layer.surface.disable(),
                         disabledContentColor = colors.text.disabled
                     ),
                     // Мягкий акцент (Tonal style) - очень популярно в Material 3
                     secondary = IconButtonColors(
                         containerColor = colors.layer.primaryTranslucent,
                         contentColor = colors.layer.primary,
-                        disabledContainerColor = colors.layer.neutral,
+                        disabledContainerColor = colors.layer.primaryTranslucent.disable(),
                         disabledContentColor = colors.text.disabled
                     ),
                     transparent = IconButtonColors(
@@ -52,13 +50,13 @@ data class ButtonsColorPresets(
                     primary = ButtonColors(
                         containerColor = colors.layer.primary,
                         contentColor = colors.layer.onPrimary,
-                        disabledContainerColor = colors.layer.primaryDisabled,
+                        disabledContainerColor = colors.layer.primary.disable(),
                         disabledContentColor = colors.text.disabled
                     ),
                     secondary = ButtonColors(
                         containerColor = colors.layer.onSurface,
                         contentColor = colors.text.primary,
-                        disabledContainerColor = colors.layer.onSurface.copy(alpha = 0.5f),
+                        disabledContainerColor = colors.layer.onSurface.disable(),
                         disabledContentColor = colors.text.disabled
                     ),
                     tertiary = ButtonColors(
@@ -69,14 +67,14 @@ data class ButtonsColorPresets(
                     ),
                     onSurface = ButtonColors(
                         containerColor = colors.layer.background,
-                        contentColor = colors.text.primary,
-                        disabledContainerColor = colors.layer.background.copy(alpha = 0.5f),
-                        disabledContentColor = colors.text.disabled
+                        contentColor = colors.text.secondary,
+                        disabledContainerColor = colors.layer.background.disable(),
+                        disabledContentColor = colors.text.tertiary
                     ),
                     onBackground = ButtonColors(
                         containerColor = colors.layer.surface,
                         contentColor = colors.text.primary,
-                        disabledContainerColor = colors.layer.surface.copy(alpha = 0.5f),
+                        disabledContainerColor = colors.layer.surface.disable(),
                         disabledContentColor = colors.text.disabled
                     ),
                     positive = ButtonColors(
@@ -88,7 +86,7 @@ data class ButtonsColorPresets(
                     negative = ButtonColors(
                         containerColor = colors.layer.negative.copy(alpha = 0.1f),
                         contentColor = colors.layer.negative,
-                        disabledContainerColor = colors.layer.neutral,
+                        disabledContainerColor = colors.layer.neutral.disable(),
                         disabledContentColor = colors.text.disabled
                     )
                 )

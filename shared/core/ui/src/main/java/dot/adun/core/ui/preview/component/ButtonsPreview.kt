@@ -37,9 +37,7 @@ private fun ButtonsPreview() {
         ) {
             PrimaryTextButton(
                 text = if (state.enabled()) "Disable" else "Enable",
-                clickable = Clickable(
-                    onClick = { state = state.toggle() }
-                ),
+                clickable = Clickable.of { state = state.toggle() },
                 config = ButtonConfig.primary(
                     size = ButtonConfig.Size.Small
                 )
@@ -47,11 +45,7 @@ private fun ButtonsPreview() {
 
             PrimaryTextButton(
                 text = "Loader",
-                clickable = Clickable(
-                    onClick = {
-                        state = state.load()
-                    }
-                ),
+                clickable = Clickable.of { state = state.load() },
                 config = ButtonConfig.primary(
                     size = ButtonConfig.Size.Small
                 )
@@ -62,42 +56,42 @@ private fun ButtonsPreview() {
 
         PrimaryButton(
             state = state,
-            clickable = Clickable(onClick = {}),
+            clickable = Clickable.none,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Primary Button")
+            Text(text = "PrimaryButton")
         }
 
         SecondaryButton(
             state = state,
-            clickable = Clickable(onClick = {}),
+            clickable = Clickable.none,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Primary Button")
+            Text(text = "SecondaryButton")
         }
 
         TertiaryButton(
             state = state,
-            clickable = Clickable(onClick = {}),
+            clickable = Clickable.none,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Primary Button")
+            Text(text = "TertiaryButton")
         }
 
         SurfaceButton(
             state = state,
-            clickable = Clickable(onClick = {}),
+            clickable = Clickable.none,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Primary Button")
+            Text(text = "SurfaceButton")
         }
 
         BackgroundButton(
             state = state,
-            clickable = Clickable(onClick = {}),
+            clickable = Clickable.none,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Primary Button")
+            Text(text = "BackgroundButton")
         }
     }
 }

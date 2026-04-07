@@ -21,7 +21,28 @@ data class Clickable(
     val indicationEnabled: Boolean = true,
     val indication: Indication? = null,
     val interactionSource: MutableInteractionSource? = null,
-)
+) {
+    companion object {
+        val none: Clickable = Clickable({})
+
+        fun of(onClick: () -> Unit): Clickable {
+            return Clickable(onClick = onClick)
+        }
+
+        @Composable
+        fun of(
+            interactionSource: MutableInteractionSource = ClickableDefaults.interactionSource(),
+            indication: Indication = ClickableDefaults.defaultIndication(),
+            onClick: () -> Unit
+        ): Clickable {
+            return Clickable(
+                onClick = onClick,
+                interactionSource = interactionSource,
+                indication = indication
+            )
+        }
+    }
+}
 
 object ClickableDefaults {
     @Composable

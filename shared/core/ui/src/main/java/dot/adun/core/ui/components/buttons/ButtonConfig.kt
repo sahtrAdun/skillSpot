@@ -11,6 +11,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dot.adun.core.ui.components.base.BorderVisibility
+import dot.adun.core.ui.components.loaders.LoaderAppearance
 import dot.adun.core.ui.modifiers.Border
 import dot.adun.core.ui.theme.AppTheme
 
@@ -36,7 +37,15 @@ sealed interface ButtonConfig {
         Large(
             height = 56.dp,
             contentPadding = PaddingValues(vertical = 12.dp, horizontal = 16.dp)
-        )
+        );
+
+        fun loaderSize(): Dp {
+            return when (this) {
+                Size.Small -> 28.dp
+                Size.Medium -> 44.dp
+                Size.Large -> 52.dp
+            }
+        }
     }
 
     @Immutable
@@ -80,25 +89,25 @@ sealed interface ButtonConfig {
     ) : ButtonConfig
 
     fun containerColor(): Color {
-        return if (state.enabled()) colors.containerColor else colors.disabledContainerColor
+        return if (state.disabled()) colors.disabledContainerColor else colors.containerColor
     }
 
     @Composable
     fun animatedContainerColor(): Color {
         return animateColorAsState(
-            targetValue = if (state.enabled()) colors.containerColor else colors.disabledContainerColor
+            targetValue = if (state.disabled()) colors.disabledContainerColor else colors.containerColor
         )
             .value
     }
 
     fun contentColor(): Color {
-        return if (state.enabled()) colors.contentColor else colors.disabledContentColor
+        return if (state.disabled()) colors.disabledContentColor else colors.contentColor
     }
 
     @Composable
     fun animatedContentColor(): Color {
         return animateColorAsState(
-            targetValue = if (state.enabled()) colors.contentColor else colors.disabledContentColor
+            targetValue = if (state.disabled()) colors.disabledContentColor else colors.contentColor
         )
             .value
     }
@@ -107,8 +116,19 @@ sealed interface ButtonConfig {
     fun textStyle(): TextStyle {
         return when (size) {
             Size.Small -> AppTheme.typography.body1
-            Size.Medium -> AppTheme.typography.subhead3
-            Size.Large -> AppTheme.typography.subhead2
+            Size.Medium -> AppTheme.typography.subhead2
+            Size.Large -> AppTheme.typography.subhead1
+        }
+    }
+
+    @Composable
+    fun loaderAppearance(): LoaderAppearance {
+        return when (this) {
+            is Primary -> AppTheme.presets.loaders.solid.onPrimary
+            is Secondary -> AppTheme.presets.loaders.combined.surface
+            is Tertiary -> AppTheme.presets.loaders.twisted.primary
+            is Surface -> AppTheme.presets.loaders.twisted.background
+            is Background -> AppTheme.presets.loaders.solid.surface
         }
     }
 
@@ -120,7 +140,7 @@ sealed interface ButtonConfig {
             is Tertiary -> null
             is Surface -> Border(
                 color = colors.contentColor,
-                width = 0.5.dp,
+                width = 1.dp,
                 shape = AppTheme.shapes.medium
             )
             is Background -> Border(
