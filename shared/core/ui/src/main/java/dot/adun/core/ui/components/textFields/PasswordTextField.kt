@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import dot.adun.common.resources.CommonDraw
+import dot.adun.common.resources.Res
 import dot.adun.core.ui.components.base.BorderVisibility
 import dot.adun.core.ui.entity.TextFieldData
 
@@ -26,8 +26,12 @@ fun PasswordTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = keyboardType),
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
-    val icon = if (passwordVisible) CommonDraw.ic_eye_fill_closed_24 else CommonDraw.ic_eye_fill_open_24
-    val visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
+
+    val icon = if (passwordVisible) Res.drawable.ic_eye_fill_closed_24
+    else Res.drawable.ic_eye_fill_open_24
+
+    val visualTransformation = if (passwordVisible) VisualTransformation.None
+    else PasswordVisualTransformation()
 
     SimpleTextField(
         data = data,

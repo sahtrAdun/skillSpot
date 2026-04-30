@@ -1,6 +1,6 @@
 package dot.adun.core.domain.validation.rules
 
-import dot.adun.common.resources.CommonStrings
+import dot.adun.common.resources.Res
 import dot.adun.core.domain.validation.Critical
 import dot.adun.core.domain.validation.Minor
 import dot.adun.core.domain.validation.RulesValidator
@@ -13,7 +13,7 @@ class DigitsValidationRules(
     override val withMinors: Boolean = withWarnings
 
     override fun buildRules(value: String): List<ValidationRule.Type> = listOf(
-        Critical(CommonStrings.validation_no_digits) { value.any { it.isDigit() }.not() },
-        Minor(CommonStrings.validation_digits_count, listOf(recommendedDigitsCount)) { value.count { it.isDigit() } < recommendedDigitsCount }
+        Critical(Res.strings.validation_no_digits) { value.any { it.isDigit() }.not() },
+        Minor(Res.strings.validation_digits_count, listOf(recommendedDigitsCount)) { value.count { it.isDigit() } < recommendedDigitsCount }
     )
 }

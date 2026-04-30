@@ -6,10 +6,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import dagger.hilt.android.AndroidEntryPoint
-import dot.adun.core.domain.util.Constants
+import dot.adun.common.resources.PrefKeys
 import dot.adun.core.ui.theme.AppTheme
+import dot.adun.core.ui.theme.ThemeType
 import dot.adun.routing.nav3.AppNavigation
 
 @AndroidEntryPoint
@@ -18,22 +20,36 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val theme = remember { Constants.App.UI.SYSTEM_THEME } // todo temp
+            CompositionProviders {
+                val theme = remember { ThemeType.from(PrefKeys.UI.THEME_SYSTEM) }
 
-            AppTheme(isDark = isDark(theme)) {
-                AppNavigation(
-                    onFinish = { finish() }
-                )
+                AppTheme(
+                    isDark = isDark(theme)
+                ) {
+                    AppNavigation(
+                        onFinish = { finish() }
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-private fun isDark(theme: String): Boolean? {
+private fun isDark(theme: ThemeType): Boolean {
     return when (theme) {
-        Constants.App.UI.DARK_THEME -> true
-        Constants.App.UI.LIGHT_THEME -> false
-        else -> isSystemInDarkTheme()
+        ThemeType.Dark -> true
+        ThemeType.Light -> false
+        ThemeType.DayNight -> TODO()
+        ThemeType.System -> isSystemInDarkTheme()
+    }
+}
+
+@Composable
+private fun CompositionProviders(
+    app: @Composable () -> Unit
+) {
+    CompositionLocalProvider {
+        app()
     }
 }

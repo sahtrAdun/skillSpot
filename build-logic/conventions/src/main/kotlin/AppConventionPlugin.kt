@@ -38,6 +38,7 @@ class AppConventionPlugin : Plugin<Project> {
             implementation(libs, "compose-navigation-viewmodel")
             implementation(libs, "compose-navigation-adaptive")
             implementation(libs, "compose-coil")
+            implementation(libs, "compose-haze")
             debug(libs, "compose-ui-tooling")
 
             implementation(libs, "kotlinx-serialization-json")

@@ -1,6 +1,5 @@
 package dot.adun.core.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -35,7 +34,7 @@ val AppTheme: AdunTheme
 
 @Composable
 fun AppTheme(
-    isDark: Boolean? = null,
+    isDark: Boolean,
     theme: AdunTheme = buildDefaultTheme(isDark),
     content: @Composable () -> Unit
 ) {
@@ -47,15 +46,14 @@ fun AppTheme(
 }
 
 @Composable
-private fun buildDefaultTheme(isDark: Boolean?): AdunTheme {
-    val colorScheme = isDark ?: isSystemInDarkTheme()
-    val colors = AdunColorPresets.materialGreen().colors(colorScheme)
+private fun buildDefaultTheme(isDark: Boolean): AdunTheme {
+    val colors = AdunColorPresets.materialGreen().colors(isDark)
     val shapes = AdunShapes()
     val typography = AdunTypography.default
     val paddings = AdunPaddings.create()
     val presets = AdunColorPresets.createWith(colors)
 
-    return remember(colorScheme) {
+    return remember(isDark) {
         AdunThemeBuilder(
             colors = colors,
             shapes = shapes,

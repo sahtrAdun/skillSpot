@@ -22,7 +22,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import dot.adun.common.resources.CommonDraw
+import dot.adun.common.resources.Res
 import dot.adun.core.ui.modifiers.click.Clickable
 import dot.adun.core.ui.modifiers.click.ClickableDefaults
 import dot.adun.core.ui.modifiers.click.clickableEffect
@@ -117,7 +117,7 @@ fun BackIconButton(
 ) {
     IcButton(
         modifier = modifier,
-        painter = painterResource(CommonDraw.ic_back_24),
+        painter = painterResource(Res.drawable.ic_back_24),
         colors = AppTheme.presets.buttons.icon.transparent,
         onClick = onClick,
         iconModifier = Modifier.requiredSize(16.dp)
