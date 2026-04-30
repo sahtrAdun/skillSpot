@@ -46,7 +46,7 @@ class ComposeConventionPlugin : BaseConventionPlugin() {
             implementation(libs, "compose-navigation-viewmodel")
             implementation(libs, "compose-navigation-adaptive")
             implementation(libs, "compose-cloudy")
-            //implementation(libs, "compose-shimmer")
+            implementation(libs, "compose-haze")
             debug(libs, "compose-ui-tooling")
 
             implementation(libs, "kotlinx-serialization-json")

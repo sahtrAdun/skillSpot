@@ -34,7 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import dot.adun.common.resources.CommonDraw
+import dot.adun.common.resources.Res
 import dot.adun.core.domain.validation.Explanation
 import dot.adun.core.ui.components.base.BorderVisibility
 import dot.adun.core.ui.components.base.HSpacer
@@ -139,7 +139,7 @@ fun BaseTextField(
                             if (!empty) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     TextFieldButton(
-                                        icon = CommonDraw.ic_backspace_fill_24,
+                                        icon = Res.drawable.ic_backspace_fill_24,
                                         color = tint,
                                         onClick = { onValueChange("") },
                                         description = "text field clear icon"
