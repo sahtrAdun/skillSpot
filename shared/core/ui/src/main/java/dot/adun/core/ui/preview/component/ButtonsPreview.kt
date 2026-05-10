@@ -12,7 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dot.adun.core.ui.components.base.VSpacer
+import dot.adun.core.ui.components.VSpacer
 import dot.adun.core.ui.components.buttons.BackgroundButton
 import dot.adun.core.ui.components.buttons.ButtonConfig
 import dot.adun.core.ui.components.buttons.ButtonState

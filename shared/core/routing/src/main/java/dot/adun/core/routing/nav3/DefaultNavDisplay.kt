@@ -2,7 +2,6 @@ package dot.adun.core.routing.nav3
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ContentTransform
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
@@ -19,6 +18,7 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.scene.Scene
 import androidx.navigation3.ui.NavDisplay
 import dot.adun.core.routing.Route
+import dot.adun.core.routing.animations.transitionAnimationTween
 
 @Composable
 fun <T : NavKey> DefaultNavDisplay(
@@ -41,7 +41,7 @@ fun <T : NavKey> DefaultNavDisplay(
             ?: defaultPopTransition<T>()
     }
 
-    val predictivePopSpec = remember(lastKey) {
+    val predictivePopTransitionSpec = remember(lastKey) {
         (lastKey as? Route<*>)
             ?.predictivePopTransitionSpec()
             ?: defaultPredictivePopTransition<T>()
@@ -57,7 +57,7 @@ fun <T : NavKey> DefaultNavDisplay(
         entryProvider = entryProvider,
         transitionSpec = transitionSpec,
         popTransitionSpec = popTransitionSpec,
-        predictivePopTransitionSpec = predictivePopSpec,
+        predictivePopTransitionSpec = predictivePopTransitionSpec,
         modifier = modifier
     )
 }
@@ -65,18 +65,18 @@ fun <T : NavKey> DefaultNavDisplay(
 private fun <T : NavKey> defaultTransition():
     AnimatedContentTransitionScope<Scene<T>>.() -> ContentTransform = {
         slideInHorizontally(
-            animationSpec = tween(durationMillis = 500)
+            animationSpec = transitionAnimationTween()
         ) { it } togetherWith slideOutHorizontally(
-            animationSpec = tween(durationMillis = 500)
+            animationSpec = transitionAnimationTween()
         ) { -it }
     }
 
 private fun <T : NavKey> defaultPopTransition():
     AnimatedContentTransitionScope<Scene<T>>.() -> ContentTransform = {
         slideInHorizontally(
-            animationSpec = tween(durationMillis = 500)
+            animationSpec = transitionAnimationTween()
         ) { -it } togetherWith slideOutHorizontally(
-            animationSpec = tween(durationMillis = 500)
+            animationSpec = transitionAnimationTween()
         ) { it }
     }
 
@@ -88,3 +88,5 @@ private fun <T : NavKey> defaultPredictivePopTransition():
             slideOutHorizontally { it }
         )
     }
+
+const val TRANSITION_ANIMATION_DURATION = 500

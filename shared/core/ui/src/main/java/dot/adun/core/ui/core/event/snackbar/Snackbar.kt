@@ -1,6 +1,6 @@
 package dot.adun.core.ui.core.event.snackbar
 
-import dot.adun.core.ui.core.TextRef
+import dot.adun.core.domain.entity.TextRef
 import dot.adun.core.ui.core.event.GlobalEvent
 import dot.adun.core.ui.core.event.ViewEvent
 import kotlin.time.Duration

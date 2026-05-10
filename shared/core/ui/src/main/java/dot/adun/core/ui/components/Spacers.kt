@@ -1,4 +1,4 @@
-package dot.adun.core.ui.components.base
+package dot.adun.core.ui.components
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope

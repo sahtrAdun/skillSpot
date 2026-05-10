@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import dot.adun.core.ui.components.base.vSpacer
 import dot.adun.core.ui.theme.AppTheme
 
 @Composable

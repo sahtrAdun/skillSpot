@@ -80,7 +80,7 @@ fun BaseButton(
                             shape = shape
                         )
                     )
-                    .takeIf { config.borderVisibility.visible(false) }
+                    .takeIf { config.borderVisibility.visible { false } }
                     ?: Modifier
             )
     ) {

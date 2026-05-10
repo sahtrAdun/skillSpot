@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 @Immutable
 @Serializable
 data object HomeFlow : Flow, Unique() {
-    override val startDestination: Navigation = HomeRoute()
+    override val startDestination = HomeRoute()
 }
 
 fun NavFlowScope.homeFlow(

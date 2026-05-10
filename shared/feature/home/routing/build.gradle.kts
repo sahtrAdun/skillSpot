@@ -11,6 +11,7 @@ dependencies {
     implementation(projects.shared.core.routing)
 
     implementation(projects.shared.feature.search.routing)
+    implementation(projects.shared.feature.settings.routing)
 
     api(projects.shared.feature.home.ui)
     api(projects.shared.feature.home.domain)

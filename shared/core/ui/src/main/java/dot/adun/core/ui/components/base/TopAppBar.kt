@@ -17,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onPlaced
@@ -25,6 +24,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import com.skydoves.cloudy.cloudy
+import dot.adun.core.ui.components.HSpacer
+import dot.adun.core.ui.components.WSpacer
 import dot.adun.core.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

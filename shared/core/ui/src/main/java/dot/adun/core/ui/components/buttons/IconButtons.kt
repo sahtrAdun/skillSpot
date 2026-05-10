@@ -31,7 +31,7 @@ import dot.adun.core.ui.theme.AppTheme
 import kotlin.math.sqrt
 
 @Composable
-fun MyIconButton(
+internal fun MyIconButton(
     colors: IconButtonColors,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,

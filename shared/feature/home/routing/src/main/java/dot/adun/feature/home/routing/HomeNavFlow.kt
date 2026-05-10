@@ -12,7 +12,7 @@ class HomeNavFlow(
     onFinish: (HomeFlowResult) -> Unit
 ) : NavFlow<HomeFlow, HomeFlowResult>(
     flow = HomeFlow,
-    scope = scope,
+    navFlowScope = scope,
     onFinish = onFinish
 ) {
     override fun NavFlowScope.navigationFlow() {

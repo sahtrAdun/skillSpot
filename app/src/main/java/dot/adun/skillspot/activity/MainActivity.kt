@@ -7,24 +7,34 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import dot.adun.common.resources.PrefKeys
 import dot.adun.core.ui.theme.AppTheme
-import dot.adun.core.ui.theme.ThemeType
+import dot.adun.core.domain.entity.ThemeType
+import dot.adun.feature.settings.domain.SettingsModel
+import dot.adun.feature.settings.domain.entity.Setting
+import dot.adun.feature.settings.domain.entity.Settings
 import dot.adun.routing.nav3.AppNavigation
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    @Inject
+    lateinit var settingsModel: SettingsModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             CompositionProviders {
-                val theme = remember { ThemeType.from(PrefKeys.UI.THEME_SYSTEM) }
+                val themeState by settingsModel.themeFlow
+                    .collectAsStateWithLifecycle(PrefKeys.UI.THEME_SYSTEM)
 
                 AppTheme(
-                    isDark = isDark(theme)
+                    isDark = isDark(ThemeType.from(themeState))
                 ) {
                     AppNavigation(
                         onFinish = { finish() }

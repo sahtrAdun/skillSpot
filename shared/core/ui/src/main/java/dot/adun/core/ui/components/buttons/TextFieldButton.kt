@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import dot.adun.core.ui.components.textFields.core.TextFieldDefaults
 import dot.adun.core.ui.theme.AppTheme
 
 @Composable
@@ -25,8 +26,8 @@ fun TextFieldButton(
         ),
         onClick = onClick,
         contentDescription = description,
-        modifier = modifier,
         contentPadding = PaddingValues(4.dp),
-        iconModifier = Modifier.requiredSize(20.dp)
+        modifier = modifier,
+        iconModifier = Modifier.requiredSize(TextFieldDefaults.iconSize)
     )
 }

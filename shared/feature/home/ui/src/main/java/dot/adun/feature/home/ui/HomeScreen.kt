@@ -17,7 +17,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dot.adun.core.ui.components.base.AdunScaffold
 import dot.adun.core.ui.components.base.AppScreen
 import dot.adun.core.ui.components.base.TopAppBar
-import dot.adun.core.ui.components.base.vSpacer
+import dot.adun.core.ui.components.vSpacer
 import dot.adun.core.ui.modifiers.click.Clickable
 import dot.adun.core.ui.modifiers.surface
 import dot.adun.core.ui.theme.AppTheme

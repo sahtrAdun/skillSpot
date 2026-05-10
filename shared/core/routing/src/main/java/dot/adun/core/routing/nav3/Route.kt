@@ -18,20 +18,20 @@ inline fun <reified R : Route<*>> NavFlowScope.route(
         with(key) {
             Content(
                 onScreenResult = onScreenResult,
-                onNavigateBack = onNavigateBack ?: {
-                    if (stack.size > 1) {
-                        stack.removeLastOrNull()
-                    } else {
-                        parentStack?.let { parent ->
-                            if (parent.size > 1) {
-                                parent.removeLastOrNull()
-                            }
-                        }
-                    }
-
-                    Unit
-                }
+                onNavigateBack = onNavigateBack ?: { defaultNavigateBack() }
             )
+        }
+    }
+}
+
+fun NavFlowScope.defaultNavigateBack() {
+    if (stack.size > 1) {
+        stack.removeLastOrNull()
+    } else {
+        parentStack?.let { parent ->
+            if (parent.size > 1) {
+                parent.removeLastOrNull()
+            }
         }
     }
 }

@@ -6,11 +6,11 @@ enum class BorderVisibility {
     Newer,
     WithCondition;
 
-    fun visible(visible: Boolean): Boolean {
+    fun visible(condition: () -> Boolean): Boolean {
         return when (this) {
             Always -> true
             Newer -> false
-            WithCondition -> visible
+            WithCondition -> condition()
         }
     }
 }
