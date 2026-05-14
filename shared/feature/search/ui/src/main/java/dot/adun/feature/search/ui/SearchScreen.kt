@@ -11,7 +11,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dot.adun.core.ui.components.DefaultAppBar
 import dot.adun.core.ui.components.base.AdunScaffold
 import dot.adun.core.ui.components.base.AppScreen
-import dot.adun.core.ui.components.base.VSpacer
+import dot.adun.core.ui.components.VSpacer
 import dot.adun.core.ui.components.buttons.BackgroundTextButton
 import dot.adun.core.ui.components.buttons.PrimaryTextButton
 import dot.adun.core.ui.components.buttons.SecondaryTextButton

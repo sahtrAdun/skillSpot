@@ -44,6 +44,11 @@
             <option value="$PROJECT_DIR$/shared/feature/search/domain" />
             <option value="$PROJECT_DIR$/shared/feature/search/routing" />
             <option value="$PROJECT_DIR$/shared/feature/search/ui" />
+            <option value="$PROJECT_DIR$/shared/feature/settings" />
+            <option value="$PROJECT_DIR$/shared/feature/settings/data" />
+            <option value="$PROJECT_DIR$/shared/feature/settings/domain" />
+            <option value="$PROJECT_DIR$/shared/feature/settings/routing" />
+            <option value="$PROJECT_DIR$/shared/feature/settings/ui" />
             <option value="$PROJECT_DIR$/shared/routing" />
           </set>
         </option>

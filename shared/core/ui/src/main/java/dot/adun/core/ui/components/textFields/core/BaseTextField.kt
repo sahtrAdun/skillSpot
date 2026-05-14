@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import dot.adun.common.resources.Res
 import dot.adun.core.domain.validation.Explanation
 import dot.adun.core.ui.components.base.BorderVisibility
-import dot.adun.core.ui.components.base.HSpacer
-import dot.adun.core.ui.components.base.VSpacer
+import dot.adun.core.ui.components.HSpacer
+import dot.adun.core.ui.components.VSpacer
 import dot.adun.core.ui.components.buttons.TextFieldButton
 import dot.adun.core.ui.components.text.OverflowText
 import dot.adun.core.ui.entity.TextFieldData
@@ -70,9 +70,7 @@ fun BaseTextField(
     var isFocused by remember { mutableStateOf(false) }
     val colors = TextFieldsColorPresets.rememberTextFieldColors(data, colorPreset, isFocused)
     val tint by animateColorAsState(colors.text.copy(alpha = 0.5f))
-    val cursorColor = SolidColor(
-        if (data.hasError) colors.text else colors.cursor
-    )
+    val cursorColor = SolidColor(if (data.hasError) colors.text else colors.cursor)
 
     Column {
         BasicTextField(
@@ -88,94 +86,123 @@ fun BaseTextField(
             keyboardActions = actions ?: KeyboardActions { focusManager.clearFocus() },
             keyboardOptions = keyboardOptions,
             decorationBox = { innerTextField ->
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .surface(
-                            color = animateColorAsState(colors.background).value,
-                            shape = AppTheme.shapes.medium,
-                            padding = contentPaddings,
-                            border = Border(
-                                color = animateColorAsState(
-                                    colors.border.copy(alpha = 0.5f)
-                                ).value,
-                                shape = AppTheme.shapes.medium
-                            )
-                                .takeIf { borderVisibility.visible(data.hasError) }
-                        )
-                ) {
-                    if (leadingContent != null) {
-                        leadingContent(tint)
-                    }
-                    Box(
-                        modifier = Modifier.weight(1f),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        if (data.value.isEmpty() && placeholder != null) {
-                            Text(
-                                text = placeholder,
-                                style = AppTheme.typography.body1,
-                                color = tint,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
-                        innerTextField()
-                    }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        val enterTransition =
-                            if (trailingContent == null) fadeIn() + slideInHorizontally { it }
-                            else fadeIn()
-                        val exitTransition =
-                            if (trailingContent == null) fadeOut() + slideOutHorizontally { it / 2 }
-                            else fadeOut()
-
-                        AnimatedContent(
-                            targetState = data.value.isEmpty(),
-                            transitionSpec = { enterTransition togetherWith exitTransition },
-                            contentAlignment = Alignment.Center
-                        ) { empty ->
-                            if (!empty) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    TextFieldButton(
-                                        icon = Res.drawable.ic_backspace_fill_24,
-                                        color = tint,
-                                        onClick = { onValueChange("") },
-                                        description = "text field clear icon"
-                                    )
-                                    if (trailingContent != null) {
-                                        HSpacer(12.dp)
-                                    }
-                                }
-                            }
-                        }
-                        if (trailingContent != null) {
-                            trailingContent(tint)
-                        }
-                    }
-                }
-
+                TextFieldDecoration(
+                    colors = colors,
+                    contentPaddings = contentPaddings,
+                    borderVisibility = borderVisibility,
+                    data = data,
+                    tint = tint,
+                    placeholder = placeholder,
+                    innerTextField = innerTextField,
+                    trailingContent = trailingContent,
+                    leadingContent = leadingContent,
+                    onValueChange = onValueChange
+                )
             },
             modifier = modifier
-                .height(52.dp)
-                .onFocusChanged { focusState ->
-                    isFocused = focusState.isFocused
-                },
+                .height(TextFieldDefaults.height)
+                .onFocusChanged { focusState -> isFocused = focusState.isFocused },
         )
-        AnimatedContent(
-            targetState = data.helper,
-            contentKey = { it?.explanation?.contentKey() },
-            transitionSpec = {
-                fadeIn() + slideInVertically { -it } togetherWith
-                        fadeOut() + slideOutVertically { -it }
+        TextFieldExplanation(data)
+    }
+}
+
+@Composable
+private fun TextFieldDecoration(
+    colors: TextFieldsColorPresets.AdunTextFieldColor,
+    contentPaddings: PaddingValues,
+    borderVisibility: BorderVisibility,
+    data: TextFieldData,
+    tint: Color,
+    placeholder: String?,
+    innerTextField: @Composable (() -> Unit),
+    trailingContent: @Composable ((Color) -> Unit)?,
+    leadingContent: @Composable ((Color) -> Unit)?,
+    onValueChange: (String) -> Unit
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .surface(
+                color = animateColorAsState(colors.background).value,
+                shape = AppTheme.shapes.medium,
+                padding = contentPaddings,
+                border = Border(
+                    color = animateColorAsState(
+                        colors.border.copy(alpha = 0.5f)
+                    ).value,
+                    shape = AppTheme.shapes.medium
+                )
+                    .takeIf { borderVisibility.visible { data.hasError } }
+            )
+    ) {
+        if (leadingContent != null) {
+            leadingContent(tint)
+        }
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            if (data.value.isEmpty() && placeholder != null) {
+                Text(
+                    text = placeholder,
+                    style = AppTheme.typography.body1,
+                    color = tint,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
-        ) { helper ->
-            if (helper != null) {
-                Column {
-                    VSpacer(8.dp)
-                    TextFieldHelper(helper)
+            innerTextField()
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            val enterTransition =
+                if (trailingContent == null) fadeIn() + slideInHorizontally { it }
+                else fadeIn()
+            val exitTransition =
+                if (trailingContent == null) fadeOut() + slideOutHorizontally { it / 2 }
+                else fadeOut()
+
+            AnimatedContent(
+                targetState = data.value.isEmpty(),
+                transitionSpec = { enterTransition togetherWith exitTransition },
+                contentAlignment = Alignment.Center
+            ) { empty ->
+                if (!empty) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        TextFieldButton(
+                            icon = Res.drawable.ic_backspace_fill_24,
+                            color = tint,
+                            onClick = { onValueChange("") },
+                            description = "text field clear icon"
+                        )
+                        if (trailingContent != null) {
+                            HSpacer(12.dp)
+                        }
+                    }
                 }
+            }
+            if (trailingContent != null) {
+                trailingContent(tint)
+            }
+        }
+    }
+}
+
+@Composable
+private fun TextFieldExplanation(data: TextFieldData) {
+    AnimatedContent(
+        targetState = data.helper,
+        contentKey = { it?.explanation?.contentKey() },
+        transitionSpec = {
+            fadeIn() + slideInVertically { -it } togetherWith
+                    fadeOut() + slideOutVertically { -it }
+        }
+    ) { helper ->
+        if (helper != null) {
+            Column {
+                VSpacer(8.dp)
+                TextFieldHelper(helper)
             }
         }
     }

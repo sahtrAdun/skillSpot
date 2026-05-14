@@ -12,7 +12,7 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.scene.Scene
 import dot.adun.core.domain.util.randomUuid
 import dot.adun.core.routing.Route
-import dot.adun.core.routing.Unique
+import dot.adun.core.routing.animations.transitionAnimationTween
 import dot.adun.feature.search.ui.SearchScreen
 import dot.adun.feature.search.ui.SearchViewModel
 import kotlinx.serialization.Serializable
@@ -32,12 +32,14 @@ data class SearchRoute(
 
     override fun <T : NavKey> transitionSpec():
         (AnimatedContentTransitionScope<Scene<T>>.() -> ContentTransform) = {
-            fadeIn() togetherWith fadeOut()
+            fadeIn(searchAnimationSpec()) togetherWith
+                    fadeOut(searchAnimationSpec())
         }
 
     override fun <T : NavKey> popTransitionSpec():
         (AnimatedContentTransitionScope<Scene<T>>.() -> ContentTransform) = {
-            fadeIn() togetherWith fadeOut()
+            fadeIn(searchAnimationSpec()) togetherWith
+                    fadeOut(searchAnimationSpec())
         }
 
     override fun <T : NavKey> predictivePopTransitionSpec():
@@ -46,6 +48,8 @@ data class SearchRoute(
                 fadeIn(),
                 fadeOut()
             )
-    }
+        }
 
 }
+
+private fun <T> searchAnimationSpec() = transitionAnimationTween<T>(750)

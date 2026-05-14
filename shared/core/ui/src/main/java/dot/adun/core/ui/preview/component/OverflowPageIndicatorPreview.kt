@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dot.adun.core.ui.components.OverflowPageIndicator
-import dot.adun.core.ui.components.base.VSpacer
+import dot.adun.core.ui.components.VSpacer
 import dot.adun.core.ui.preview.PreviewColumn
 
 @Preview

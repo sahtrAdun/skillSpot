@@ -52,16 +52,10 @@ object ClickableDefaults {
     fun defaultIndication(
         radius: Dp? = null,
         bounded: Boolean = true,
-    ): Indication = when (radius) {
-        null -> ripple(
-            bounded = bounded,
-            radius = 240.dp
-        )
-        else -> ripple(
-            bounded = bounded,
-            radius = radius
-        )
-    }
+    ): Indication = ripple(
+        bounded = bounded,
+        radius = radius ?: Dp.Unspecified
+    )
 }
 
 fun Modifier.click(

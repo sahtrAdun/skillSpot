@@ -7,15 +7,13 @@ import dot.adun.core.routing.NavFlowScope
 
 abstract class NavFlow<F : Flow, R>(
     val flow: F,
-    val scope: NavFlowScope,
+    val navFlowScope: NavFlowScope,
     val onFinish: (R) -> Unit
 ) : NavigationFlow {
     val startDestination = flow.startDestination
 
-    inline fun <reified E : F> content() = with(scope) {
-        entryProviderScope.entry<E>(
-            clazzContentKey = { it.id }
-        ) {
+    inline fun <reified E : F> content() = with(navFlowScope) {
+        entryProviderScope.entry<E>(clazzContentKey = { it.id }) {
             val innerStack = rememberNavBackStack(startDestination)
 
             DefaultNavDisplay(
