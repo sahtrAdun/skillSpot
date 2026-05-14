@@ -1,6 +1,6 @@
 package dot.adun.feature.settings.domain
 
-import dot.adun.common.resources.PrefKeys
+import dot.adun.core.domain.entity.Theme
 import dot.adun.core.domain.util.mapUntilChanged
 import dot.adun.feature.settings.domain.entity.Setting
 import dot.adun.feature.settings.domain.entity.Settings
@@ -14,10 +14,15 @@ class SettingsModel @Inject constructor(
 ) {
     val settings: Flow<List<Setting>> = repository.localSettings
 
-    val themeFlow: Flow<String> = repository
+    val themeFlow: Flow<Theme> = repository
         .observe(Setting.Id(Settings.Theme.id))
-        .mapUntilChanged { (it as? Setting.Selector)?.selectedOption?.value
-            ?: PrefKeys.UI.THEME_SYSTEM }
+        .mapUntilChanged {
+            val id = (it as? Setting.Selector)?.selectedOption?.value
+            Theme.fromId(id)
+        }
+
+    fun flow(setting: Settings): Flow<Setting?> = repository
+        .observe(Setting.Id(setting.id))
 
     fun find(setting: Settings): Setting? {
         return repository.get(Setting.Id(setting.id))
