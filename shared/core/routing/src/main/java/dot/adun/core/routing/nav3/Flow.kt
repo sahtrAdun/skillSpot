@@ -1,7 +1,5 @@
 package dot.adun.core.routing.nav3
 
-import androidx.navigation3.runtime.entryProvider
-import androidx.navigation3.runtime.rememberNavBackStack
 import dot.adun.core.routing.Flow
 import dot.adun.core.routing.NavFlowScope
 
@@ -10,23 +8,18 @@ abstract class NavFlow<F : Flow, R>(
     val navFlowScope: NavFlowScope,
     val onFinish: (R) -> Unit
 ) : NavigationFlow {
-    val startDestination = flow.startDestination
+    init {
+        navFlowScope.onStart()
+    }
 
-    inline fun <reified E : F> content() = with(navFlowScope) {
-        entryProviderScope.entry<E>(clazzContentKey = { it.id }) {
-            val innerStack = rememberNavBackStack(startDestination)
+    open fun NavFlowScope.onStart() {}
 
-            DefaultNavDisplay(
-                stack = innerStack,
-                entryProvider = entryProvider {
-                    NavFlowScope(
-                        stack = innerStack,
-                        parentStack = stack,
-                        entryProviderScope = this,
-                    )
-                        .navigationFlow()
-                },
-            )
-        }
+    fun content() = with(navFlowScope) {
+        NavFlowScope(
+            stack = stack,
+            flowParent = flow.startDestination,
+            entryProviderScope = entryProviderScope,
+        )
+            .navigationFlow()
     }
 }

@@ -46,5 +46,20 @@ include(
     ":shared:feature:settings:domain",
     ":shared:feature:settings:ui",
     ":shared:feature:settings:routing",
+
+    ":shared:feature:auth:data",
+    ":shared:feature:auth:domain",
+    ":shared:feature:auth:ui",
+    ":shared:feature:auth:routing",
+
+    ":shared:feature:login:data",
+    ":shared:feature:login:domain",
+    ":shared:feature:login:ui",
+    ":shared:feature:login:routing",
+
+    ":shared:feature:register:data",
+    ":shared:feature:register:domain",
+    ":shared:feature:register:ui",
+    ":shared:feature:register:routing",
 )
  

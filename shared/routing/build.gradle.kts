@@ -11,6 +11,6 @@ dependencies {
     implementation(projects.shared.core.routing)
     implementation(projects.shared.core.domain)
     // screens
-    api(projects.shared.feature.home.routing)
-    api(projects.shared.feature.search.routing)
+    implementation(projects.shared.feature.home.routing)
+    implementation(projects.shared.feature.auth.routing)
 }

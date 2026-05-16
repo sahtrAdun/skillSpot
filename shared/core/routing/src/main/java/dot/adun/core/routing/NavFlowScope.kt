@@ -6,34 +6,63 @@ import androidx.navigation3.runtime.NavKey
 
 open class NavFlowScope(
     val stack: NavBackStack<NavKey>,
-    val parentStack: NavBackStack<NavKey>? = null,
-    val entryProviderScope: EntryProviderScope<NavKey>
+    val flowParent: Route<*>,
+    val entryProviderScope: EntryProviderScope<NavKey>,
 ) {
-    fun <T : NavKey> pushNew(element: T) = stack.add(element)
+    var flowState: Map<Flow, Any?> = emptyMap()
 
-    fun <T : NavKey> replaceCurrent(element: T) {
-        pushNew(element)
-        stack.removeAt(stack.lastIndex - 1)
+    fun <T : NavKey> push(element: T) {
+        if (stack.last() == element) {
+            replaceCurrent(element)
+        } else {
+            pushNew(element)
+        }
     }
 
-    fun <T : NavKey> replaceFlow(element: T) {
-        val targetStack = parentStack ?: stack
-        targetStack.add(element)
-        if (targetStack.size > 1) {
-            targetStack.removeAt(targetStack.lastIndex - 1)
+    fun <T : NavKey> setRoot(element: T) {
+        if (element is Flow) {
+            flowState += (element to element.state)
+            stack.add(0, element.startDestination)
+        } else {
+            stack.add(0, element)
+        }
+    }
+
+    fun <T : NavKey> pushNew(element: T) {
+        if (element is Flow) {
+            flowState += (element to element.state)
+            stack.add(element.startDestination)
+        } else {
+            stack.add(element)
+        }
+    }
+
+    fun <T : NavKey> replaceCurrent(element: T) {
+        clearStateFor(stack.last())
+        pushNew(element)
+
+        val current = stack.lastIndex - 1
+        stack.removeAt(current)
+    }
+
+    fun <T : NavKey> replaceAll(element: T) {
+        setRoot(element)
+        popToIndex(0)
+    }
+
+    fun pop() {
+        if (stack.size > 1) {
+            clearStateFor(stack.last())
+            stack.removeLastOrNull()
         }
     }
 
     fun <T : NavKey> popTo(element: T) {
-        while (stack.last() != element) {
-            stack.removeLastOrNull()
-        }
+        while (stack.last() != element) { pop() }
     }
 
     fun popToIndex(index: Int) {
-        while (stack.lastIndex != index) {
-            stack.removeLastOrNull()
-        }
+        while (stack.lastIndex != index) { pop() }
     }
 
     fun <T : NavKey> popToFirst(element: T) {
@@ -56,6 +85,17 @@ open class NavFlowScope(
         }
     }
 
-    fun popToRoot() = popToFirst(stack[0])
+    fun popToRoot() = popToFirst(flowParent)
+
+    private fun <T> clearStateFor(element: T) {
+        if (element is Flow) {
+            flowState -= element
+        }
+    }
 }
 
+@Suppress("UNCHECKED_CAST")
+inline fun <reified S, reified F> NavFlowScope.getFlowState(): S? {
+    val key = flowState.keys.firstOrNull { it is F } ?: return null
+    return flowState[key] as? S
+}

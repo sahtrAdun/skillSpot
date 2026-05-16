@@ -10,7 +10,6 @@ import androidx.compose.runtime.Immutable
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.scene.Scene
-import dot.adun.core.domain.util.randomUuid
 import dot.adun.core.routing.Route
 import dot.adun.core.routing.animations.transitionAnimationTween
 import dot.adun.feature.search.ui.SearchScreen
@@ -20,7 +19,7 @@ import kotlinx.serialization.Serializable
 @Immutable
 @Serializable
 data class SearchRoute(
-    override val id: String = randomUuid()
+    override val id: String = "search_route"
 ) : Route<SearchViewModel> {
     @Composable
     override fun Screen(viewModel: SearchViewModel) {

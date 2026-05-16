@@ -183,7 +183,7 @@ data class AdunColorPresets(
                 disabled = ColorPalette.gray_700,
                 error = MaterialPalette.soft_red,
                 warning = MaterialPalette.soft_amber,
-                onPrimary = MaterialPalette.green_900,
+                onPrimary = MaterialPalette.gray_100,
                 primaryInvert = MaterialPalette.gray_900
             )
             val border = AdunColors.Border(
