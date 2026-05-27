@@ -1,5 +1,6 @@
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ExternalModuleDependency
+import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.artifacts.dsl.DependencyHandler
@@ -25,6 +26,15 @@ private fun DependencyHandler.addPlugin(tag: String, libs: VersionCatalog, alias
     }
 }
 
+fun DependencyHandler.implementationPlatform(libs: VersionCatalog, alias: String) {
+    val library = libs.findLibrary(alias)
+    if (library.isPresent) {
+        add("implementation", platform(library.get()))
+    } else {
+        throw IllegalArgumentException("'$alias' not found in version catalog")
+    }
+}
+
 fun DependencyHandler.implementation(libs: VersionCatalog, alias: String) {
     addPlugin("implementation", libs, alias)
 }
@@ -40,4 +50,7 @@ fun DependencyHandler.implementation(dependency: Optional<out Provider<out Exter
 }
 fun DependencyHandler.implementationProject(path: String) {
     add("implementation", project(path))
+}
+fun DependencyHandler.implementationPlatform(notation: String) {
+    add("implementation", platform(notation))
 }

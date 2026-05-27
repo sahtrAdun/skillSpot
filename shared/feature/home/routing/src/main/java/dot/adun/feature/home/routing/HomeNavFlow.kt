@@ -1,5 +1,6 @@
 package dot.adun.feature.home.routing
 
+import androidx.compose.runtime.Immutable
 import dot.adun.core.routing.NavFlowScope
 import dot.adun.core.routing.nav3.NavFlow
 import dot.adun.core.routing.nav3.route
@@ -7,6 +8,7 @@ import dot.adun.feature.home.ui.HomeScreenResult
 import dot.adun.feature.search.routing.SearchRoute
 import dot.adun.feature.search.ui.SearchScreenResult
 
+@Immutable
 class HomeNavFlow(
     scope: NavFlowScope,
     onFinish: (HomeFlowResult) -> Unit

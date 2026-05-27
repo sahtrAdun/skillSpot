@@ -11,8 +11,10 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
@@ -38,11 +40,11 @@ open class StateViewModel<VS, VI: BaseViewIntents, R>(initialState: VS) : ViewMo
     )
     val result: Flow<R> = _result.receiveAsFlow()
 
-    private val _events: Channel<ViewEvent> = Channel(
-        capacity = 5,
+    private val _events: MutableSharedFlow<ViewEvent> = MutableSharedFlow(
+        extraBufferCapacity = 5,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
-    val events: Flow<ViewEvent> = _events.receiveAsFlow()
+    val events: Flow<ViewEvent> = _events.asSharedFlow()
 
     open val intents: VI by lazy {
         throw IllegalStateException("Intents not initialized in ${this::class.simpleName}")
@@ -50,6 +52,12 @@ open class StateViewModel<VS, VI: BaseViewIntents, R>(initialState: VS) : ViewMo
 
     protected fun update(reducer: (VS) -> VS) {
         _state.update(reducer)
+    }
+
+    protected suspend fun action(body: suspend (VS) -> Unit) {
+        viewModelScope.launch {
+            body(_state.value)
+        }
     }
 
     @JvmName("Execute")
@@ -105,7 +113,11 @@ open class StateViewModel<VS, VI: BaseViewIntents, R>(initialState: VS) : ViewMo
     ) { on(flow.debounce(this), block) }
 
     protected fun navigateBack() {
-        _events.trySend(ViewModelEvent.NavigateBack)
+        _events.tryEmit(ViewModelEvent.NavigateBack)
+    }
+
+    protected fun emitEvent(event: ViewEvent) {
+        _events.tryEmit(event)
     }
 
     protected fun emitResult(result: R) {
@@ -115,14 +127,14 @@ open class StateViewModel<VS, VI: BaseViewIntents, R>(initialState: VS) : ViewMo
     private fun SimpleIntent.log() {
         val viewModelName = this@StateViewModel::class.java.simpleName
         Napier.d(tag = "vm-intent") {
-            "[$viewModelName] $name --simple"
+            "[$viewModelName] $name"
         }
     }
 
     private fun <T> TypedIntent<T>.log(data: T) {
         val viewModelName = this@StateViewModel::class.java.simpleName
         Napier.d(tag = "vm-intent") {
-            "[$viewModelName] $name --data: $data"
+            "[$viewModelName] $name"
         }
     }
 }

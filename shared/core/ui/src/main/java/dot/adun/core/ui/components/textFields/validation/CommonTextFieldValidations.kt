@@ -2,6 +2,7 @@ package dot.adun.core.ui.components.textFields.validation
 
 import dot.adun.core.domain.validation.ValidationRule
 import dot.adun.core.domain.validation.rules.DigitsValidationRules
+import dot.adun.core.domain.validation.rules.EmailValidationRules
 import dot.adun.core.domain.validation.rules.EmptinessValidationRules
 import dot.adun.core.domain.validation.rules.LengthValidationRules
 import dot.adun.core.domain.validation.rules.LettersValidationRules
@@ -18,5 +19,12 @@ class PasswordTextFieldValidation() : TextFieldValidator() {
         LengthValidationRules(4, 20),
         LettersValidationRules(),
         DigitsValidationRules()
+    )
+}
+
+class EmailTextFieldValidation() : TextFieldValidator() {
+    override val rules: List<ValidationRule.Group> = listOf(
+        EmptinessValidationRules(),
+        EmailValidationRules(),
     )
 }

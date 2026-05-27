@@ -7,5 +7,6 @@ android {
 }
 
 dependencies {
+    implementation(projects.shared.core.data)
     implementation(projects.shared.feature.home.domain)
 }

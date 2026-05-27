@@ -1,5 +1,6 @@
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.project
 
 class SharedConventionPlugin : BaseConventionPlugin() {
     override fun applyPlugins(project: Project): Unit = with(project) {

@@ -3,7 +3,6 @@ package dot.adun.feature.home.routing
 import androidx.compose.runtime.Immutable
 import dot.adun.core.routing.Flow
 import dot.adun.core.routing.NavFlowScope
-import dot.adun.core.routing.Navigation
 import dot.adun.core.routing.Unique
 import kotlinx.serialization.Serializable
 
@@ -11,13 +10,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object HomeFlow : Flow, Unique() {
     override val startDestination = HomeRoute()
+    override val state: Any? = null
 }
 
 fun NavFlowScope.homeFlow(
     onFinish: (HomeFlowResult) -> Unit
 ) = HomeNavFlow(this, onFinish)
-    .content<HomeFlow>()
+    .content()
 
 sealed interface HomeFlowResult {
     data object Finish : HomeFlowResult
+    data object Logout : HomeFlowResult
 }
