@@ -1,11 +1,23 @@
 package dot.adun.core.ui.mappers
 
 import dot.adun.common.resources.Res
-import dot.adun.core.domain.entity.ApiError
-import dot.adun.core.domain.entity.AuthError
+import dot.adun.core.domain.entity.error.ApiError
+import dot.adun.core.domain.entity.error.AppError
+import dot.adun.core.domain.entity.error.AuthError
 import dot.adun.core.domain.entity.resRef
 import dot.adun.core.domain.entity.strRef
 import dot.adun.core.ui.entity.UiError
+
+fun AppError.toUiError(): UiError {
+    return when (this) {
+        is ApiError -> this.toUiError()
+        is AppError.Unknown -> UiError(
+            title = resRef(Res.strings.error_unknown_title),
+            description = this.throwable.localizedMessage?.let { strRef(it) }
+                ?: resRef(Res.strings.error_unknown_desc)
+        )
+    }
+}
 
 fun ApiError.toUiError(): UiError {
     return when (this) {
@@ -31,10 +43,9 @@ fun ApiError.toUiError(): UiError {
                 )
             }
         }
-        is ApiError.Unknown -> UiError(
+        else -> UiError(
             title = resRef(Res.strings.error_unknown_title),
-            description = this.throwable.localizedMessage?.let { strRef(it) }
-                ?: resRef(Res.strings.error_unknown_desc)
+            description = resRef(Res.strings.error_unknown_desc)
         )
     }
 }

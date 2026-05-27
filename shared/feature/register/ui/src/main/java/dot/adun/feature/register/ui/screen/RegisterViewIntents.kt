@@ -8,4 +8,5 @@ class RegisterViewIntents : BaseViewIntents() {
     val login = intent("login")
     val changeEmail = typedIntent<String>("changeEmail")
     val changePassword = typedIntent<String>("changePassword")
+    val changeSecondPassword = typedIntent<String>("changeSecondPassword")
 }

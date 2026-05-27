@@ -150,9 +150,9 @@ data class AdunColorPresets(
                 primaryInvert = MaterialPalette.white
             )
             val layer = AdunColors.Layer(
-                background = MaterialPalette.gray_50,
-                surface = Color.White,
-                onSurface = MaterialPalette.gray_150,
+                background = MaterialPalette.gray_150,
+                surface = MaterialPalette.gray_50,
+                onSurface = MaterialPalette.gray_200,
                 primary = MaterialPalette.green_primary,
                 primaryDisabled = MaterialPalette.gray_300,
                 onPrimary = MaterialPalette.white,

@@ -29,10 +29,10 @@ fun rememberButtonState(
     loading: Boolean = false,
     disabled: Boolean = false
 ): ButtonState {
-    return remember {
+    return remember(loading, disabled) {
         when {
-            loading -> ButtonState.Loading
             disabled -> ButtonState.Disabled
+            loading -> ButtonState.Loading
             else -> ButtonState.Enabled
         }
     }

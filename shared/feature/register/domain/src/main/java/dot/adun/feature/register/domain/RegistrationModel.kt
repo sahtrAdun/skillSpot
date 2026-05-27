@@ -1,6 +1,6 @@
 package dot.adun.feature.register.domain
 
-import dot.adun.feature.auth.domain.AuthResult
+import dot.adun.feature.auth.domain.entity.AuthResult
 import javax.inject.Inject
 
 class RegistrationModel @Inject constructor(

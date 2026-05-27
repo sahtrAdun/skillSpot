@@ -13,15 +13,10 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.layout.onPlaced
-import androidx.compose.ui.platform.LocalDensity
 import dot.adun.core.ui.components.loaders.Loader
 import dot.adun.core.ui.components.loaders.PolyShapes
 import dot.adun.core.ui.modifiers.Border
@@ -39,31 +34,19 @@ fun BaseButton(
     shape: Shape = AppTheme.shapes.medium,
     content: @Composable () -> Unit
 ) {
-    val density = LocalDensity.current
     val containerColor = config.animatedContainerColor()
     val contentColor = config.animatedContentColor()
-
-    var buttonWidthPx by remember { mutableIntStateOf(0) }
-    val radius = remember(buttonWidthPx) {
-        with(density) {
-            val width = buttonWidthPx.toDp()
-            width * 0.9f
-        }
-    }
 
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .onPlaced { buttonWidthPx = it.size.width }
+            .clip(shape)
             .minimumInteractiveComponentSize()
             .clickableEffect(
                 clickable = clickable.copy(
                     enabled = config.state.enabled(),
                     interactionSource = ClickableDefaults.interactionSource(),
-                    indication = ClickableDefaults.defaultIndication(
-                        radius = radius,
-                        bounded = true
-                    )
+                    indication = ClickableDefaults.defaultIndication()
                 ),
                 scaleFactor = 0.97f
             )

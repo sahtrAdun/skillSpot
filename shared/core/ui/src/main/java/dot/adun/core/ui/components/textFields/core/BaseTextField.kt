@@ -36,9 +36,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dot.adun.common.resources.Res
 import dot.adun.core.domain.validation.Explanation
-import dot.adun.core.ui.components.base.BorderVisibility
 import dot.adun.core.ui.components.HSpacer
 import dot.adun.core.ui.components.VSpacer
+import dot.adun.core.ui.components.base.BorderVisibility
 import dot.adun.core.ui.components.buttons.TextFieldButton
 import dot.adun.core.ui.components.text.OverflowText
 import dot.adun.core.ui.entity.TextFieldData
@@ -129,9 +129,7 @@ private fun TextFieldDecoration(
                 shape = AppTheme.shapes.medium,
                 padding = contentPaddings,
                 border = Border(
-                    color = animateColorAsState(
-                        colors.border.copy(alpha = 0.5f)
-                    ).value,
+                    color = animateColorAsState(colors.border.copy(alpha = 0.5f)).value,
                     shape = AppTheme.shapes.medium
                 )
                     .takeIf { borderVisibility.visible { data.hasError } }

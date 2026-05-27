@@ -10,8 +10,10 @@ fun RegisterScreen(
 ) = AppScreen(viewModel) { state, intents, actions ->
     RegisterLayout(
         actions = actions,
+        loadState = state.loadState,
         emailField = state.emailField,
         passwordField = state.passwordField,
+        secondPasswordField = state.secondPasswordField,
         intents = intents
     )
 }

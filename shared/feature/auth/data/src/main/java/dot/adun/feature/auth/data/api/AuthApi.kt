@@ -1,7 +1,6 @@
 package dot.adun.feature.auth.data.api
 
-import dot.adun.core.domain.mappers.toApiError
-import dot.adun.feature.auth.domain.AuthResult
+import dot.adun.feature.auth.domain.entity.AuthResult
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
@@ -18,15 +17,11 @@ class AuthApi @Inject constructor(
         email: String,
         password: String
     ): AuthResult = withContext(Dispatchers.IO) {
-        try {
-            supabase.auth.signUpWith(Email) {
-                this.email = email
-                this.password = password
-            }
-            AuthResult.Success
-        } catch (e: Exception) {
-            AuthResult.Failure(e.toApiError())
+        supabase.auth.signUpWith(Email) {
+            this.email = email
+            this.password = password
         }
+        AuthResult.Success
     }
 
     suspend fun loginWithEmail(
@@ -34,13 +29,18 @@ class AuthApi @Inject constructor(
         password: String
     ): AuthResult = withContext(Dispatchers.IO) {
         try {
-            supabase.auth.signInWith(Email) {
-                this.email = email
-                this.password = password
-            }
-            AuthResult.Success
-        } catch (e: Exception) {
-            AuthResult.Failure(e.toApiError())
+            supabase.auth.signOut()
+        } catch (_: Exception) {
+            /* do nothing */
+        } finally {
+            supabase.auth.clearSession()
         }
+
+        supabase.auth.signInWith(Email) {
+            this.email = email
+            this.password = password
+        }
+
+        AuthResult.Success
     }
 }

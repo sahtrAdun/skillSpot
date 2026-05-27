@@ -13,29 +13,29 @@ data class AdunTypography(
     val headline1: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.ExtraBold,
-        fontSize = 96.sp,
-        lineHeight = 112.sp,
-        letterSpacing = (-1.5).sp
+        fontSize = 48.sp,
+        lineHeight = 56.sp,
+        letterSpacing = (-1.0).sp
     ),
     val headline2: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.ExtraBold,
-        fontSize = 60.sp,
-        lineHeight = 72.sp,
+        fontSize = 42.sp,
+        lineHeight = 50.sp,
         letterSpacing = (-0.5).sp
     ),
     val headline3: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
-        fontSize = 48.sp,
-        lineHeight = 56.sp,
+        fontSize = 36.sp,
+        lineHeight = 44.sp,
         letterSpacing = 0.sp
     ),
     val headline4: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 34.sp,
-        lineHeight = 40.sp,
+        fontSize = 30.sp,
+        lineHeight = 38.sp,
         letterSpacing = 0.25.sp
     ),
     val headline5: TextStyle = TextStyle(
@@ -49,22 +49,22 @@ data class AdunTypography(
     val subhead1: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
+        fontSize = 22.sp,
+        lineHeight = 28.sp,
         letterSpacing = 0.15.sp
     ),
     val subhead2: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Medium,
-        fontSize = 14.sp,
-        lineHeight = 20.sp,
+        fontSize = 20.sp,
+        lineHeight = 26.sp,
         letterSpacing = 0.1.sp
     ),
     val subhead3: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
-        lineHeight = 16.sp,
+        fontSize = 18.sp,
+        lineHeight = 24.sp,
         letterSpacing = 0.1.sp
     ),
 
@@ -73,7 +73,7 @@ data class AdunTypography(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+        letterSpacing = 0.25.sp
     ),
     val body2: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
@@ -87,7 +87,7 @@ data class AdunTypography(
         fontWeight = FontWeight.Medium,
         fontSize = 12.sp,
         lineHeight = 16.sp,
-        letterSpacing = 0.4.sp
+        letterSpacing = 0.25.sp
     ),
 
     val caption1: TextStyle = TextStyle(

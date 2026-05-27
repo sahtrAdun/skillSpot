@@ -41,8 +41,8 @@ fun SimpleTextField(
         keyboardOptions = keyboardOptions,
         visualTransformation = visualTransformation,
         borderVisibility = borderVisibility,
-        leadingContent = { tint ->
-            if (leadingIcon != null) {
+        leadingContent = leadingIcon?.let {
+            { tint ->
                 TextFieldButton(
                     icon = leadingIcon,
                     color = tint,
@@ -51,8 +51,8 @@ fun SimpleTextField(
                 )
             }
         },
-        trailingContent = { tint ->
-            if (trailingIcon != null) {
+        trailingContent = trailingIcon?.let {
+            { tint ->
                 TextFieldButton(
                     icon = trailingIcon,
                     color = tint,

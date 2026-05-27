@@ -8,6 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.aakira.napier.Napier
 import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.annotations.SupabaseInternal
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
@@ -30,6 +31,7 @@ import io.github.jan.supabase.auth.Auth as SupabaseAuth
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+    @OptIn(SupabaseInternal::class)
     @Provides
     @Singleton
     fun provideSupabaseClient(
@@ -41,6 +43,16 @@ object NetworkModule {
         ) {
             requestTimeout = 30.seconds
             defaultSerializer = KotlinXSerializer(Json { ignoreUnknownKeys = true })
+            httpConfig {
+                install(Logging) {
+                    logger = object : Logger {
+                        override fun log(message: String) {
+                            Napier.i(tag = "HTTP_CLIENT", message = message)
+                        }
+                    }
+                    level = LogLevel.ALL
+                }
+            }
             install(SupabaseAuth) {
                 alwaysAutoRefresh = true
             }

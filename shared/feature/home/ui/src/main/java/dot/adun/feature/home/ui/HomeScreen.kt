@@ -44,12 +44,12 @@ fun HomeScreen(
                 }
             }
         }
-    ) { yOffset ->
+    ) { offset ->
         LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize(),
         ) {
-            vSpacer(yOffset + 6.dp)
+            vSpacer(offset.y + 6.dp)
             items(20) { index ->
                 Box(
                     modifier = Modifier

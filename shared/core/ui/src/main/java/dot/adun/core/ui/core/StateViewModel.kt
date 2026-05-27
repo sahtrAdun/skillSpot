@@ -3,8 +3,13 @@ package dot.adun.core.ui.core
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dot.adun.core.domain.TaskJob
+import dot.adun.core.domain.entity.LoadState
+import dot.adun.core.domain.entity.error.AppError
 import dot.adun.core.ui.core.event.ViewEvent
 import dot.adun.core.ui.core.event.ViewModelEvent
+import dot.adun.core.ui.core.event.snackbar.Snackbar
+import dot.adun.core.ui.mappers.toUiError
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -94,7 +99,7 @@ open class StateViewModel<VS, VI: BaseViewIntents, R>(initialState: VS) : ViewMo
     protected fun <T> intent(intent: TypedIntent<T>): Flow<T> =
         intents.events
             .filter { (i, _) -> i is TypedIntent<*> && i.id == intent.id }
-            .onEach { (i, data) -> (i as TypedIntent<T>).log(data as T) }
+            .onEach { (i, _) -> (i as TypedIntent<T>).log() }
             .map { it.second as T }
 
     protected fun onIntent(intent: SimpleIntent, block: suspend () -> Unit) {
@@ -124,16 +129,43 @@ open class StateViewModel<VS, VI: BaseViewIntents, R>(initialState: VS) : ViewMo
         _result.trySend(result)
     }
 
+    protected fun <T> runJob(
+        stateRead: (VS) -> LoadState,
+        stateWrite: (VS, LoadState) -> VS,
+        builder: TaskJob<VS, T>.() -> Unit
+    ) {
+        TaskJob<VS, T>(
+            scope = viewModelScope,
+            currentState = { state.value },
+            onStateUpdate = { reducer -> update(reducer) },
+            stateRead = stateRead,
+            stateWrite = stateWrite
+        )
+            .apply(builder)
+            .start()
+    }
+
+    protected fun errorSnack(error: AppError) {
+        val uiError = error.toUiError()
+        emitEvent(
+            Snackbar(
+                title = uiError.title,
+                message = uiError.description,
+                isError = true
+            )
+        )
+    }
+
     private fun SimpleIntent.log() {
         val viewModelName = this@StateViewModel::class.java.simpleName
-        Napier.d(tag = "vm-intent") {
+        Napier.d(tag = "view-model-intent") {
             "[$viewModelName] $name"
         }
     }
 
-    private fun <T> TypedIntent<T>.log(data: T) {
+    private fun <T> TypedIntent<T>.log() {
         val viewModelName = this@StateViewModel::class.java.simpleName
-        Napier.d(tag = "vm-intent") {
+        Napier.d(tag = "view-model-intent") {
             "[$viewModelName] $name"
         }
     }
