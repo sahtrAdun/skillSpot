@@ -8,4 +8,6 @@ android {
 
 dependencies {
     api(projects.shared.core.domain)
+    implementation(platform(libs.supabase.bom))
+    implementation(libs.supabase.auth)
 }

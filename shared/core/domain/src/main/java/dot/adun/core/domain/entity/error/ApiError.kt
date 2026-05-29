@@ -1,13 +1,12 @@
-package dot.adun.core.domain.entity
+package dot.adun.core.domain.entity.error
 
 import javax.annotation.concurrent.Immutable
 
 @Immutable
-sealed interface ApiError {
+sealed interface ApiError : AppError {
     data class HttpError(val code: Int, val serverMessage: String?) : ApiError
     object NetworkError : ApiError
     object Unauthorized : ApiError
-    data class Unknown(val throwable: Throwable) : ApiError
 }
 
 @Immutable

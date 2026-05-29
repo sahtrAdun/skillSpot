@@ -1,6 +1,9 @@
 package dot.adun.feature.auth.ui.screen
 
 import androidx.compose.runtime.Immutable
+import dot.adun.feature.auth.domain.entity.AuthStatus
 
 @Immutable
-data object AuthViewState
+data class AuthViewState(
+    val authStatus: AuthStatus = AuthStatus.Loading
+)

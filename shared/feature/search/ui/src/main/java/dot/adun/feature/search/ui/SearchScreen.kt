@@ -39,7 +39,7 @@ fun SearchScreen(
         Column(
             modifier = Modifier
                 .padding(AppTheme.paddings.inset.screen)
-                .padding(top = offset)
+                .padding(top = offset.y)
         ) {
             PasswordTextField(
                 data = state.textField,

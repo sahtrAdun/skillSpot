@@ -21,6 +21,7 @@ fun PasswordTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     actions: KeyboardActions? = null,
+    enabled: Boolean = true,
     keyboardType: KeyboardType = KeyboardType.Password,
     borderVisibility: BorderVisibility = BorderVisibility.Newer,
     keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = keyboardType),
@@ -28,7 +29,7 @@ fun PasswordTextField(
     var passwordVisible by remember { mutableStateOf(false) }
 
     val icon = if (passwordVisible) Res.drawable.ic_eye_fill_closed_24
-    else Res.drawable.ic_eye_fill_open_24
+        else Res.drawable.ic_eye_fill_open_24
 
     val visualTransformation = if (passwordVisible) VisualTransformation.None
     else PasswordVisualTransformation()
@@ -42,6 +43,7 @@ fun PasswordTextField(
         visualTransformation = visualTransformation,
         placeholder = "•••••••••••••••",
         actions = actions,
+        enabled = enabled,
         keyboardType = keyboardType,
         keyboardOptions = keyboardOptions,
         borderVisibility = borderVisibility,

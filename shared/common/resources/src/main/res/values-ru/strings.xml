@@ -30,4 +30,16 @@
     <string name="password">Пароль</string>
     <string name="auth_error_email_exists">Такой email уже существует</string>
     <string name="auth_error_email_invalid">Неверный email</string>
+    <string name="screen_registration_title">Регистрация</string>
+    <string name="screen_registration_desc">Введите ваш email и придумайте пароль для начала работы.</string>
+    <string name="screen_registration_alredy_have_account">Уже есть аккаунт?</string>
+    <string name="screen_registration_header">Создайте новый аккаунт</string>
+    <string name="screen_login_title">Вход</string>
+    <string name="screen_login_header">Войдите в свой аккаунт</string>
+    <string name="screen_login_desc">Введите свой адрес электронной почты и пароль</string>
+    <string name="screen_login_dont_have_account">Еще нет аккаунта?</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="password_error_match">Пароли не совпадают.</string>
+    <string name="or">Или</string>
+    <string name="await">Подождите</string>
 </resources>

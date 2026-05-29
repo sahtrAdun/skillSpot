@@ -115,9 +115,9 @@ sealed interface ButtonConfig {
     @Composable
     fun textStyle(): TextStyle {
         return when (size) {
-            Size.Small -> AppTheme.typography.body1
-            Size.Medium -> AppTheme.typography.subhead2
-            Size.Large -> AppTheme.typography.subhead1
+            Size.Small -> AppTheme.typography.body3
+            Size.Medium -> AppTheme.typography.body2
+            Size.Large -> AppTheme.typography.body1
         }
     }
 

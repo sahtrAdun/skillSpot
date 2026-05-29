@@ -1,21 +1,32 @@
 package dot.adun.core.domain.mappers
 
-import dot.adun.core.domain.entity.ApiError
-import dot.adun.core.domain.entity.AuthError
+import dot.adun.core.domain.entity.error.ApiError
+import dot.adun.core.domain.entity.error.AppError
+import dot.adun.core.domain.entity.error.AuthError
 import io.github.jan.supabase.auth.exception.AuthErrorCode
 import io.github.jan.supabase.auth.exception.AuthRestException
 import io.ktor.client.plugins.HttpRequestTimeoutException
+import io.ktor.client.plugins.ResponseException
+
+fun Exception.toAppError(): AppError {
+    return when (this) {
+        is HttpRequestTimeoutException,
+        is AuthRestException,
+        is ResponseException -> this.toApiError()
+        else -> AppError.Unknown(this)
+    }
+}
 
 fun Exception.toApiError(): ApiError {
     return when (this) {
         is HttpRequestTimeoutException -> ApiError.NetworkError
         is AuthRestException -> this.toApiError()
-        is io.ktor.client.plugins.ResponseException -> this.toApiError()
-        else -> ApiError.Unknown(this)
+        is ResponseException -> this.toApiError()
+        else -> AppError.Unknown(this)
     }
 }
 
-private fun io.ktor.client.plugins.ResponseException.toApiError(): ApiError =
+private fun ResponseException.toApiError(): ApiError =
     when (response.status.value) {
         401 -> ApiError.Unauthorized
         else -> ApiError.HttpError(
@@ -26,9 +37,10 @@ private fun io.ktor.client.plugins.ResponseException.toApiError(): ApiError =
 
 private fun AuthRestException.toApiError(): ApiError {
     return when (errorCode) {
+        AuthErrorCode.UserAlreadyExists -> AuthError.EmailExists
         AuthErrorCode.EmailExists -> AuthError.EmailExists
         AuthErrorCode.EmailAddressInvalid -> AuthError.InvalidEmail
         AuthErrorCode.InvalidCredentials -> ApiError.Unauthorized
-        else -> ApiError.Unknown(this)
+        else -> AppError.Unknown(this)
     }
 }

@@ -253,6 +253,7 @@ object MaterialPalette {
     val gray_100 = Color(0xFFF3F4F6)
     val gray_150 = Color(0xffefeff2)
     val gray_200 = Color(0xFFE5E7EB)
+    val gray_250 = Color(0xFFD8DEDF)
     val gray_300 = Color(0xFFCBD5E1)
     val gray_400 = Color(0xFF9CA3AF)
     val gray_500 = Color(0xFF64748B)

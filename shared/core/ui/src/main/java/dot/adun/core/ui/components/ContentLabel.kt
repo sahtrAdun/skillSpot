@@ -18,7 +18,7 @@ fun ContentLabel(
     label: TextRef,
     modifier: Modifier = Modifier,
     color: Color = AppTheme.colors.text.primary,
-    style: TextStyle = AppTheme.typography.body2,
+    style: TextStyle = AppTheme.typography.body1,
     maxLines: Int = Int.MAX_VALUE,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(8.dp),

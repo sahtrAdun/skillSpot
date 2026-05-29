@@ -1,0 +1,13 @@
+<resources>
+    <string name="pager_1_title">Next-Gen Freelance</string>
+    <string name="pager_2_title">Projects Tailored to Your Stack</string>
+    <string name="pager_3_title">Secure Escrow Milestones</string>
+    <string name="pager_4_title">Vetted IT Talents</string>
+    <string name="pager_5_title">Elevate Your Career</string>
+
+    <string name="pager_1_desc">The premier platform built exclusively for IT professionals. Find high-paying projects or hire top talent in one click.</string>
+    <string name="pager_2_desc">No more endless spam. Our smart feed matches you with gigs based on your exact technologies, seniority, and desired hourly rate.</string>
+    <string name="pager_3_desc">Work with a 100% payment guarantee. Funds are safely locked in escrow and released automatically as soon as tasks are approved.</string>
+    <string name="pager_4_desc">Need a Senior React Dev or a part-time DevOps engineer? Post your project and start getting responses from verified pros within 10 minutes.</string>
+    <string name="pager_5_desc">Create your account, build an outstanding portfolio, and land the best tech contracts on the market today.</string>
+</resources>

@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.draw.scale
 
 @Composable
 fun Modifier.clickableEffect(
@@ -28,9 +28,10 @@ fun Modifier.clickableEffect(
     )
 
     this
-        .graphicsLayer {
+        /*.graphicsLayer {
             this.scaleX = scale
             this.scaleY = scale
-        }
+        }*/
+        .scale(scale)
         .click(clickable)
 }

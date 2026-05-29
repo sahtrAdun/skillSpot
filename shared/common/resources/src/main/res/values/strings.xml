@@ -32,4 +32,16 @@
     <string name="password">Password</string>
     <string name="auth_error_email_exists">Email already exists</string>
     <string name="auth_error_email_invalid">Invalid email</string>
+    <string name="screen_registration_title">Registration</string>
+    <string name="screen_registration_desc">Enter your email and password to get started.</string>
+    <string name="screen_registration_alredy_have_account">Already have an account?</string>
+    <string name="screen_registration_header">Create a new account</string>
+    <string name="screen_login_title">Login</string>
+    <string name="screen_login_header">Log in to your account</string>
+    <string name="screen_login_desc">Enter your email and password</string>
+    <string name="screen_login_dont_have_account">Don\'t have an account yet?</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="password_error_match">The passwords don\'t match</string>
+    <string name="or">Or</string>
+    <string name="await">Await</string>
 </resources>
