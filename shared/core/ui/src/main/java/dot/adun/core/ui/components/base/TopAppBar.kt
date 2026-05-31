@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,17 +22,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.dp
-import com.skydoves.cloudy.cloudy
 import dot.adun.core.ui.components.HSpacer
-import dot.adun.core.ui.components.WSpacer
 import dot.adun.core.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(
     modifier: Modifier = Modifier,
-    backgroundColor: Color = AppTheme.colors.layer.surface,
+    padding: PaddingValues = PaddingValues(),
+    backgroundColor: Color = Color.Transparent,
     leadingContent: (@Composable () -> Unit)? = null,
     trailingContent: (@Composable () -> Unit)? = null,
     bottomContent: (@Composable () -> Unit)? = null,
@@ -46,7 +45,6 @@ fun TopAppBar(
             modifier= Modifier
                 .matchParentSize()
                 .background(color = backgroundColor)
-                .cloudy(16)
         )
 
         Column {
@@ -55,7 +53,7 @@ fun TopAppBar(
                     .fillMaxWidth()
                     .statusBarsPadding()
                     .displayCutoutPadding()
-                    .padding(top = 15.dp)
+                    .padding(padding)
                     .padding(AppTheme.paddings.inset.content),
                 horizontalArrangement = Arrangement.spacedBy(AppTheme.paddings.space.semiRegular),
                 verticalAlignment = Alignment.CenterVertically
@@ -65,9 +63,12 @@ fun TopAppBar(
                     onWidthChanges = { leadingWidthPx = it },
                     content = leadingContent
                 )
-                WSpacer()
-                centralContent()
-                WSpacer()
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    centralContent()
+                }
                 density.SideContent(
                     placeholderWidthPx = leadingWidthPx,
                     onWidthChanges = { trailingWidthPx = it },

@@ -1,6 +1,7 @@
 package dot.adun.feature.auth.ui.screen
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
@@ -15,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dot.adun.common.resources.Res
+import dot.adun.core.domain.mappers.isLoading
+import dot.adun.core.ui.components.FullScreenLoader
 import dot.adun.core.ui.components.base.AppScreen
 import dot.adun.core.ui.components.loaders.Loader
 import dot.adun.core.ui.components.loaders.LoaderAppearance
@@ -25,19 +28,22 @@ import dot.adun.feature.auth.ui.component.AuthLayout
 @Composable
 fun AuthScreen(
     viewModel: AuthViewModel
-) = AppScreen(viewModel) { state, intents, actions ->
+) = AppScreen(viewModel) { state, intents ->
     AnimatedContent(
         targetState = state.authStatus,
-        transitionSpec = { fadeIn() togetherWith fadeOut() }
+        transitionSpec = { fadeIn(spec()) togetherWith fadeOut(spec()) }
     ) { status ->
         if (status is AuthStatus.Loading) {
             LoadState()
         } else {
             AuthLayout(
-                actions = actions,
                 intents = intents
             )
         }
+    }
+
+    FullScreenLoader(state.loadState.isLoading) {
+        LoadState()
     }
 }
 
@@ -61,3 +67,5 @@ private fun LoadState(modifier: Modifier = Modifier) {
         )
     }
 }
+
+private fun <T> spec() = tween<T>(500)

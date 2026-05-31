@@ -12,8 +12,9 @@ dependencies {
 
     implementation(projects.shared.feature.login.routing)
     implementation(projects.shared.feature.register.routing)
+    implementation(projects.shared.feature.profile.routing)
 
-    api(projects.shared.feature.auth.ui)
-    api(projects.shared.feature.auth.domain)
-    api(projects.shared.feature.auth.data)
+    implementation(projects.shared.feature.auth.ui)
+    implementation(projects.shared.feature.auth.domain)
+    implementation(projects.shared.feature.auth.data)
 }

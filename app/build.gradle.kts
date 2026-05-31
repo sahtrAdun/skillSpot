@@ -44,6 +44,7 @@ android {
 
 dependencies {
     implementation(projects.shared.feature.settings.routing)
+    implementation(projects.shared.feature.profile.domain)
 
     implementation(projects.shared.core.domain)
     implementation(projects.shared.core.ui)

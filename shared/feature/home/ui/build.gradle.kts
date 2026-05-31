@@ -7,7 +7,8 @@ android {
 }
 
 dependencies {
-    implementation(projects.shared.core.ui)
-    implementation(projects.shared.core.routing)
+    implementation(projects.shared.feature.authorized.ui)
+
     implementation(projects.shared.feature.home.domain)
+    implementation(projects.shared.feature.profile.domain)
 }

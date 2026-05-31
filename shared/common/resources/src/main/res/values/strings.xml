@@ -44,4 +44,18 @@
     <string name="password_error_match">The passwords don\'t match</string>
     <string name="or">Or</string>
     <string name="await">Await</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_ok">Ok</string>
+    <string name="error_profile_fetch">Failed to update profile data</string>
+    <string name="vacancy_status_open">Open</string>
+    <string name="vacancy_status_progress">In progress</string>
+    <string name="vacancy_status_closed">Closed</string>
+    <string name="resume_active">Active</string>
+    <string name="resume_inactive">Inactive</string>
+    <string name="view_all">View all</string>
+    <string name="collapse">Collapse</string>
+    <string name="vacancies">vacancies</string>
+    <string name="resumes">resumes</string>
+    <string name="in_progress">In progress</string>
 </resources>

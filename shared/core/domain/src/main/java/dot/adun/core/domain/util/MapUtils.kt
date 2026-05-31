@@ -4,8 +4,11 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.mapNotNull
 
 @OptIn(ExperimentalCoroutinesApi::class)
 fun <T, R> Flow<T>.mapUntilChanged(selector: (T) -> R): Flow<R> {
     return mapLatest(selector).distinctUntilChanged()
 }
+
+fun <T> Flow<T?>.notNull(): Flow<T> = mapNotNull { it }

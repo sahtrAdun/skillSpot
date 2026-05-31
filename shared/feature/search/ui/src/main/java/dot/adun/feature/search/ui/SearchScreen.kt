@@ -26,9 +26,8 @@ import dot.adun.core.ui.theme.AppTheme
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
-) = AppScreen(viewModel) { state, intents, actions ->
+) = AppScreen(viewModel) { state, intents ->
     AdunScaffold(
-        screenActions = actions,
         appBar = {
             DefaultAppBar(
                 label = "Test search",
@@ -39,7 +38,7 @@ fun SearchScreen(
         Column(
             modifier = Modifier
                 .padding(AppTheme.paddings.inset.screen)
-                .padding(top = offset.y)
+                .padding(top = offset.top)
         ) {
             PasswordTextField(
                 data = state.textField,

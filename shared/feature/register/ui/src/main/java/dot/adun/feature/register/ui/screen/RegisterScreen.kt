@@ -7,9 +7,8 @@ import dot.adun.feature.register.ui.component.RegisterLayout
 @Composable
 fun RegisterScreen(
     viewModel: RegisterViewModel
-) = AppScreen(viewModel) { state, intents, actions ->
+) = AppScreen(viewModel) { state, intents ->
     RegisterLayout(
-        actions = actions,
         loadState = state.loadState,
         emailField = state.emailField,
         passwordField = state.passwordField,

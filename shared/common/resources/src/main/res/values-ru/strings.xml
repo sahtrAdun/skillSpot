@@ -42,4 +42,18 @@
     <string name="password_error_match">Пароли не совпадают.</string>
     <string name="or">Или</string>
     <string name="await">Подождите</string>
+    <string name="button_confirm">Подтвердить</string>
+    <string name="button_cancel">Отмена</string>
+    <string name="button_ok">Ок</string>
+    <string name="error_profile_fetch">Не удалось обновить данные профиля</string>
+    <string name="vacancy_status_open">Открыта</string>
+    <string name="vacancy_status_progress">Выполняется</string>
+    <string name="vacancy_status_closed">Закрыта</string>
+    <string name="resume_active">Активно</string>
+    <string name="resume_inactive">Не активно</string>
+    <string name="view_all">Посмотреть все</string>
+    <string name="collapse">Свернуть</string>
+    <string name="vacancies">вакансии</string>
+    <string name="resumes">резюме</string>
+    <string name="in_progress">В процессе</string>
 </resources>

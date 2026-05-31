@@ -7,9 +7,8 @@ import dot.adun.feature.login.ui.component.LoginLayout
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel
-) = AppScreen(viewModel) { state, intents, actions ->
+) = AppScreen(viewModel) { state, intents ->
     LoginLayout(
-        actions = actions,
         loadState = state.loadState,
         emailField = state.emailField,
         passwordField = state.passwordField,

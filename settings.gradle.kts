@@ -61,5 +61,15 @@ include(
     ":shared:feature:register:domain",
     ":shared:feature:register:ui",
     ":shared:feature:register:routing",
+
+    ":shared:feature:profile:data",
+    ":shared:feature:profile:domain",
+    ":shared:feature:profile:ui",
+    ":shared:feature:profile:routing",
+
+    ":shared:feature:authorized:data",
+    ":shared:feature:authorized:domain",
+    ":shared:feature:authorized:ui",
+    ":shared:feature:authorized:routing",
 )
  

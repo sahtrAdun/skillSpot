@@ -10,7 +10,7 @@ dependencies {
     implementation(projects.shared.core.ui)
     implementation(projects.shared.core.routing)
 
-    api(projects.shared.feature.register.ui)
-    api(projects.shared.feature.register.domain)
-    api(projects.shared.feature.register.data)
+    implementation(projects.shared.feature.register.ui)
+    implementation(projects.shared.feature.register.domain)
+    implementation(projects.shared.feature.register.data)
 }

@@ -37,7 +37,6 @@ import dot.adun.core.ui.components.buttons.rememberButtonState
 import dot.adun.core.ui.components.textFields.PasswordTextField
 import dot.adun.core.ui.components.textFields.SimpleTextField
 import dot.adun.core.ui.entity.MaterialDecorator
-import dot.adun.core.ui.entity.ScreenActions
 import dot.adun.core.ui.entity.TextFieldData
 import dot.adun.core.ui.modifiers.click.Clickable
 import dot.adun.core.ui.modifiers.click.click
@@ -46,7 +45,6 @@ import dot.adun.feature.register.ui.screen.Intents
 
 @Composable
 fun RegisterLayout(
-    actions: ScreenActions,
     loadState: LoadState,
     emailField: TextFieldData,
     passwordField: TextFieldData,
@@ -55,7 +53,6 @@ fun RegisterLayout(
     modifier: Modifier = Modifier
 ) {
     AdunScaffold(
-        screenActions = actions,
         modifier = modifier,
         appBar = {
             FloatingAppBar(
@@ -75,7 +72,7 @@ fun RegisterLayout(
                 Text(text = stringResource(Res.strings.button_register))
             }
         }
-    ) { offset ->
+    ) { padding ->
         MaterialShape(
             size = MaterialDecorator.Size.Large,
             color = AppTheme.colors.layer.onSurface
@@ -83,7 +80,7 @@ fun RegisterLayout(
 
         Column(
             modifier = Modifier
-                .padding(top = offset.y)
+                .padding(top = padding.top)
                 .verticalScroll(rememberScrollState())
         ) {
             VSpacer(48.dp)
@@ -106,7 +103,7 @@ fun RegisterLayout(
                     )
                     .padding(horizontal = 16.dp, vertical = 12.dp)
             )
-            VSpacer(offset.x)
+            VSpacer(padding.bottom)
         }
     }
 }

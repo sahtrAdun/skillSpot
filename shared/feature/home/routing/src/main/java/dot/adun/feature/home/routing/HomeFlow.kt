@@ -4,6 +4,7 @@ import androidx.compose.runtime.Immutable
 import dot.adun.core.routing.Flow
 import dot.adun.core.routing.NavFlowScope
 import dot.adun.core.routing.Unique
+import dot.adun.feature.home.routing.routes.HomeRoute
 import kotlinx.serialization.Serializable
 
 @Immutable

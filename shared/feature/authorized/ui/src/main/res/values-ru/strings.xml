@@ -1,0 +1,9 @@
+<resources>
+    <string name="payment_from">От %s</string>
+    <string name="per_hour">%s/час</string>
+    <string name="full_time">Полная занятость</string>
+    <string name="part_time">Частичная занятость</string>
+    <string name="one_time">Единоразовая занятость</string>
+    <string name="required_exp">Опыт: %d+ лет</string>
+    <string name="views">%d просмотров</string>
+</resources>
