@@ -10,4 +10,6 @@
     <string name="pager_3_desc">Work with a 100% payment guarantee. Funds are safely locked in escrow and released automatically as soon as tasks are approved.</string>
     <string name="pager_4_desc">Need a Senior React Dev or a part-time DevOps engineer? Post your project and start getting responses from verified pros within 10 minutes.</string>
     <string name="pager_5_desc">Create your account, build an outstanding portfolio, and land the best tech contracts on the market today.</string>
+    <string name="dialog_title">Almost done</string>
+    <string name="dialog_desc">Choose your role. The role cannot be changed in the future!</string>
 </resources>

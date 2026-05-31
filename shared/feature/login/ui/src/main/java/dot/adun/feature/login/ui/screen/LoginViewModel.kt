@@ -2,16 +2,23 @@ package dot.adun.feature.login.ui.screen
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dot.adun.core.domain.util.notNull
 import dot.adun.core.ui.core.StateViewModel
+import dot.adun.feature.auth.domain.AuthModel
 import dot.adun.feature.auth.domain.entity.AuthResult
+import dot.adun.feature.auth.ui.screen.chooseRoleDialog
 import dot.adun.feature.login.domain.LoginModel
+import dot.adun.core.domain.entity.UserRole
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @Stable
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val model: LoginModel
+    private val model: LoginModel,
+    private val authModel: AuthModel
 ) : StateViewModel<State, Intents, ScreenResult>(State()) {
     override val intents = Intents()
 
@@ -51,10 +58,26 @@ class LoginViewModel @Inject constructor(
                 )
             }
         }
+
+        on(authModel.profile.notNull()) { profile ->
+            action { _ ->
+                if (profile.role == UserRole.None) {
+                    emitEvent(
+                        chooseRoleDialog(
+                            onConfirm = { role ->
+                                viewModelScope.launch { authModel.updateUserRole(role) }
+                            }
+                        )
+                    )
+                } else {
+                    emitResult(LoginScreenResult.Success)
+                }
+            }
+        }
     }
 
     private fun performLogin() {
-        runJob<AuthResult>(
+        task(
             stateRead = { vs -> vs.loadState },
             stateWrite = { vs, ls -> vs.copy(loadState = ls) }
         ) {
@@ -69,11 +92,26 @@ class LoginViewModel @Inject constructor(
 
             onSuccess { result ->
                 when (result) {
-                    AuthResult.Success -> emitResult(LoginScreenResult.Success)
+                    AuthResult.Success -> performPostLogin()
                     else -> Unit
                 }
             }
 
+            onError { error -> errorSnack(error) }
+        }
+    }
+
+    private fun performPostLogin() {
+        task(
+            stateRead = { vs -> vs.loadState },
+            stateWrite = { vs, ls -> vs.copy(loadState = ls) }
+        ) {
+            job { _ ->
+                authModel.rememberAuth()
+                authModel.fetchProfile()
+            }
+
+            onSuccess { _ -> }
             onError { error -> errorSnack(error) }
         }
     }

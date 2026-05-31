@@ -45,9 +45,9 @@ fun Modifier.shimmer(
     cornerRadius: Dp = 0.dp,
 ): Modifier {
     val shimmerColors = listOf(
-        Color.DarkGray.copy(alpha = alpha(0.1f, visible)),
-        Color.Gray.copy(alpha = alpha(0.5f, visible)),
-        Color.Gray.copy(alpha = alpha(0.1f, visible))
+        Color.DarkGray.copy(alpha = alpha(0.5f, visible)),
+        Color.Gray.copy(alpha = alpha(0.75f, visible)),
+        Color.Gray.copy(alpha = alpha(0.33f, visible))
     )
 
     val transition = rememberInfiniteTransition(label = "shimmer")

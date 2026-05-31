@@ -1,0 +1,9 @@
+<resources>
+<string name="payment_from">From %s</string>
+    <string name="per_hour">%s/hr</string>
+    <string name="full_time">Full time</string>
+    <string name="part_time">Part time</string>
+    <string name="one_time">One time</string>
+    <string name="required_exp">Experience: %d+ years</string>
+    <string name="views">%d views</string>
+</resources>

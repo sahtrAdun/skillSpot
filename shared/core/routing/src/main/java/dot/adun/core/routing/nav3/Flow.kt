@@ -9,7 +9,10 @@ abstract class NavFlow<F : Flow, R>(
     val onFinish: (R) -> Unit
 ) : NavigationFlow {
     init {
-        navFlowScope.onStart()
+        val queue = navFlowScope.flowQueue
+        if (queue.add(flow)) {
+            navFlowScope.onStart()
+        }
     }
 
     open fun NavFlowScope.onStart() {}
@@ -18,6 +21,8 @@ abstract class NavFlow<F : Flow, R>(
         NavFlowScope(
             stack = stack,
             flowParent = flow.startDestination,
+            flowState = flowState,
+            flowQueue = flowQueue,
             entryProviderScope = entryProviderScope,
         )
             .navigationFlow()

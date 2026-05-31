@@ -7,6 +7,6 @@ android {
 }
 
 dependencies {
-    api(projects.shared.core.domain)
+    api(projects.shared.feature.authorized.domain)
     api(projects.shared.feature.settings.domain)
 }

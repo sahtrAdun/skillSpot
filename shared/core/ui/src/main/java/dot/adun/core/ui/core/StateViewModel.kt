@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dot.adun.core.domain.TaskJob
 import dot.adun.core.domain.entity.LoadState
+import dot.adun.core.domain.entity.TextRef
 import dot.adun.core.domain.entity.error.AppError
 import dot.adun.core.ui.core.event.ViewEvent
 import dot.adun.core.ui.core.event.ViewModelEvent
@@ -129,9 +130,9 @@ open class StateViewModel<VS, VI: BaseViewIntents, R>(initialState: VS) : ViewMo
         _result.trySend(result)
     }
 
-    protected fun <T> runJob(
-        stateRead: (VS) -> LoadState,
-        stateWrite: (VS, LoadState) -> VS,
+    protected fun <T> task(
+        stateRead: (VS) -> LoadState = { _ -> LoadState.NotStarted },
+        stateWrite: (VS, LoadState) -> VS = { vs, _ -> vs },
         builder: TaskJob<VS, T>.() -> Unit
     ) {
         TaskJob<VS, T>(
@@ -152,6 +153,33 @@ open class StateViewModel<VS, VI: BaseViewIntents, R>(initialState: VS) : ViewMo
                 title = uiError.title,
                 message = uiError.description,
                 isError = true
+            )
+        )
+    }
+
+    protected fun errorSnack(
+        error: TextRef,
+        message: TextRef? = null,
+    ) {
+        emitEvent(
+            Snackbar(
+                title = error,
+                message = message,
+                isError = true
+            )
+        )
+    }
+
+    protected fun simpleSnackbar(
+        title: TextRef,
+        message: TextRef? = null,
+        isError: Boolean = false,
+    ) {
+        emitEvent(
+            Snackbar(
+                title = title,
+                message = message,
+                isError = isError
             )
         )
     }

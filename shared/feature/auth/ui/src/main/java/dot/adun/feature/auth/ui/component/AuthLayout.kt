@@ -28,7 +28,6 @@ import dot.adun.core.ui.components.buttons.PrimaryButton
 import dot.adun.core.ui.components.buttons.SecondaryButton
 import dot.adun.core.ui.components.divider.HDivider
 import dot.adun.core.ui.entity.MaterialDecorator
-import dot.adun.core.ui.entity.ScreenActions
 import dot.adun.core.ui.modifiers.click.Clickable
 import dot.adun.core.ui.theme.AppTheme
 import dot.adun.core.ui.util.display
@@ -38,12 +37,10 @@ import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun AuthLayout(
-    actions: ScreenActions,
     intents: Intents,
     modifier: Modifier = Modifier
 ) {
     AdunScaffold(
-        screenActions = actions,
         modifier = modifier,
     ) { offset ->
         Box(
@@ -72,7 +69,7 @@ fun AuthLayout(
                     interval = 5.seconds,
                     contentPadding = PaddingValues(
                         bottom = 48.dp,
-                        top = 144.dp + offset.y
+                        top = 144.dp + offset.top
                     ),
                     pageSize = PageSize.Fixed(256.dp),
                     modifier = Modifier

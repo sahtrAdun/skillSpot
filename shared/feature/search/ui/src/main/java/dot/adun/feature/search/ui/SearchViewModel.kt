@@ -33,4 +33,5 @@ class SearchViewModel @Inject constructor(
 
 sealed interface SearchScreenResult {
     data object Finish : SearchScreenResult
+    data object NavigateToSettings : SearchScreenResult
 }

@@ -39,6 +39,11 @@
             <option value="$PROJECT_DIR$/shared/feature/auth/domain" />
             <option value="$PROJECT_DIR$/shared/feature/auth/routing" />
             <option value="$PROJECT_DIR$/shared/feature/auth/ui" />
+            <option value="$PROJECT_DIR$/shared/feature/authorized" />
+            <option value="$PROJECT_DIR$/shared/feature/authorized/data" />
+            <option value="$PROJECT_DIR$/shared/feature/authorized/domain" />
+            <option value="$PROJECT_DIR$/shared/feature/authorized/routing" />
+            <option value="$PROJECT_DIR$/shared/feature/authorized/ui" />
             <option value="$PROJECT_DIR$/shared/feature/home" />
             <option value="$PROJECT_DIR$/shared/feature/home/data" />
             <option value="$PROJECT_DIR$/shared/feature/home/domain" />
@@ -49,6 +54,11 @@
             <option value="$PROJECT_DIR$/shared/feature/login/domain" />
             <option value="$PROJECT_DIR$/shared/feature/login/routing" />
             <option value="$PROJECT_DIR$/shared/feature/login/ui" />
+            <option value="$PROJECT_DIR$/shared/feature/profile" />
+            <option value="$PROJECT_DIR$/shared/feature/profile/data" />
+            <option value="$PROJECT_DIR$/shared/feature/profile/domain" />
+            <option value="$PROJECT_DIR$/shared/feature/profile/routing" />
+            <option value="$PROJECT_DIR$/shared/feature/profile/ui" />
             <option value="$PROJECT_DIR$/shared/feature/register" />
             <option value="$PROJECT_DIR$/shared/feature/register/data" />
             <option value="$PROJECT_DIR$/shared/feature/register/domain" />

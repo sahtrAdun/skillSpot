@@ -7,8 +7,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.shared.core.ui)
-    implementation(projects.shared.core.routing)
+    implementation(projects.shared.feature.authorized.routing)
 
     implementation(projects.shared.feature.search.routing)
     implementation(projects.shared.feature.settings.routing)

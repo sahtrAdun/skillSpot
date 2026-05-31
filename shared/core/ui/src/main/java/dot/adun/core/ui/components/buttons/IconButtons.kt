@@ -4,6 +4,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonColors
@@ -17,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -35,7 +37,7 @@ internal fun MyIconButton(
     colors: IconButtonColors,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    shape: RoundedCornerShape = AppTheme.shapes.medium,
+    shape: RoundedCornerShape = CircleShape,
     contentPadding: PaddingValues = ButtonsDefault.Icons.contentPadding,
     enabled: Boolean = true,
     content: @Composable () -> Unit
@@ -86,13 +88,13 @@ internal fun MyIconButton(
 fun IcButton(
     painter: Painter,
     colors: IconButtonColors,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     shape: RoundedCornerShape = AppTheme.shapes.medium,
     contentPadding: PaddingValues = ButtonsDefault.Icons.contentPadding,
     enabled: Boolean = true,
     contentDescription: String? = null,
-    onClick: () -> Unit,
 ) {
     MyIconButton(
         modifier = modifier,
@@ -104,6 +106,34 @@ fun IcButton(
     ) {
         Icon(
             painter = painter,
+            contentDescription = contentDescription,
+            modifier = iconModifier
+        )
+    }
+}
+
+@Composable
+fun IcButton(
+    vector: ImageVector,
+    colors: IconButtonColors,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier.requiredSize(24.dp),
+    shape: RoundedCornerShape = CircleShape,
+    contentPadding: PaddingValues = ButtonsDefault.Icons.contentPadding,
+    enabled: Boolean = true,
+    contentDescription: String? = null,
+) {
+    MyIconButton(
+        modifier = modifier,
+        colors = colors,
+        shape = shape,
+        enabled = enabled,
+        onClick = onClick,
+        contentPadding = contentPadding
+    ) {
+        Icon(
+            imageVector = vector,
             contentDescription = contentDescription,
             modifier = iconModifier
         )

@@ -1,10 +1,14 @@
 package dot.adun.feature.auth.ui.screen
 
 import androidx.compose.runtime.Stable
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dot.adun.core.ui.core.StateViewModel
 import dot.adun.feature.auth.domain.AuthModel
 import dot.adun.feature.auth.domain.entity.AuthStatus
+import dot.adun.core.domain.entity.UserRole
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @Stable
@@ -23,16 +27,47 @@ class AuthViewModel @Inject constructor(
             emitResult(AuthScreenResult.Register)
         }
 
-        on(authModel.authStatusFlow) { status ->
+        on(
+            combine(
+                authModel.authStatusFlow,
+                authModel.profile,
+                ::Pair
+            )
+        ) { (status, profile) ->
             update { state ->
                 state.copy(authStatus = status)
             }
 
             action { _ ->
                 if (status is AuthStatus.Authenticated) {
-                    emitResult(AuthScreenResult.Authorized)
+                    if (profile == null) {
+                        performProfileFetch()
+                    } else {
+                        if (profile.role == UserRole.None) {
+                            emitEvent(
+                                chooseRoleDialog(
+                                    onConfirm = { role ->
+                                        viewModelScope.launch { authModel.updateUserRole(role) }
+                                    }
+                                )
+                            )
+                        } else {
+                            emitResult(AuthScreenResult.Authorized)
+                        }
+                    }
                 }
             }
+        }
+    }
+
+    private fun performProfileFetch() {
+        task(
+            stateRead = { vs -> vs.loadState },
+            stateWrite = { vs, ls -> vs.copy(loadState = ls) }
+        ) {
+            job { authModel.fetchProfile() }
+            onSuccess { _ -> }
+            onError { error -> errorSnack(error) }
         }
     }
 }

@@ -17,7 +17,7 @@ import dot.adun.core.ui.theme.AppTheme
 @Composable
 fun ColumnScope.HDivider(
     modifier: Modifier = Modifier,
-    color: Color = AppTheme.colors.text.tertiary,
+    color: Color = AppTheme.colors.layer.onSurface,
     thickness: Dp = 1.dp
 ) {
     HorizontalDivider(

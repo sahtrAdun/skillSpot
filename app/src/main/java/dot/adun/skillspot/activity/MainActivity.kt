@@ -15,7 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import dot.adun.core.domain.DayNightState
 import dot.adun.core.domain.calculateNextUpdateTime
 import dot.adun.core.domain.entity.Theme
+import dot.adun.core.ui.LocalUserRole
+import dot.adun.core.domain.entity.UserRole
 import dot.adun.core.ui.theme.AppTheme
+import dot.adun.feature.profile.domain.ProfileModel
 import dot.adun.feature.settings.domain.SettingsModel
 import dot.adun.routing.nav3.AppNavigation
 import kotlinx.coroutines.delay
@@ -25,12 +28,19 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var settingsModel: SettingsModel
+    @Inject
+    lateinit var profileModel: ProfileModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CompositionProviders {
+            val profile by profileModel.profile.collectAsStateWithLifecycle(null)
+            val userRole = profile?.role ?: UserRole.None
+
+            CompositionProviders(
+                userRole = userRole
+            ) {
                 val themeState by settingsModel.themeFlow.collectAsStateWithLifecycle(Theme.System)
 
                 AppTheme(
@@ -74,9 +84,12 @@ private fun dayNightThemeController(): State<DayNightState> {
 
 @Composable
 private fun CompositionProviders(
+    userRole: UserRole,
     app: @Composable () -> Unit
 ) {
-    CompositionLocalProvider {
+    CompositionLocalProvider(
+        LocalUserRole provides userRole
+    ) {
         app()
     }
 }

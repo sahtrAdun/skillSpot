@@ -1,19 +1,25 @@
 package dot.adun.feature.register.ui.screen
 
 import androidx.compose.runtime.Stable
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dot.adun.common.resources.Res
 import dot.adun.core.domain.entity.resRef
+import dot.adun.core.domain.util.notNull
 import dot.adun.core.ui.core.StateViewModel
-import dot.adun.core.ui.core.event.snackbar.Snackbar
+import dot.adun.feature.auth.domain.AuthModel
 import dot.adun.feature.auth.domain.entity.AuthResult
+import dot.adun.feature.auth.ui.screen.chooseRoleDialog
+import dot.adun.core.domain.entity.UserRole
 import dot.adun.feature.register.domain.RegistrationModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @Stable
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val model: RegistrationModel
+    private val model: RegistrationModel,
+    private val authModel: AuthModel
 ) : StateViewModel<State, Intents, Result>(State()) {
     override val intents = Intents()
 
@@ -36,13 +42,7 @@ class RegisterViewModel @Inject constructor(
             }
             action { newState ->
                 if (newState.secondPasswordField.value != newState.passwordField.value) {
-                    emitEvent(
-                        Snackbar(
-                            title = resRef(Res.strings.password_error_match),
-                            message = null,
-                            isError = true
-                        )
-                    )
+                    errorSnack(resRef(Res.strings.password_error_match))
                     return@action
                 }
 
@@ -75,10 +75,26 @@ class RegisterViewModel @Inject constructor(
                 )
             }
         }
+
+        on(authModel.profile.notNull()) { profile ->
+            action { _ ->
+                if (profile.role == UserRole.None) {
+                    emitEvent(
+                        chooseRoleDialog(
+                            onConfirm = { role ->
+                                viewModelScope.launch { authModel.updateUserRole(role) }
+                            }
+                        )
+                    )
+                } else {
+                    emitResult(RegisterScreenResult.Success)
+                }
+            }
+        }
     }
 
     private fun performRegistration() {
-        runJob<AuthResult>(
+        task(
             stateRead = { vs -> vs.loadState },
             stateWrite = { vs, ls -> vs.copy(loadState = ls) }
         ) {
@@ -93,11 +109,26 @@ class RegisterViewModel @Inject constructor(
 
             onSuccess { result ->
                 when (result) {
-                    AuthResult.Success -> emitResult(RegisterScreenResult.Success)
+                    AuthResult.Success -> performPostRegister()
                     else -> Unit
                 }
             }
 
+            onError { error -> errorSnack(error) }
+        }
+    }
+
+    private fun performPostRegister() {
+        task(
+            stateRead = { vs -> vs.loadState },
+            stateWrite = { vs, ls -> vs.copy(loadState = ls) }
+        ) {
+            job { _ ->
+                authModel.rememberAuth()
+                authModel.fetchProfile()
+            }
+
+            onSuccess { _ -> }
             onError { error -> errorSnack(error) }
         }
     }

@@ -29,14 +29,8 @@ class AuthNavFlow(
     override fun NavFlowScope.onStart() {
         when (flow.state.route) {
             Default -> Unit
-            Login -> {
-                push(flow.startDestination)
-                push(LoginFlow)
-            }
-            Register -> {
-                push(flow.startDestination)
-                push(RegisterFlow)
-            }
+            Login -> flow.onStart(LoginFlow)
+            Register -> flow.onStart(RegisterFlow)
         }
     }
 
@@ -78,5 +72,5 @@ class AuthNavFlow(
 }
 
 private fun NavFlowScope.auth() = AuthFlow(
-    state = getFlowState<AuthFlowState, AuthFlow>() ?: AuthFlowState()
+    state = getFlowState(AuthFlow::class) ?: AuthFlowState()
 )

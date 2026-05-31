@@ -19,7 +19,8 @@ data class RegisterViewState(
         validationType = PasswordTextFieldValidation(),
         jitValidation = true
     ),
-    val loadState: LoadState = LoadState.NotStarted
+    val loadState: LoadState = LoadState.NotStarted,
+    val fetchUserLoadState: LoadState = LoadState.NotStarted
 ) {
     val isValid: Boolean = !emailField.hasError && !passwordField.hasError &&
             !secondPasswordField.hasError && passwordField.value == secondPasswordField.value
