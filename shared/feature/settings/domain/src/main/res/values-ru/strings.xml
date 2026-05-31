@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_theme_title">Тема</string>
+    <string name="setting_theme_light">Светлая</string>
+    <string name="setting_theme_dark">Темная</string>
+    <string name="setting_theme_system">Как в системе</string>
+    <string name="setting_theme_day_night">По времени</string>
+    <string name="settings_screen_title">Настройки</string>
+</resources>
