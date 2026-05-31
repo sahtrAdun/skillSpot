@@ -60,8 +60,9 @@ private fun isDark(theme: Theme) = when (theme) {
     Theme.Light -> false
     Theme.Dark -> true
     Theme.DayNight -> {
-        val state by dayNightThemeController()
-        state.isDark
+        /*val state by dayNightThemeController()
+        state.isDark*/
+        isSystemInDarkTheme()
     }
     Theme.System -> isSystemInDarkTheme()
 }

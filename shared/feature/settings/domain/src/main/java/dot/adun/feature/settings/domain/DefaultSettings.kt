@@ -1,7 +1,7 @@
 package dot.adun.feature.settings.domain
 
 import dot.adun.common.resources.PrefKeys
-import dot.adun.core.domain.entity.strRef
+import dot.adun.core.domain.entity.resRef
 import dot.adun.feature.settings.domain.entity.Setting
 import dot.adun.feature.settings.domain.entity.Settings
 
@@ -13,25 +13,25 @@ val defaultSettings = listOf<Setting>(
             Setting.Option(
                 id = SETTINGS_THEME_SYSTEM,
                 value = PrefKeys.UI.THEME_SYSTEM,
-                label = strRef("")
+                label = resRef(R.string.setting_theme_system)
             ),
             Setting.Option(
                 id = SETTINGS_THEME_LIGHT,
                 value = PrefKeys.UI.THEME_LIGHT,
-                label = strRef("")
+                label = resRef(R.string.setting_theme_light)
             ),
             Setting.Option(
                 id = SETTINGS_THEME_DARK,
                 value = PrefKeys.UI.THEME_DARK,
-                label = strRef("")
+                label = resRef(R.string.setting_theme_dark)
             ),
             Setting.Option(
                 id = SETTINGS_THEME_DAY_NIGHT,
                 value = PrefKeys.UI.THEME_DAY_NIGHT,
-                label = strRef("")
+                label = resRef(R.string.setting_theme_day_night)
             ),
         ),
-        title = strRef(""),
+        title = resRef(R.string.setting_theme_title),
         description = null
     )
 )

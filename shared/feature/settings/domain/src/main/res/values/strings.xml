@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="setting_theme_title">Theme</string>
+    <string name="setting_theme_light">Light</string>
+    <string name="setting_theme_dark">Dark</string>
+    <string name="setting_theme_system">System</string>
+    <string name="setting_theme_day_night">Time based</string>
+    <string name="settings_screen_title">Settings</string>
+</resources>
