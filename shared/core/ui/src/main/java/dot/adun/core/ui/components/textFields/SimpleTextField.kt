@@ -10,6 +10,8 @@ import dot.adun.core.ui.components.base.BorderVisibility
 import dot.adun.core.ui.components.buttons.TextFieldButton
 import dot.adun.core.ui.components.textFields.core.BaseTextField
 import dot.adun.core.ui.entity.TextFieldData
+import dot.adun.core.ui.theme.AppTheme
+import dot.adun.core.ui.theme.presets.TextFieldsColorPresets
 
 @Composable
 fun SimpleTextField(
@@ -25,9 +27,10 @@ fun SimpleTextField(
     readOnly: Boolean = !enabled,
     actions: KeyboardActions? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
-    borderVisibility: BorderVisibility = BorderVisibility.Newer,
+    borderVisibility: BorderVisibility = BorderVisibility.Always,
     keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = keyboardType),
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    colorPreset: TextFieldsColorPresets.AdunTextFieldColors = AppTheme.presets.textFields.common,
 ) {
     BaseTextField(
         modifier = modifier,
@@ -41,6 +44,7 @@ fun SimpleTextField(
         keyboardOptions = keyboardOptions,
         visualTransformation = visualTransformation,
         borderVisibility = borderVisibility,
+        colorPreset = colorPreset,
         leadingContent = leadingIcon?.let {
             { tint ->
                 TextFieldButton(

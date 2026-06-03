@@ -22,6 +22,7 @@ import androidx.graphics.shapes.RoundedPolygon
 import dot.adun.core.ui.entity.MaterialDecorator
 import dot.adun.core.ui.modifiers.surface
 import dot.adun.core.ui.theme.AppTheme
+import dot.adun.core.ui.util.rememberScreenPaddings
 
 @Composable
 fun MaterialDecorator(
@@ -52,7 +53,14 @@ fun BoxScope.MaterialShape(
     size: MaterialDecorator.Size = MaterialDecorator.Size.Medium,
     alignment: Alignment = Alignment.TopStart,
 ) {
-    val offset = remember(alignment, size) { relatedOffset(alignment, size.value) }
+    val paddings = rememberScreenPaddings()
+    val offset = remember(alignment, size) {
+        relatedOffset(
+            alignment = alignment,
+            size = size.value,
+            paddings = paddings
+        )
+    }
 
     Box(
         modifier = modifier
@@ -67,20 +75,25 @@ fun BoxScope.MaterialShape(
     )
 }
 
-private fun relatedOffset(alignment: Alignment, size: Dp) : DpOffset {
+private fun relatedOffset(
+    alignment: Alignment,
+    size: Dp,
+    paddings: DpOffset
+) : DpOffset {
     val half = size / 2
+    val (bottom, top) = paddings.x to paddings.y
 
     return when (alignment) {
-        Alignment.TopStart -> DpOffset(x = -half, y = -half)
-        Alignment.TopEnd -> DpOffset(x = half, y = -half)
-        Alignment.BottomStart -> DpOffset(x = -half, y = half)
-        Alignment.BottomEnd -> DpOffset(x = half, y = half)
+        Alignment.TopStart -> DpOffset(x = -half, y = -half - top)
+        Alignment.TopEnd -> DpOffset(x = half, y = -half - top)
+        Alignment.TopCenter -> DpOffset(x = 0.dp, y = -half - top)
 
-        Alignment.TopCenter -> DpOffset(x = 0.dp, y = -half)
+        Alignment.BottomStart -> DpOffset(x = -half, y = half + bottom)
+        Alignment.BottomEnd -> DpOffset(x = half, y = half + bottom)
+        Alignment.BottomCenter -> DpOffset(x = 0.dp, y = half + bottom)
+
         Alignment.CenterStart -> DpOffset(x = -half, y = 0.dp)
         Alignment.CenterEnd -> DpOffset(x = half, y = 0.dp)
-        Alignment.BottomCenter -> DpOffset(x = 0.dp, y = half)
-
         Alignment.Center -> DpOffset(x = 0.dp, y = 0.dp)
         else -> DpOffset.Zero
     }

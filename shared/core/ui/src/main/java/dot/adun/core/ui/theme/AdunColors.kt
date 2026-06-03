@@ -44,6 +44,7 @@ data class AdunColors(
         val primary: Color,
         val secondary: Color,
         val tertiary: Color,
+        val accent: Color,
         val hint: Color,
         val disabled: Color,
         val error: Color,

@@ -1,6 +1,8 @@
 package dot.adun.feature.authorized.domain
 
 import dot.adun.feature.authorized.domain.entity.PagingParams
+import dot.adun.feature.authorized.domain.entity.Resume
+import dot.adun.feature.authorized.domain.entity.Vacancy
 import javax.inject.Inject
 
 class AuthorizedModel @Inject constructor(
@@ -23,4 +25,19 @@ class AuthorizedModel @Inject constructor(
 
     suspend fun getClientActiveProjects(params: PagingParams) =
         repository.getClientActiveProjects(params)
+
+    suspend fun getVacancyById(id: String) =
+        repository.getVacancyById(id)
+
+    suspend fun getResumeById(id: String) =
+        repository.getResumeById(id)
+
+    suspend fun getProfileById(id: String) =
+        repository.getProfileById(id)
+
+    suspend fun updateVacancy(vacancy: Vacancy) =
+        repository.updateVacancy(vacancy)
+
+    suspend fun updateResume(resume: Resume) =
+        repository.updateResume(resume)
 }

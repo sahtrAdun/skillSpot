@@ -1,5 +1,6 @@
 package dot.adun.feature.authorized.ui.screen.active
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dot.adun.core.domain.entity.UserRole
@@ -18,8 +19,8 @@ class ActiveViewModel @Inject constructor(
     override val intents = ActiveViewIntents()
 
     init {
-        onIntent(intents.openDetails) {
-            emitResult(ActiveScreenResult.Details)
+        onIntent(intents.openDetails) { (isVacancy, id) ->
+            emitResult(ActiveScreenResult.Details(isVacancy, id))
         }
 
         on(profileModel.profile) { profile ->
@@ -88,6 +89,11 @@ class ActiveViewModel @Inject constructor(
 }
 
 sealed interface ActiveScreenResult {
-    data object Details : ActiveScreenResult
+    @Immutable
+    data class Details(
+        val isVacancy: Boolean,
+        val id: String
+    ) : ActiveScreenResult
+
     data object Finish : ActiveScreenResult
 }

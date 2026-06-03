@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import dot.adun.common.resources.Res
 import dot.adun.core.ui.components.HSpacer
 import dot.adun.core.ui.components.VSpacer
+import dot.adun.core.ui.modifiers.Border
 import dot.adun.core.ui.modifiers.click.Clickable
 import dot.adun.core.ui.modifiers.click.clickableEffect
 import dot.adun.core.ui.modifiers.surface
@@ -51,9 +52,13 @@ fun VacancyItem(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(
+            .surface(
                 color = AppTheme.colors.layer.surface,
                 shape = AppTheme.shapes.medium,
+                border = Border(
+                    color = AppTheme.colors.border.primary,
+                    shape = AppTheme.shapes.medium
+                )
             )
             .clickableEffect(Clickable.of(onClick))
             .padding(AppTheme.paddings.inset.content)

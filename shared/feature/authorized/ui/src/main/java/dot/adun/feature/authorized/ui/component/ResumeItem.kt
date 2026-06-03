@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import dot.adun.common.resources.Res
 import dot.adun.core.ui.components.HSpacer
 import dot.adun.core.ui.components.VSpacer
+import dot.adun.core.ui.modifiers.Border
 import dot.adun.core.ui.modifiers.click.Clickable
 import dot.adun.core.ui.modifiers.click.clickableEffect
 import dot.adun.core.ui.modifiers.surface
@@ -41,6 +42,7 @@ import java.time.LocalDateTime
 @Composable
 fun ResumeItem(
     resume: Resume,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var hasOverflow by remember { mutableStateOf(false) }
@@ -52,8 +54,13 @@ fun ResumeItem(
             .surface(
                 color = AppTheme.colors.layer.surface,
                 shape = AppTheme.shapes.medium,
-                padding = AppTheme.paddings.inset.content,
+                border = Border(
+                    color = AppTheme.colors.border.primary,
+                    shape = AppTheme.shapes.medium
+                )
             )
+            .clickableEffect(Clickable.of(onClick))
+            .padding(AppTheme.paddings.inset.content)
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -184,7 +191,8 @@ private fun ResumeItemPreview() {
                 isActive = true,
                 createdAt = LocalDateTime.now(),
                 updatedAt = LocalDateTime.now(),
-            )
+            ),
+            onClick = {}
         )
     }
 }

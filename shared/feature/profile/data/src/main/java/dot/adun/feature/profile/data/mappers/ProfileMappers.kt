@@ -4,8 +4,10 @@ import dot.adun.core.domain.entity.UserRole
 import dot.adun.core.domain.mappers.toLocalDateTime
 import dot.adun.core.domain.mappers.toNetwork
 import dot.adun.feature.profile.data.dto.ProfileDto
+import dot.adun.feature.profile.data.dto.PublicProfileDto
 import dot.adun.feature.profile.data.dto.UserRoleDto
 import dot.adun.feature.profile.domain.entity.Profile
+import dot.adun.feature.profile.domain.entity.PublicProfile
 
 fun ProfileDto.toDomainModel(): Profile = Profile(
     id = id,
@@ -35,13 +37,27 @@ fun Profile.toNetworkModel(): ProfileDto = ProfileDto(
     createdAt = createdAt.toNetwork(),
 )
 
+fun PublicProfileDto.toDomainModel(): PublicProfile = PublicProfile(
+    id = id,
+    role = role.toUserRole(),
+    fullName = fullName,
+    bio = bio,
+    ratingAvg = ratingAvg,
+    tasksCompleted = tasksCompleted,
+    avatarUrl = avatarUrl,
+    age = age,
+    country = country,
+    city = city,
+    createdAt = createdAt.toLocalDateTime(),
+)
+
 fun UserRole.toNetworkModel(): String = when (this) {
     UserRole.Freelancer -> UserRoleDto.FREELANCER.raw
     UserRole.Customer -> UserRoleDto.CUSTOMER.raw
     UserRole.None -> UserRoleDto.NONE.raw
 }
 
-private fun String.toUserRole(): UserRole = when (this) {
+fun String.toUserRole(): UserRole = when (this) {
     UserRoleDto.FREELANCER.raw -> UserRole.Freelancer
     UserRoleDto.CUSTOMER.raw -> UserRole.Customer
     else -> UserRole.None

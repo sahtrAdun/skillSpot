@@ -3,14 +3,13 @@ package dot.adun.feature.authorized.data.api
 import dot.adun.core.data.apiRequest
 import dot.adun.feature.authorized.data.MainRpc
 import dot.adun.feature.authorized.data.api.response.GetClientActiveProjectsResponse
-import dot.adun.feature.authorized.data.dto.ResumeDto
 import dot.adun.feature.authorized.data.dto.VacancyDto
 import dot.adun.feature.authorized.data.mappers.toDomainModel
 import dot.adun.feature.authorized.data.mappers.toNetworkModel
 import dot.adun.feature.authorized.domain.entity.PagingParams
-import dot.adun.feature.authorized.domain.entity.Resume
 import dot.adun.feature.authorized.domain.entity.Vacancy
 import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.rpc
 import javax.inject.Inject
@@ -54,4 +53,27 @@ class VacanciesApi @Inject constructor(
         )
             .decodeList<GetClientActiveProjectsResponse.Value>()
     }
+
+    suspend fun getVacancyById(id: String): Vacancy? = apiRequest(
+        onSuccess = { it },
+        onEmptyOrNull = { null }
+    ) {
+        client.from(VACANCY_TABLE)
+            .select { filter { VacancyDto::id eq id } }
+            .decodeList<VacancyDto>()
+            .firstOrNull()
+            ?.toDomainModel()
+    }
+
+    suspend fun updateVacancy(vacancy: VacancyDto) = apiRequest(
+        onSuccess = {},
+        onEmptyOrNull = {}
+    ) {
+        client.from(VACANCY_TABLE)
+            .update(vacancy) {
+                filter { VacancyDto::id eq vacancy.id }
+            }
+    }
 }
+
+private const val VACANCY_TABLE = "vacancies"

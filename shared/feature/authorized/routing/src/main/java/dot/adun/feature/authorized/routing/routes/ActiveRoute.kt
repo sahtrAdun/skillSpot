@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 @Immutable
 @Serializable
 data class ActiveRoute(
-    override val id: String = "home_route"
+    override val id: String = "active_route"
 ) : Route<ActiveViewModel> {
     @Composable
     override fun Screen(viewModel: ActiveViewModel) {

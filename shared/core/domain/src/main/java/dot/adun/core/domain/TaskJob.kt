@@ -21,6 +21,8 @@ class TaskJob<VS, T> constructor(
     private var successReducer: ((VS, T) -> VS)? = null
     private var successStateWrite: ((VS, T) -> VS)? = null
     private var errorStateWrite: ((VS, AppError) -> VS)? = null
+    private var anyBlock: (suspend (VS) -> Unit)? = null
+    private var anyStateWrite: ((VS) -> VS)? = null
 
     fun job(block: suspend (VS) -> T) {
         this.actionBlock = block
@@ -44,6 +46,14 @@ class TaskJob<VS, T> constructor(
 
     fun onErrorStateWrite(reducer: (VS, AppError) -> VS) {
         this.errorStateWrite = reducer
+    }
+
+    fun onAny(action: (suspend (VS) -> Unit)? = null) {
+        this.anyBlock = action
+    }
+
+    fun onAnyStateWrite(action: ((VS) -> VS)? = null) {
+        this.anyStateWrite = action
     }
 
     fun start() {
@@ -76,6 +86,13 @@ class TaskJob<VS, T> constructor(
                     stateWrite(newState, LoadState.Error(appError))
                 }
                 errorBlock?.invoke(appError)
+            } finally {
+                val currentState = currentState()
+                anyBlock?.invoke(currentState)
+                onStateUpdate { pcState ->
+                    val newState = anyStateWrite?.invoke(pcState) ?: pcState
+                    stateWrite(newState, stateRead(currentState))
+                }
             }
         }
     }

@@ -5,6 +5,10 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
@@ -94,6 +98,51 @@ fun AdunScaffold(
             ) {
                 floatingContent.content()
             }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AdunScaffold(
+    refreshing: Boolean,
+    onRefresh: () -> Unit,
+    modifier: Modifier = Modifier,
+    screenActions: ScreenActions = rememberScreenActions(),
+    floatingContent: ScaffoldFloatingContent? = null,
+    contentBackground: Color = AppTheme.colors.layer.background,
+    appBar: (@Composable () -> Unit)? = null,
+    bottomContent: (@Composable () -> Unit)? = null,
+    content: @Composable BoxScope.(ScaffoldPaddings) -> Unit
+) {
+    AdunScaffold(
+        modifier = modifier,
+        screenActions = screenActions,
+        floatingContent = floatingContent,
+        contentBackground = contentBackground,
+        appBar = appBar,
+        bottomContent = bottomContent,
+    ) { paddings ->
+        val refreshState = rememberPullToRefreshState()
+
+        PullToRefreshBox(
+            isRefreshing = refreshing,
+            onRefresh = onRefresh,
+            state = refreshState,
+            modifier = Modifier.fillMaxSize(),
+            indicator = {
+                PullToRefreshDefaults.Indicator(
+                    state = refreshState,
+                    isRefreshing = refreshing,
+                    containerColor = AppTheme.colors.layer.surface,
+                    color = AppTheme.colors.icon.accent,
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .padding(top = paddings.top),
+                )
+            }
+        ) {
+            content(paddings)
         }
     }
 }

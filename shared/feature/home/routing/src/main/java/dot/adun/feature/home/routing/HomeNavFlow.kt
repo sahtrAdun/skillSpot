@@ -6,7 +6,13 @@ import dot.adun.core.routing.nav3.NavFlow
 import dot.adun.core.routing.nav3.navigateBack
 import dot.adun.core.routing.nav3.route
 import dot.adun.feature.authorized.routing.routes.ActiveRoute
+import dot.adun.feature.authorized.routing.routes.ResumeDetailsRoute
+import dot.adun.feature.authorized.routing.routes.ResumeEditRoute
+import dot.adun.feature.authorized.routing.routes.VacancyDetailsRoute
+import dot.adun.feature.authorized.routing.routes.VacancyEditRoute
 import dot.adun.feature.authorized.ui.screen.active.ActiveScreenResult
+import dot.adun.feature.authorized.ui.screen.details.resume.ResumeDetailsScreenResult
+import dot.adun.feature.authorized.ui.screen.details.vacancy.VacancyDetailsScreenResult
 import dot.adun.feature.home.routing.routes.HomeRoute
 import dot.adun.feature.home.ui.screen.HomeScreenResult
 import dot.adun.feature.search.routing.SearchRoute
@@ -36,35 +42,68 @@ class HomeNavFlow(
             }
         }
 
+        route<Settings> { result ->
+            when (result) {
+                is SettingsScreenResult -> onSettingsScreenResult(result)
+            }
+        }
+
         route<Active> { result ->
             when (result) {
                 is ActiveScreenResult -> onActiveScreenResult(result)
             }
         }
 
-        route<Settings> { result ->
+        route<VacancyDetailsRoute> { result ->
             when (result) {
-                is SettingsScreenResult -> onSettingsScreenResult(result)
+                is VacancyDetailsScreenResult -> onVacancyDetailsScreenResult(result)
             }
         }
+
+        route<ResumeDetailsRoute> { result ->
+            when (result) {
+                is ResumeDetailsScreenResult -> onResumeDetailsScreenResult(result)
+            }
+        }
+
+        route<VacancyEditRoute> { _ -> navigateBack() }
+        route<ResumeEditRoute> { _ -> navigateBack() }
     }
 
     private fun NavFlowScope.onHomeScreenResult(result: HomeScreenResult) = when (result) {
         HomeScreenResult.Finish -> onFinish(HomeFlowResult.Finish)
         HomeScreenResult.Search -> pushNew(Search())
         HomeScreenResult.Logout -> onFinish(HomeFlowResult.Logout)
+        is HomeScreenResult.Details -> {
+            if (result.isVacancy) push(VacancyDetailsRoute(result.id))
+            else push(ResumeDetailsRoute(result.id))
+        }
     }
 
     private fun NavFlowScope.onSearchScreenResult(result: SearchScreenResult) = when (result) {
         else -> navigateBack()
     }
 
-    private fun NavFlowScope.onActiveScreenResult(result: ActiveScreenResult) = when (result) {
+    private fun NavFlowScope.onSettingsScreenResult(result: SettingsScreenResult) = when (result) {
         else -> navigateBack()
     }
 
-    private fun NavFlowScope.onSettingsScreenResult(result: SettingsScreenResult) = when (result) {
-        else -> navigateBack()
+    private fun NavFlowScope.onActiveScreenResult(result: ActiveScreenResult) = when (result) {
+        is ActiveScreenResult.Details -> {
+            if (result.isVacancy) push(VacancyDetailsRoute(result.id))
+            else push(ResumeDetailsRoute(result.id))
+        }
+        ActiveScreenResult.Finish -> navigateBack()
+    }
+
+    private fun NavFlowScope.onVacancyDetailsScreenResult(result: VacancyDetailsScreenResult) = when (result) {
+        is VacancyDetailsScreenResult.Edit -> push(VacancyEditRoute(result.id))
+        VacancyDetailsScreenResult.Finish -> navigateBack()
+    }
+
+    private fun NavFlowScope.onResumeDetailsScreenResult(result: ResumeDetailsScreenResult) = when (result) {
+        is ResumeDetailsScreenResult.Edit -> push(VacancyEditRoute(result.id))
+        ResumeDetailsScreenResult.Finish -> navigateBack()
     }
 }
 

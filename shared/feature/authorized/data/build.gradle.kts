@@ -8,6 +8,7 @@ android {
 
 dependencies {
     api(projects.shared.core.data)
+    api(projects.shared.feature.profile.data)
     api(projects.shared.feature.authorized.domain)
 }
 
