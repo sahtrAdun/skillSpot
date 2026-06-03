@@ -2,6 +2,7 @@ package dot.adun.core.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,12 +18,13 @@ import dot.adun.core.ui.util.display
 fun ContentLabel(
     label: TextRef,
     modifier: Modifier = Modifier,
+    labelModifier: Modifier = Modifier,
     color: Color = AppTheme.colors.text.primary,
     style: TextStyle = AppTheme.typography.body1,
     maxLines: Int = Int.MAX_VALUE,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(8.dp),
-    content: @Composable () -> Unit
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
         verticalArrangement = verticalArrangement,
@@ -33,7 +35,8 @@ fun ContentLabel(
             style = style,
             color = color,
             maxLines = maxLines,
-            overflow = overflow
+            overflow = overflow,
+            modifier = labelModifier
         )
         content()
     }

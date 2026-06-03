@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dot.adun.core.ui.modifiers.Border
 import dot.adun.core.ui.modifiers.click.Clickable
 import dot.adun.core.ui.modifiers.click.clickableEffect
 import dot.adun.core.ui.modifiers.surface
@@ -37,9 +38,13 @@ fun DummySearchField(
             .surface(
                 color = AppTheme.colors.layer.surface,
                 shape = CircleShape,
-                padding = PaddingValues(vertical = 8.dp, horizontal = 12.dp)
+                border = Border(
+                    color = AppTheme.colors.border.primary,
+                    shape = CircleShape
+                )
             )
             .clickableEffect(Clickable.of(onClick))
+            .padding(vertical = 8.dp, horizontal = 12.dp)
     ) {
         Text(
             text = "Search",

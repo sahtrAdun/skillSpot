@@ -4,5 +4,5 @@ import dot.adun.core.ui.core.BaseViewIntents
 
 class ActiveViewIntents : BaseViewIntents() {
     val navigateBack = intent("navigateBack")
-    val openDetails = intent("openDetails")
+    val openDetails = typedIntent<Pair<Boolean, String>>("openDetails")
 }

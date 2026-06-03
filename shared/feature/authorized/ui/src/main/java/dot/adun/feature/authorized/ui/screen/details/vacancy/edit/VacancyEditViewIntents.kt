@@ -1,0 +1,19 @@
+package dot.adun.feature.authorized.ui.screen.details.vacancy.edit
+
+import dot.adun.core.ui.core.BaseViewIntents
+import dot.adun.feature.authorized.domain.entity.Currency
+import dot.adun.feature.authorized.domain.entity.PaymentType
+
+class VacancyEditViewIntents : BaseViewIntents() {
+    val navigateBack = intent("navigateBack")
+    val changeTitle = typedIntent<String>("changeTitle")
+    val changeDescription = typedIntent<String>("changeDescription")
+    val changeSkillInput = typedIntent<String>("changeSkillInput")
+    val addSkill = intent("addSkill")
+    val removeSkill = typedIntent<String>("removeSkill")
+    val changeExperience = typedIntent<String>("changeExperience")
+    val changePaymentMethod = typedIntent<PaymentType>("changePaymentMethod")
+    val changeBudget = typedIntent<String>("changeBudget")
+    val changeCurrency = typedIntent<Currency>("changeCurrency")
+    val save = intent("save")
+}

@@ -70,6 +70,7 @@ data class AdunColorPresets(
                     tertiary = MaterialPalette.gray_300,
                     hint = MaterialPalette.gray_400,
                     disabled = MaterialPalette.gray_200,
+                    accent = brandGreen,
                     error = error,
                     warning = warning,
                     onPrimary = Color.White,
@@ -131,6 +132,7 @@ data class AdunColorPresets(
                 primary = MaterialPalette.gray_900,
                 secondary = MaterialPalette.gray_700,
                 tertiary = MaterialPalette.gray_500,
+                accent = MaterialPalette.green_primary,
                 hint = MaterialPalette.gray_400,
                 disabled = MaterialPalette.gray_300,
                 error = MaterialPalette.soft_red,
@@ -201,6 +203,7 @@ data class AdunColorPresets(
                 primary = MaterialPalette.gray_100,
                 secondary = MaterialPalette.gray_400,
                 tertiary = MaterialPalette.gray_600,
+                accent = MaterialPalette.green_primary,
                 hint = MaterialPalette.gray_500,
                 disabled = MaterialPalette.gray_700,
                 error = MaterialPalette.soft_red,
@@ -245,7 +248,7 @@ data class AdunColorPresets(
     }
 }
 
-val disabledColor = ColorPalette.gray_500.copy(alpha = 0.25f)
+val disabledColor = ColorPalette.gray_500.copy(alpha = 0.55f)
 
 fun Color.disable(other: Color = disabledColor): Color {
     return other

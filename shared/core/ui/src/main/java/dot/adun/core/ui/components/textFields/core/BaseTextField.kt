@@ -93,6 +93,7 @@ fun BaseTextField(
                     data = data,
                     tint = tint,
                     placeholder = placeholder,
+                    isFocused = isFocused,
                     innerTextField = innerTextField,
                     trailingContent = trailingContent,
                     leadingContent = leadingContent,
@@ -115,6 +116,7 @@ private fun TextFieldDecoration(
     data: TextFieldData,
     tint: Color,
     placeholder: String?,
+    isFocused: Boolean,
     innerTextField: @Composable (() -> Unit),
     trailingContent: @Composable ((Color) -> Unit)?,
     leadingContent: @Composable ((Color) -> Unit)?,
@@ -162,11 +164,11 @@ private fun TextFieldDecoration(
                 else fadeOut()
 
             AnimatedContent(
-                targetState = data.value.isEmpty(),
+                targetState = data.value.isNotEmpty() && isFocused,
                 transitionSpec = { enterTransition togetherWith exitTransition },
                 contentAlignment = Alignment.Center
-            ) { empty ->
-                if (!empty) {
+            ) { visible ->
+                if (visible) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         TextFieldButton(
                             icon = Res.drawable.ic_backspace_fill_24,

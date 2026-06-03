@@ -3,14 +3,10 @@ package dot.adun.feature.authorized.ui.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,9 +18,8 @@ import dot.adun.core.ui.LoadState
 import dot.adun.core.ui.UserRoleResolver
 import dot.adun.core.ui.components.FloatingAppBar
 import dot.adun.core.ui.components.MaterialShape
+import dot.adun.core.ui.components.SimpleLayout
 import dot.adun.core.ui.components.base.AdunScaffold
-import dot.adun.core.ui.components.base.ScaffoldPaddings
-import dot.adun.core.ui.components.vSpacer
 import dot.adun.core.ui.entity.MaterialDecorator
 import dot.adun.core.ui.modifiers.shimmer
 import dot.adun.core.ui.theme.AppTheme
@@ -63,19 +58,19 @@ fun ActiveLayout(
             UserRoleResolver(
                 modifier = Modifier.padding(AppTheme.paddings.inset.list),
                 forFreelancers = { contentModifier ->
-                    Layout(
+                    SimpleLayout(
                         items = vacancies,
                         padding = padding,
                         modifier = contentModifier
-                    ) { vacancy, index ->
+                    ) { vacancy, _ ->
                         VacancyItem(
                             vacancy = vacancy,
-                            onClick = {}
+                            onClick = { intents.openDetails(true to vacancy.id) }
                         )
                     }
                 },
                 forCustomers = { contentModifier ->
-                    Layout(
+                    SimpleLayout(
                         items = activeProjects,
                         padding = padding,
                         modifier = contentModifier
@@ -85,24 +80,6 @@ fun ActiveLayout(
                 }
             )
         }
-    }
-}
-
-@Composable
-private fun <T> Layout(
-    items: List<T>,
-    padding: ScaffoldPaddings,
-    modifier: Modifier = Modifier,
-    item: @Composable (item: T, index: Int) -> Unit
-) {
-    LazyColumn(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(vertical = 6.dp),
-        modifier = modifier.fillMaxSize()
-    ) {
-        itemsIndexed(items) { index, item -> item(item, index) }
-        vSpacer(padding.bottom)
     }
 }
 

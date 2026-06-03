@@ -11,6 +11,13 @@ import dot.adun.feature.authorized.domain.entity.PaymentType
 import dot.adun.feature.authorized.domain.entity.Resume
 import dot.adun.feature.authorized.domain.entity.Vacancy
 import dot.adun.feature.authorized.ui.R
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+private val dateTimeFormatter: DateTimeFormatter =
+    DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
+
+fun LocalDateTime.formatDateTime(): String = format(dateTimeFormatter)
 
 @Composable
 fun buildPaymentLabel(payment: Resume.PaymentInfo): String {
@@ -57,6 +64,12 @@ val AvailabilityType.label: TextRef
         AvailabilityType.FullTime -> resRef(R.string.full_time)
         AvailabilityType.PartTime -> resRef(R.string.part_time)
         AvailabilityType.OneTime -> resRef(R.string.one_time)
+    }
+
+val PaymentType.label: TextRef
+    get() = when (this) {
+        PaymentType.Hourly -> resRef(R.string.hourly)
+        PaymentType.Fixed -> resRef(R.string.fixed)
     }
 
 val Vacancy.Status.label: TextRef

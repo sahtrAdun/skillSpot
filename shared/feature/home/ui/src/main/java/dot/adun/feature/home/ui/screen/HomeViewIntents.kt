@@ -6,4 +6,6 @@ class HomeViewIntents : BaseViewIntents() {
     val navigateBack = intent("navigateBack")
     val navToSearch = intent("navToSearch")
     val logout = intent("logout")
+    val refresh = intent("refresh")
+    val openDetails = typedIntent<Pair<Boolean, String>>("openDetails")
 }
