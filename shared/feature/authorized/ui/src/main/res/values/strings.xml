@@ -54,4 +54,13 @@
     <string name="tasks_completed">%d tasks completed</string>
     <string name="member_since">Member since %s</string>
     <string name="experience_years">%d+ years of experience</string>
+
+    <string name="vacancy_apply">Apply</string>
+    <string name="vacancy_applied">Application sent</string>
+    <string name="apply_title">Apply to vacancy</string>
+    <string name="apply_select_resume">Select a resume</string>
+    <string name="apply_cover_letter_hint">Cover letter (optional)</string>
+    <string name="apply_send">Send application</string>
+    <string name="apply_no_resumes">Create a resume to apply</string>
+    <string name="apply_success">Application sent</string>
 </resources>

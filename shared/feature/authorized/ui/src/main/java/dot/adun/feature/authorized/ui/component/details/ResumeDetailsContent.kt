@@ -91,6 +91,7 @@ fun ResumeDetailsContent(
                             title = stringResource(R.string.resume_author),
                             creator = creator,
                             loadState = creatorLoadState,
+                            onClick = creator?.let { author -> { intents.openProfile(author.id) } },
                         )
                     }
                     ResumeAvailabilityCard(resume)

@@ -3,9 +3,12 @@ package dot.adun.feature.authorized.data.api
 import dot.adun.core.data.apiRequest
 import dot.adun.feature.authorized.data.MainRpc
 import dot.adun.feature.authorized.data.api.response.GetClientActiveProjectsResponse
+import dot.adun.feature.authorized.data.dto.ApplicationDto
+import dot.adun.feature.authorized.data.dto.ApplyForVacancyParamsDto
 import dot.adun.feature.authorized.data.dto.VacancyDto
 import dot.adun.feature.authorized.data.mappers.toDomainModel
 import dot.adun.feature.authorized.data.mappers.toNetworkModel
+import dot.adun.feature.authorized.domain.entity.Application
 import dot.adun.feature.authorized.domain.entity.PagingParams
 import dot.adun.feature.authorized.domain.entity.Vacancy
 import io.github.jan.supabase.SupabaseClient
@@ -73,6 +76,27 @@ class VacanciesApi @Inject constructor(
             .update(vacancy) {
                 filter { VacancyDto::id eq vacancy.id }
             }
+    }
+
+    suspend fun applyForVacancy(
+        vacancyId: String,
+        resumeId: String,
+        coverLetter: String?,
+    ): Application = apiRequest(
+        onSuccess = { it },
+        onEmptyOrNull = { error("Application was not created") }
+    ) {
+        client.postgrest.rpc(
+            function = MainRpc.APPLY_FOR_VACANCY,
+            parameters = ApplyForVacancyParamsDto(
+                vacancyId = vacancyId,
+                resumeId = resumeId,
+                coverLetter = coverLetter,
+            )
+        )
+            .decodeList<ApplicationDto>()
+            .firstOrNull()
+            ?.toDomainModel()
     }
 }
 

@@ -1,0 +1,33 @@
+<resources>
+    <string name="profile_title">Profile</string>
+
+    <string name="profile_tab_info">Information</string>
+    <string name="profile_tab_reviews">Reviews</string>
+    <string name="profile_tab_vacancies">Vacancies</string>
+    <string name="profile_tab_resumes">Resumes</string>
+
+    <string name="profile_role_freelancer">Freelancer</string>
+    <string name="profile_role_customer">Customer</string>
+
+    <string name="profile_about">About</string>
+    <string name="profile_details">Details</string>
+    <string name="profile_rating">Rating</string>
+    <string name="profile_rating_value">★ %1$s</string>
+    <string name="profile_no_rating">No rating yet</string>
+    <string name="profile_tasks_label">Tasks completed</string>
+    <string name="profile_member_since_label">Member since</string>
+    <string name="profile_location">Location</string>
+    <string name="profile_age">Age</string>
+    <string name="profile_age_value">%d y.o.</string>
+    <string name="profile_role">Role</string>
+    <string name="profile_no_bio">No description provided</string>
+
+    <string name="profile_no_reviews">No reviews yet</string>
+    <string name="profile_no_content">Nothing here yet</string>
+    <string name="profile_unnamed">Unnamed user</string>
+
+    <string name="profile_per_hour">%s/hr</string>
+    <string name="profile_from">from %s</string>
+    <string name="profile_active">Active</string>
+    <string name="profile_inactive">Inactive</string>
+</resources>

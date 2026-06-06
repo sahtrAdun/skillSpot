@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import dot.adun.core.ui.modifiers.Border
 import dot.adun.core.ui.modifiers.surface
 import dot.adun.core.ui.theme.AppTheme
 
@@ -62,9 +63,14 @@ fun Snackbar(
             .displayCutoutPadding()
             .padding(16.dp)
             .surface(
-                color = if (isError) AppTheme.colors.layer.error else AppTheme.colors.layer.onSurface,
+                color = if (isError) AppTheme.colors.layer.error else AppTheme.colors.layer.surface,
                 shape = AppTheme.shapes.medium,
-                padding = PaddingValues(horizontal = 16.dp, vertical = 12.dp)
+                padding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+                border = Border(
+                    shape = AppTheme.shapes.medium,
+                    color = AppTheme.colors.border.primary,
+                )
+                    .takeIf { !isError }
             )
     ) {
         Text(

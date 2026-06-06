@@ -2,7 +2,10 @@ package dot.adun.core.ui.components.base
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -35,12 +38,14 @@ fun AdunScaffold(
     screenActions: ScreenActions = rememberScreenActions(),
     floatingContent: ScaffoldFloatingContent? = null,
     contentBackground: Color = AppTheme.colors.layer.background,
+    navigationBarsPadding: Boolean = true,
     appBar: (@Composable () -> Unit)? = null,
     bottomContent: (@Composable () -> Unit)? = null,
     content: @Composable BoxScope.(ScaffoldPaddings) -> Unit
 ) {
     val density = LocalDensity.current
     val bottomBarController = LocalBottomBarController.current
+    val navigationBars = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
     var appBarHeightPx by remember { mutableIntStateOf(0) }
     var bottomContentHeightPx by remember { mutableIntStateOf(0) }
     val paddings = remember(
@@ -52,7 +57,8 @@ fun AdunScaffold(
             ScaffoldPaddings(
                 top = appBarHeightPx.toDp(),
                 bottomContainer = bottomContentHeightPx.toDp(),
-                bottomBar = bottomBarController.height
+                bottomBar = bottomBarController.height,
+                navigationBars = navigationBars
             )
         }
     }
@@ -68,7 +74,7 @@ fun AdunScaffold(
                         indicationEnabled = false
                     )
                 )
-                .navigationBarsPadding()
+                .then(if (navigationBarsPadding) Modifier.navigationBarsPadding() else Modifier)
         ) {
             content(paddings)
             if (bottomContent != null) {
@@ -157,7 +163,8 @@ data class ScaffoldFloatingContent(
 data class ScaffoldPaddings(
     val top: Dp,
     val bottomContainer: Dp,
-    val bottomBar: Dp
+    val bottomBar: Dp,
+    val navigationBars: Dp,
 ) {
     val bottom: Dp = bottomContainer + bottomBar
 }

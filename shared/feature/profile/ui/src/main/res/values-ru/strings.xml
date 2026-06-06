@@ -1,0 +1,33 @@
+<resources>
+    <string name="profile_title">Профиль</string>
+
+    <string name="profile_tab_info">Информация</string>
+    <string name="profile_tab_reviews">Отзывы</string>
+    <string name="profile_tab_vacancies">Вакансии</string>
+    <string name="profile_tab_resumes">Резюме</string>
+
+    <string name="profile_role_freelancer">Фрилансер</string>
+    <string name="profile_role_customer">Заказчик</string>
+
+    <string name="profile_about">О себе</string>
+    <string name="profile_details">Детали</string>
+    <string name="profile_rating">Рейтинг</string>
+    <string name="profile_rating_value">★ %1$s</string>
+    <string name="profile_no_rating">Нет оценок</string>
+    <string name="profile_tasks_label">Выполнено задач</string>
+    <string name="profile_member_since_label">На сайте с</string>
+    <string name="profile_location">Местоположение</string>
+    <string name="profile_age">Возраст</string>
+    <string name="profile_age_value">%d г.</string>
+    <string name="profile_role">Роль</string>
+    <string name="profile_no_bio">Описание не предоставлено</string>
+
+    <string name="profile_no_reviews">Отзывов пока нет</string>
+    <string name="profile_no_content">Здесь пока ничего нет</string>
+    <string name="profile_unnamed">Пользователь без имени</string>
+
+    <string name="profile_per_hour">%s/час</string>
+    <string name="profile_from">от %s</string>
+    <string name="profile_active">Активен</string>
+    <string name="profile_inactive">Неактивен</string>
+</resources>

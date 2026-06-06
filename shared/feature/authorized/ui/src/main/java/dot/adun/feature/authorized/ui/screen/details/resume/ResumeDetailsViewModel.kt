@@ -34,6 +34,10 @@ class ResumeDetailsViewModel @AssistedInject constructor(
             emitResult(ResumeDetailsScreenResult.Edit(resumeId))
         }
 
+        onIntent(intents.openProfile) { profileId ->
+            emitResult(ResumeDetailsScreenResult.OpenAuthorProfile(profileId))
+        }
+
         on(profileModel.profile) { profile ->
             update { state -> state.copy(currentUserId = profile?.id) }
         }

@@ -40,4 +40,10 @@ class AuthorizedModel @Inject constructor(
 
     suspend fun updateResume(resume: Resume) =
         repository.updateResume(resume)
+
+    suspend fun applyForVacancy(
+        vacancyId: String,
+        resumeId: String,
+        coverLetter: String?,
+    ) = repository.applyForVacancy(vacancyId, resumeId, coverLetter)
 }

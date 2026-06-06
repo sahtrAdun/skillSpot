@@ -5,4 +5,5 @@ object MainRpc {
     const val GET_MATCHING_RESUMES = "get_matching_resumes"
     const val GET_ACTIVE_WORKING_VACANCIES = "get_active_working_vacancies"
     const val GET_CLIENT_ACTIVE_PROJECTS = "get_client_active_projects"
+    const val APPLY_FOR_VACANCY = "apply_for_vacancy"
 }

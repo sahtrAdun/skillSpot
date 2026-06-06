@@ -10,8 +10,8 @@ data class PagingParams(
 
 fun buildPagingParams(
     listSize: Int,
+    skipCache: Boolean = false,
     pageSize: Int = PagingState.defaultPageSize,
-    skipCache: Boolean = false
 ): PagingParams {
     val offset = if (skipCache) 0 else listSize
 

@@ -22,4 +22,7 @@ sealed interface ResumeDetailsScreenResult {
 
     @Immutable
     data class Edit(val id: String) : ResumeDetailsScreenResult
+
+    @Immutable
+    data class OpenAuthorProfile(val profileId: String) : ResumeDetailsScreenResult
 }

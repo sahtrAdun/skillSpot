@@ -3,18 +3,19 @@ package dot.adun.feature.profile.data
 import androidx.datastore.preferences.core.stringPreferencesKey
 import dot.adun.core.domain.store.AppPreferences
 import dot.adun.core.domain.util.mapUntilChanged
-import dot.adun.core.domain.util.notNull
 import dot.adun.feature.profile.data.api.ProfileApi
 import dot.adun.feature.profile.data.dto.ProfileDto
 import dot.adun.feature.profile.data.mappers.toDomainModel
 import dot.adun.feature.profile.data.mappers.toNetworkModel
 import dot.adun.feature.profile.domain.ProfileRepository
 import dot.adun.feature.profile.domain.entity.Profile
+import dot.adun.feature.profile.domain.entity.ProfileContent
 import dot.adun.feature.profile.domain.entity.ProfileResult
+import dot.adun.feature.profile.domain.entity.PublicProfile
+import dot.adun.feature.profile.domain.entity.Review
 import io.github.aakira.napier.Napier
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.auth.auth
-import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -76,6 +77,18 @@ class ProfileDataRepository @Inject constructor(
             Napier.w(e) { e.localizedMessage ?: e.message ?: "Failed to read profile" }
             null
         }
+    }
+
+    override suspend fun getProfileById(id: String): PublicProfile? {
+        return profileApi.getProfileById(id)
+    }
+
+    override suspend fun getReviews(profileId: String, limit: Int, offset: Int): List<Review> {
+        return profileApi.getReviews(profileId, limit, offset)
+    }
+
+    override suspend fun getContent(profileId: String, limit: Int, offset: Int): ProfileContent {
+        return profileApi.getContent(profileId, limit, offset)
     }
 
     override suspend fun clearProfileCache() {

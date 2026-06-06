@@ -8,4 +8,5 @@ class HomeViewIntents : BaseViewIntents() {
     val logout = intent("logout")
     val refresh = intent("refresh")
     val openDetails = typedIntent<Pair<Boolean, String>>("openDetails")
+    val openProfile = intent("openProfile")
 }

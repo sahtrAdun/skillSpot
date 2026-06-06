@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Box
@@ -24,6 +25,8 @@ import dot.adun.core.ui.components.FloatingAppBar
 import dot.adun.core.ui.components.MaterialShape
 import dot.adun.core.ui.components.VSpacer
 import dot.adun.core.ui.components.base.AdunScaffold
+import dot.adun.core.ui.components.buttons.PrimaryButton
+import dot.adun.core.ui.components.buttons.rememberButtonState
 import dot.adun.core.ui.components.divider.HDivider
 import dot.adun.core.ui.entity.MaterialDecorator
 import dot.adun.core.ui.modifiers.click.Clickable
@@ -46,6 +49,8 @@ fun VacancyDetailsContent(
     loadState: LoadState,
     creatorLoadState: LoadState,
     canEdit: Boolean,
+    canApply: Boolean,
+    applied: Boolean,
     intents: VacancyDetailsViewIntents,
 ) {
     AdunScaffold(
@@ -66,7 +71,25 @@ fun VacancyDetailsContent(
                     }
                 } else null,
             )
-        }
+        },
+        bottomContent = if (canApply || applied) {
+            {
+                PrimaryButton(
+                    state = rememberButtonState(disabled = applied),
+                    clickable = Clickable.of(intents.openApplySheet),
+                    modifier = Modifier
+                        .imePadding()
+                        .fillMaxWidth()
+                        .padding(horizontal =  16.dp),
+                ) {
+                    Text(
+                        text = stringResource(
+                            if (applied) R.string.vacancy_applied else R.string.vacancy_apply
+                        )
+                    )
+                }
+            }
+        } else null,
     ) { padding ->
         MaterialShape(
             size = MaterialDecorator.Size.Large,
@@ -95,6 +118,7 @@ fun VacancyDetailsContent(
                             title = stringResource(R.string.vacancy_author),
                             creator = creator,
                             loadState = creatorLoadState,
+                            onClick = creator?.let { author -> { intents.openProfile(author.id) } },
                         )
                     }
                     VacancyMetaCard(vacancy)

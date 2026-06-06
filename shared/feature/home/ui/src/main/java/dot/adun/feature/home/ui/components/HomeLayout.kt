@@ -73,7 +73,7 @@ fun HomeLayout(
                     IcButton(
                         vector = Icons.Default.AccountCircle,
                         contentDescription = null,
-                        onClick = {},
+                        onClick = intents.openProfile,
                         colors = AppTheme.presets.buttons.icon.regular,
                         modifier = Modifier.border(
                             color = AppTheme.colors.border.primary,
