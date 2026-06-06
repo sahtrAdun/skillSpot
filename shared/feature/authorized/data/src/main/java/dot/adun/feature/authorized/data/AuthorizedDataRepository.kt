@@ -6,6 +6,7 @@ import dot.adun.feature.authorized.data.mappers.toDomainModel
 import dot.adun.feature.authorized.data.mappers.toNetworkModel
 import dot.adun.feature.authorized.domain.AuthorizedRepository
 import dot.adun.feature.authorized.domain.entity.ActiveProject
+import dot.adun.feature.authorized.domain.entity.Application
 import dot.adun.feature.authorized.domain.entity.PagingParams
 import dot.adun.feature.authorized.domain.entity.PagingState
 import dot.adun.feature.authorized.domain.entity.Resume
@@ -80,5 +81,13 @@ class AuthorizedDataRepository @Inject constructor(
 
     override suspend fun updateResume(resume: Resume) {
         resumesApi.updateResume(resume.toNetworkModel())
+    }
+
+    override suspend fun applyForVacancy(
+        vacancyId: String,
+        resumeId: String,
+        coverLetter: String?,
+    ): Application {
+        return vacanciesApi.applyForVacancy(vacancyId, resumeId, coverLetter)
     }
 }

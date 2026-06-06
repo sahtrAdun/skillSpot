@@ -95,6 +95,12 @@ open class NavFlowScope(
         }
     }
 
+    fun replaceFlow(flow: Flow) {
+        clearStateFor(flow)
+        popToFirst(flow.startDestination)
+        replaceCurrent(flow.startDestination)
+    }
+
     fun popToRoot() = runBlocking(Dispatchers.Main.immediate) { popToFirst(flowParent) }
 
     private fun <T> clearStateFor(element: T) {

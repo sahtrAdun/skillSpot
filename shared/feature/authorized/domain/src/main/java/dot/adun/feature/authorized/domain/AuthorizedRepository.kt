@@ -1,6 +1,7 @@
 package dot.adun.feature.authorized.domain
 
 import dot.adun.feature.authorized.domain.entity.ActiveProject
+import dot.adun.feature.authorized.domain.entity.Application
 import dot.adun.feature.authorized.domain.entity.PagingParams
 import dot.adun.feature.authorized.domain.entity.PagingState
 import dot.adun.feature.authorized.domain.entity.Resume
@@ -20,4 +21,10 @@ interface AuthorizedRepository {
     suspend fun getProfileById(id: String): PublicProfile?
     suspend fun updateVacancy(vacancy: Vacancy)
     suspend fun updateResume(resume: Resume)
+
+    suspend fun applyForVacancy(
+        vacancyId: String,
+        resumeId: String,
+        coverLetter: String?,
+    ): Application
 }

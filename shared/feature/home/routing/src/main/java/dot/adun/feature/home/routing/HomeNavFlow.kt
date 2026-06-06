@@ -15,6 +15,9 @@ import dot.adun.feature.authorized.ui.screen.details.resume.ResumeDetailsScreenR
 import dot.adun.feature.authorized.ui.screen.details.vacancy.VacancyDetailsScreenResult
 import dot.adun.feature.home.routing.routes.HomeRoute
 import dot.adun.feature.home.ui.screen.HomeScreenResult
+import dot.adun.feature.profile.routing.ProfileFlow
+import dot.adun.feature.profile.routing.ProfileRoute
+import dot.adun.feature.profile.routing.profileFlow
 import dot.adun.feature.search.routing.SearchRoute
 import dot.adun.feature.search.ui.SearchScreenResult
 import dot.adun.feature.settings.routing.SettingsRoute
@@ -68,6 +71,8 @@ class HomeNavFlow(
 
         route<VacancyEditRoute> { _ -> navigateBack() }
         route<ResumeEditRoute> { _ -> navigateBack() }
+
+        profileFlow { navigateBack() }
     }
 
     private fun NavFlowScope.onHomeScreenResult(result: HomeScreenResult) = when (result) {
@@ -78,6 +83,7 @@ class HomeNavFlow(
             if (result.isVacancy) push(VacancyDetailsRoute(result.id))
             else push(ResumeDetailsRoute(result.id))
         }
+        is HomeScreenResult.Profile -> push(ProfileFlow.create(result.id))
     }
 
     private fun NavFlowScope.onSearchScreenResult(result: SearchScreenResult) = when (result) {
@@ -98,11 +104,13 @@ class HomeNavFlow(
 
     private fun NavFlowScope.onVacancyDetailsScreenResult(result: VacancyDetailsScreenResult) = when (result) {
         is VacancyDetailsScreenResult.Edit -> push(VacancyEditRoute(result.id))
+        is VacancyDetailsScreenResult.OpenAuthorProfile -> push(ProfileRoute(result.profileId))
         VacancyDetailsScreenResult.Finish -> navigateBack()
     }
 
     private fun NavFlowScope.onResumeDetailsScreenResult(result: ResumeDetailsScreenResult) = when (result) {
         is ResumeDetailsScreenResult.Edit -> push(VacancyEditRoute(result.id))
+        is ResumeDetailsScreenResult.OpenAuthorProfile -> push(ProfileRoute(result.profileId))
         ResumeDetailsScreenResult.Finish -> navigateBack()
     }
 }

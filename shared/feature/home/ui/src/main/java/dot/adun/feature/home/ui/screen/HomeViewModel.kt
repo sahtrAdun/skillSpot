@@ -42,6 +42,12 @@ class HomeViewModel @Inject constructor(
             emitResult(HomeScreenResult.Details(isVacancy, id))
         }
 
+        onIntent(intents.openProfile) {
+            profileModel.readProfile()?.let { profile ->
+                emitResult(HomeScreenResult.Profile(profile.id))
+            }
+        }
+
         onIntent(intents.refresh) {
             action { _ -> resolveUserRoleActions(true) }
         }
@@ -93,7 +99,9 @@ class HomeViewModel @Inject constructor(
             onSuccess { paging ->
                 update { state ->
                     state.copy(
-                        recommendedResumes = state.recommendedResumes + paging.data
+                        recommendedResumes = (state.recommendedResumes + paging.data)
+                            .takeIf { !skipCache }
+                            ?: paging.data
                     )
                 }
             }
@@ -118,7 +126,9 @@ class HomeViewModel @Inject constructor(
             onSuccess { paging ->
                 update { state ->
                     state.copy(
-                        recommendedVacancies = state.recommendedVacancies + paging.data
+                        recommendedVacancies = (state.recommendedVacancies + paging.data)
+                            .takeIf { !skipCache }
+                            ?: paging.data
                     )
                 }
             }
@@ -140,8 +150,8 @@ sealed interface HomeScreenResult {
     data object Logout : HomeScreenResult
 
     @Immutable
-    data class Details(
-        val isVacancy: Boolean,
-        val id: String
-    ) : HomeScreenResult
+    data class Details(val isVacancy: Boolean, val id: String) : HomeScreenResult
+
+    @Immutable
+    data class Profile(val id: String) : HomeScreenResult
 }

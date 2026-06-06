@@ -25,6 +25,8 @@ import dot.adun.core.domain.entity.LoadState
 import dot.adun.core.domain.entity.UserRole
 import dot.adun.core.domain.mappers.isLoading
 import dot.adun.core.ui.components.VSpacer
+import dot.adun.core.ui.modifiers.click.Clickable
+import dot.adun.core.ui.modifiers.click.click
 import dot.adun.core.ui.modifiers.shimmer
 import dot.adun.core.ui.modifiers.surface
 import dot.adun.core.ui.theme.AppTheme
@@ -121,8 +123,14 @@ fun CreatorCard(
     creator: PublicProfile?,
     loadState: LoadState,
     modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
 ) {
-    DetailCard(modifier) {
+    val cardModifier = if (onClick != null && creator != null) {
+        modifier.click(Clickable.of(onClick))
+    } else {
+        modifier
+    }
+    DetailCard(cardModifier) {
         SectionTitle(title)
         when {
             creator != null -> CreatorInfo(creator)
