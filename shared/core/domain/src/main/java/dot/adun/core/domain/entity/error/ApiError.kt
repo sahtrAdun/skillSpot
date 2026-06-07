@@ -13,4 +13,5 @@ sealed interface ApiError : AppError {
 sealed interface AuthError : ApiError {
     data object EmailExists : AuthError
     data object InvalidEmail : AuthError
+    data object InvalidCredentials : AuthError
 }

@@ -32,6 +32,8 @@
     <string name="password">Password</string>
     <string name="auth_error_email_exists">Email already exists</string>
     <string name="auth_error_email_invalid">Invalid email</string>
+    <string name="auth_error_invalid_credentials_title">Sign-in failed</string>
+    <string name="auth_error_invalid_credentials_desc">Invalid email or password. Please try again.</string>
     <string name="screen_registration_title">Registration</string>
     <string name="screen_registration_desc">Enter your email and password to get started.</string>
     <string name="screen_registration_alredy_have_account">Already have an account?</string>

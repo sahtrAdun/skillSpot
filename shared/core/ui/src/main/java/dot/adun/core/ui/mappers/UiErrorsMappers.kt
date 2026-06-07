@@ -58,4 +58,8 @@ private fun AuthError.toUiError(): UiError =
         AuthError.InvalidEmail -> UiError(
             title = resRef(Res.strings.auth_error_email_invalid),
         )
+        AuthError.InvalidCredentials -> UiError(
+            title = resRef(Res.strings.auth_error_invalid_credentials_title),
+            description = resRef(Res.strings.auth_error_invalid_credentials_desc),
+        )
     }
