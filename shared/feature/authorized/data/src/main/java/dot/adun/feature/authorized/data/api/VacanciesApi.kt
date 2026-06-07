@@ -8,6 +8,7 @@ import dot.adun.feature.authorized.data.dto.CancelApplicationParamsDto
 import dot.adun.feature.authorized.data.dto.ApplicationDto
 import dot.adun.feature.authorized.data.dto.ApplyForVacancyParamsDto
 import dot.adun.feature.authorized.data.dto.CompleteProjectParamsDto
+import dot.adun.feature.authorized.data.dto.CreateVacancyParamsDto
 import dot.adun.feature.authorized.data.dto.GetMyApplicationsParamsDto
 import dot.adun.feature.authorized.data.dto.IncomingApplicationDto
 import dot.adun.feature.authorized.data.dto.LeaveProjectReviewParamsDto
@@ -17,9 +18,11 @@ import dot.adun.feature.authorized.data.dto.SearchVacancyDto
 import dot.adun.feature.authorized.data.dto.VacancyDto
 import dot.adun.feature.authorized.data.mappers.toDomainModel
 import dot.adun.feature.authorized.data.mappers.toNetworkModel
+import dot.adun.feature.authorized.data.mappers.toNetworkValue
 import dot.adun.feature.authorized.domain.entity.Application
 import dot.adun.feature.authorized.domain.entity.IncomingApplication
 import dot.adun.feature.authorized.domain.entity.MyApplication
+import dot.adun.feature.authorized.domain.entity.NewVacancy
 import dot.adun.feature.authorized.domain.entity.PagingParams
 import dot.adun.feature.authorized.domain.entity.Vacancy
 import io.github.jan.supabase.SupabaseClient
@@ -78,6 +81,39 @@ class VacanciesApi @Inject constructor(
         )
             .decodeList<SearchVacancyDto>()
             .map { it.toDomainModel() }
+    }
+
+    suspend fun getMyVacancies(params: PagingParams): List<Vacancy> = apiRequest(
+        onSuccess = { it },
+        onEmptyOrNull = { emptyList() }
+    ) {
+        client.postgrest.rpc(
+            function = MainRpc.GET_MY_VACANCIES,
+            parameters = params.toNetworkModel()
+        )
+            .decodeList<SearchVacancyDto>()
+            .map { it.toDomainModel() }
+    }
+
+    /** Creates a vacancy and returns the id of the created row. */
+    suspend fun createVacancy(draft: NewVacancy): String = apiRequest(
+        onSuccess = { it },
+        onEmptyOrNull = { error("Vacancy was not created") }
+    ) {
+        client.postgrest.rpc(
+            function = MainRpc.CREATE_VACANCY,
+            parameters = CreateVacancyParamsDto(
+                title = draft.title,
+                description = draft.description,
+                requiredSkills = draft.requiredSkills,
+                experienceYearsRequired = draft.experienceYears,
+                paymentMethod = draft.paymentMethod.toNetworkValue(),
+                budget = draft.budget,
+                currency = draft.currency.toNetworkValue(),
+                durationType = draft.durationType.toNetworkValue(),
+            )
+        )
+            .decodeAs<String>()
     }
 
     suspend fun getVacancyById(id: String): Vacancy? = apiRequest(

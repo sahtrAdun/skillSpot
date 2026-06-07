@@ -7,12 +7,18 @@ import dot.adun.core.routing.nav3.navigateBack
 import dot.adun.core.routing.nav3.route
 import dot.adun.feature.authorized.routing.routes.ActiveRoute
 import dot.adun.feature.authorized.routing.routes.ApplicationsRoute
+import dot.adun.feature.authorized.routing.routes.CreateResumeRoute
+import dot.adun.feature.authorized.routing.routes.CreateVacancyRoute
+import dot.adun.feature.authorized.routing.routes.MyItemsRoute
 import dot.adun.feature.authorized.routing.routes.ResumeDetailsRoute
 import dot.adun.feature.authorized.routing.routes.ResumeEditRoute
 import dot.adun.feature.authorized.routing.routes.VacancyDetailsRoute
 import dot.adun.feature.authorized.routing.routes.VacancyEditRoute
 import dot.adun.feature.authorized.ui.screen.active.ActiveScreenResult
 import dot.adun.feature.authorized.ui.screen.applications.ApplicationsScreenResult
+import dot.adun.feature.authorized.ui.screen.create.resume.CreateResumeScreenResult
+import dot.adun.feature.authorized.ui.screen.create.vacancy.CreateVacancyScreenResult
+import dot.adun.feature.authorized.ui.screen.myitems.MyItemsScreenResult
 import dot.adun.feature.authorized.ui.screen.details.resume.ResumeDetailsScreenResult
 import dot.adun.feature.authorized.ui.screen.details.vacancy.VacancyDetailsScreenResult
 import dot.adun.feature.home.routing.routes.HomeRoute
@@ -81,6 +87,24 @@ class HomeNavFlow(
             }
         }
 
+        route<MyItemsRoute> { result ->
+            when (result) {
+                is MyItemsScreenResult -> onMyItemsScreenResult(result)
+            }
+        }
+
+        route<CreateVacancyRoute> { result ->
+            when (result) {
+                is CreateVacancyScreenResult -> navigateBack()
+            }
+        }
+
+        route<CreateResumeRoute> { result ->
+            when (result) {
+                is CreateResumeScreenResult -> navigateBack()
+            }
+        }
+
         profileFlow { result ->
             when (result) {
                 ProfileFlowResult.Logout -> onFinish(HomeFlowResult.Logout)
@@ -98,6 +122,9 @@ class HomeNavFlow(
         }
         is HomeScreenResult.Profile -> push(ProfileFlow.create(result.id))
         HomeScreenResult.Applications -> push(ApplicationsRoute())
+        HomeScreenResult.MyItems -> push(MyItemsRoute())
+        HomeScreenResult.CreateVacancy -> push(CreateVacancyRoute())
+        HomeScreenResult.CreateResume -> push(CreateResumeRoute())
     }
 
     private fun NavFlowScope.onSearchScreenResult(result: SearchScreenResult) = when (result) {
@@ -134,6 +161,14 @@ class HomeNavFlow(
         }
         // TODO: navigate to the created project screen once it exists (result.projectId).
         is ApplicationsScreenResult.OpenProject -> Unit
+    }
+
+    private fun NavFlowScope.onMyItemsScreenResult(result: MyItemsScreenResult) = when (result) {
+        MyItemsScreenResult.Finish -> navigateBack()
+        is MyItemsScreenResult.Details -> {
+            if (result.isVacancy) push(VacancyDetailsRoute(result.id))
+            else push(ResumeDetailsRoute(result.id))
+        }
     }
 
     private fun NavFlowScope.onResumeDetailsScreenResult(result: ResumeDetailsScreenResult) = when (result) {

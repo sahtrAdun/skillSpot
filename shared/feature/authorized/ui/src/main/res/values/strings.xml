@@ -16,6 +16,10 @@
     <string name="created_at">Created: %s</string>
     <string name="updated_at">Updated: %s</string>
     <string name="vacancy_edit_title">Edit Vacancy</string>
+    <string name="vacancy_create_title">Create Vacancy</string>
+    <string name="resume_create_title">Create Resume</string>
+    <string name="vacancy_duration">Duration</string>
+    <string name="create">Create</string>
     <string name="save">Save</string>
     <string name="title">Title</string>
     <string name="skill_input_hint">Enter skill...</string>
@@ -63,6 +67,8 @@
     <string name="apply_send">Send application</string>
     <string name="apply_no_resumes">Create a resume to apply</string>
     <string name="apply_success">Application sent</string>
+
+    <string name="my_items_empty">Nothing here yet</string>
 
     <string name="applications_title">Applications</string>
     <string name="applications_empty">No applications yet</string>

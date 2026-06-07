@@ -9,6 +9,8 @@ import dot.adun.feature.authorized.domain.entity.ActiveProject
 import dot.adun.feature.authorized.domain.entity.Application
 import dot.adun.feature.authorized.domain.entity.IncomingApplication
 import dot.adun.feature.authorized.domain.entity.MyApplication
+import dot.adun.feature.authorized.domain.entity.NewResume
+import dot.adun.feature.authorized.domain.entity.NewVacancy
 import dot.adun.feature.authorized.domain.entity.PagingParams
 import dot.adun.feature.authorized.domain.entity.PagingState
 import dot.adun.feature.authorized.domain.entity.Resume
@@ -94,6 +96,30 @@ class AuthorizedDataRepository @Inject constructor(
             data = response,
             hasMore = PagingState.hasMore(response.size, params.limit),
         )
+    }
+
+    override suspend fun getMyVacancies(params: PagingParams): PagingState<Vacancy> {
+        val response = vacanciesApi.getMyVacancies(params)
+        return PagingState(
+            data = response,
+            hasMore = PagingState.hasMore(response.size, params.limit),
+        )
+    }
+
+    override suspend fun getMyResumes(params: PagingParams): PagingState<Resume> {
+        val response = resumesApi.getMyResumes(params)
+        return PagingState(
+            data = response,
+            hasMore = PagingState.hasMore(response.size, params.limit),
+        )
+    }
+
+    override suspend fun createVacancy(draft: NewVacancy): String {
+        return vacanciesApi.createVacancy(draft)
+    }
+
+    override suspend fun createResume(draft: NewResume): String {
+        return resumesApi.createResume(draft)
     }
 
     override suspend fun getProfileById(id: String): PublicProfile? {

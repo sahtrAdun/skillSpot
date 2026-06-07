@@ -10,4 +10,6 @@ class HomeViewIntents : BaseViewIntents() {
     val openDetails = typedIntent<Pair<Boolean, String>>("openDetails")
     val openProfile = intent("openProfile")
     val openApplications = intent("openApplications")
+    val openMyItems = intent("openMyItems")
+    val openCreate = intent("openCreate")
 }

@@ -27,7 +27,7 @@ fun SearchVacancyDto.toDomainModel(): Vacancy {
         status = status.toVacancyStatus(),
         viewsCount = viewsCount,
         createdAt = createdAt,
-        updatedAt = createdAt,
+        updatedAt = updatedAt?.toLocalDateTime() ?: createdAt,
     )
 }
 

@@ -25,6 +25,7 @@ data class SearchVacancyDto(
     @SerialName("status") val status: String = "OPEN",
     @SerialName("views_count") val viewsCount: Int = 0,
     @SerialName("created_at") val createdAt: String,
+    @SerialName("updated_at") val updatedAt: String? = null,
 )
 
 @Serializable
