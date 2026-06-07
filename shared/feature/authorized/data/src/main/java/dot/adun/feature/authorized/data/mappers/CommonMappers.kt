@@ -14,8 +14,8 @@ fun String.toPaymentType(): PaymentType = when (this) {
 }
 
 fun PaymentType.toNetworkValue(): String = when (this) {
-    PaymentType.Hourly -> "hourly"
-    PaymentType.Fixed -> "fixed"
+    PaymentType.Hourly -> "HOURLY"
+    PaymentType.Fixed -> "FIXED"
 }
 
 fun String.toCurrencyType(): Currency = when (this) {

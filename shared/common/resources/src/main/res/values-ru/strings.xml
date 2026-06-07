@@ -61,4 +61,8 @@
     <string name="search_hint">Поиск…</string>
     <string name="search_empty">Ничего не найдено</string>
     <string name="load_more">Загрузить ещё</string>
+    <string name="my_vacancies">Мои вакансии</string>
+    <string name="my_resumes">Мои резюме</string>
+    <string name="create_vacancy">Создать вакансию</string>
+    <string name="create_resume">Создать резюме</string>
 </resources>

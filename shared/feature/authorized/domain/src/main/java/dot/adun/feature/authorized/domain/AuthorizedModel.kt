@@ -1,5 +1,7 @@
 package dot.adun.feature.authorized.domain
 
+import dot.adun.feature.authorized.domain.entity.NewResume
+import dot.adun.feature.authorized.domain.entity.NewVacancy
 import dot.adun.feature.authorized.domain.entity.PagingParams
 import dot.adun.feature.authorized.domain.entity.Resume
 import dot.adun.feature.authorized.domain.entity.Vacancy
@@ -37,6 +39,18 @@ class AuthorizedModel @Inject constructor(
 
     suspend fun searchResumes(query: String, params: PagingParams) =
         repository.searchResumes(query, params)
+
+    suspend fun getMyVacancies(params: PagingParams) =
+        repository.getMyVacancies(params)
+
+    suspend fun getMyResumes(params: PagingParams) =
+        repository.getMyResumes(params)
+
+    suspend fun createVacancy(draft: NewVacancy) =
+        repository.createVacancy(draft)
+
+    suspend fun createResume(draft: NewResume) =
+        repository.createResume(draft)
 
     suspend fun getProfileById(id: String) =
         repository.getProfileById(id)

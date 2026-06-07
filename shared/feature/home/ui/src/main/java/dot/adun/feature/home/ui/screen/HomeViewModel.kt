@@ -52,6 +52,18 @@ class HomeViewModel @Inject constructor(
             emitResult(HomeScreenResult.Applications)
         }
 
+        onIntent(intents.openMyItems) {
+            emitResult(HomeScreenResult.MyItems)
+        }
+
+        onIntent(intents.openCreate) {
+            when (state.value.userRole) {
+                UserRole.Customer -> emitResult(HomeScreenResult.CreateVacancy)
+                UserRole.Freelancer -> emitResult(HomeScreenResult.CreateResume)
+                UserRole.None -> Unit
+            }
+        }
+
         onIntent(intents.refresh) {
             action { _ -> resolveUserRoleActions(true) }
         }
@@ -153,6 +165,9 @@ sealed interface HomeScreenResult {
     data object Finish : HomeScreenResult
     data object Logout : HomeScreenResult
     data object Applications : HomeScreenResult
+    data object MyItems : HomeScreenResult
+    data object CreateVacancy : HomeScreenResult
+    data object CreateResume : HomeScreenResult
 
     @Immutable
     data class Details(val isVacancy: Boolean, val id: String) : HomeScreenResult

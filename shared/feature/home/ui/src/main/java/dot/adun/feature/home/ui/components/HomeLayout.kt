@@ -32,7 +32,6 @@ import dot.adun.core.domain.entity.LoadState
 import dot.adun.core.domain.entity.TextRef
 import dot.adun.core.domain.entity.UserRole
 import dot.adun.core.domain.entity.resRef
-import dot.adun.core.domain.entity.strRef
 import dot.adun.core.ui.LocalUserRole
 import dot.adun.core.ui.components.ContentLabel
 import dot.adun.core.ui.components.HSpacer
@@ -112,10 +111,18 @@ fun HomeLayout(
                 Block(resRef(Res.strings.applications), intents.openApplications)
             }
             item {
-                Block(strRef("My resumes"), {})
+                val myItemsLabel = when (LocalUserRole.current) {
+                    UserRole.Customer -> Res.strings.my_vacancies
+                    else -> Res.strings.my_resumes
+                }
+                Block(resRef(myItemsLabel), intents.openMyItems)
             }
             item {
-                Block(strRef("Create resume"), {})
+                val createLabel = when (LocalUserRole.current) {
+                    UserRole.Customer -> Res.strings.create_vacancy
+                    else -> Res.strings.create_resume
+                }
+                Block(resRef(createLabel), intents.openCreate)
             }
         }
     }

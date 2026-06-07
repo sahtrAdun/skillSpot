@@ -16,6 +16,10 @@
     <string name="created_at">Создано: %s</string>
     <string name="updated_at">Обновлено: %s</string>
     <string name="vacancy_edit_title">Редактировать вакансию</string>
+    <string name="vacancy_create_title">Создать вакансию</string>
+    <string name="resume_create_title">Создать резюме</string>
+    <string name="vacancy_duration">Тип занятости</string>
+    <string name="create">Создать</string>
     <string name="save">Сохранить</string>
     <string name="title">Название</string>
     <string name="skill_input_hint">Введите навык...</string>
@@ -63,6 +67,8 @@
     <string name="apply_send">Отправить отклик</string>
     <string name="apply_no_resumes">Создайте резюме, чтобы откликнуться</string>
     <string name="apply_success">Отклик отправлен</string>
+
+    <string name="my_items_empty">Здесь пока пусто</string>
 
     <string name="applications_title">Отклики</string>
     <string name="applications_empty">Откликов пока нет</string>
