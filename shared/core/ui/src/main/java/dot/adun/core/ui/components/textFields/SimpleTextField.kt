@@ -6,9 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.Dp
 import dot.adun.core.ui.components.base.BorderVisibility
 import dot.adun.core.ui.components.buttons.TextFieldButton
 import dot.adun.core.ui.components.textFields.core.BaseTextField
+import dot.adun.core.ui.components.textFields.core.TextFieldDefaults
 import dot.adun.core.ui.entity.TextFieldData
 import dot.adun.core.ui.theme.AppTheme
 import dot.adun.core.ui.theme.presets.TextFieldsColorPresets
@@ -33,6 +35,7 @@ fun SimpleTextField(
     colorPreset: TextFieldsColorPresets.AdunTextFieldColors = AppTheme.presets.textFields.common,
     maxLines: Int = 1,
     minLines: Int = 1,
+    height: Dp = TextFieldDefaults.height,
 ) {
     BaseTextField(
         modifier = modifier,
@@ -49,6 +52,7 @@ fun SimpleTextField(
         colorPreset = colorPreset,
         maxLines = maxLines,
         minLines = minLines,
+        height = height,
         leadingContent = leadingIcon?.let {
             { tint ->
                 TextFieldButton(

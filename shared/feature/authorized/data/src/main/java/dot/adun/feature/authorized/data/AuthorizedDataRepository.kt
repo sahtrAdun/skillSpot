@@ -80,6 +80,22 @@ class AuthorizedDataRepository @Inject constructor(
         return resumesApi.getResumeById(id) ?: error("Resume not found")
     }
 
+    override suspend fun searchVacancies(query: String, params: PagingParams): PagingState<Vacancy> {
+        val response = vacanciesApi.searchVacancies(query, params.limit, params.offset)
+        return PagingState(
+            data = response,
+            hasMore = PagingState.hasMore(response.size, params.limit),
+        )
+    }
+
+    override suspend fun searchResumes(query: String, params: PagingParams): PagingState<Resume> {
+        val response = resumesApi.searchResumes(query, params.limit, params.offset)
+        return PagingState(
+            data = response,
+            hasMore = PagingState.hasMore(response.size, params.limit),
+        )
+    }
+
     override suspend fun getProfileById(id: String): PublicProfile? {
         return profileApi.getProfileById(id)
     }

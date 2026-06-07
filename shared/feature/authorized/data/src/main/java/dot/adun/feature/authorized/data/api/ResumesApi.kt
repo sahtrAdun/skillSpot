@@ -3,6 +3,8 @@ package dot.adun.feature.authorized.data.api
 import dot.adun.core.data.apiRequest
 import dot.adun.feature.authorized.data.MainRpc
 import dot.adun.feature.authorized.data.dto.ResumeDto
+import dot.adun.feature.authorized.data.dto.SearchParamsDto
+import dot.adun.feature.authorized.data.dto.SearchResumeDto
 import dot.adun.feature.authorized.data.mappers.toDomainModel
 import dot.adun.feature.authorized.data.mappers.toNetworkModel
 import dot.adun.feature.authorized.domain.entity.PagingParams
@@ -27,6 +29,18 @@ class ResumesApi @Inject constructor(
             parameters = params.toNetworkModel()
         )
             .decodeList<ResumeDto>()
+            .map { it.toDomainModel() }
+    }
+
+    suspend fun searchResumes(query: String, limit: Int, offset: Int): List<Resume> = apiRequest(
+        onSuccess = { it },
+        onEmptyOrNull = { emptyList() }
+    ) {
+        client.postgrest.rpc(
+            function = MainRpc.SEARCH_RESUMES,
+            parameters = SearchParamsDto(query = query, limit = limit, offset = offset)
+        )
+            .decodeList<SearchResumeDto>()
             .map { it.toDomainModel() }
     }
 

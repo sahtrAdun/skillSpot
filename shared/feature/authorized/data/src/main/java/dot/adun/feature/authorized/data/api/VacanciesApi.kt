@@ -12,6 +12,8 @@ import dot.adun.feature.authorized.data.dto.GetMyApplicationsParamsDto
 import dot.adun.feature.authorized.data.dto.IncomingApplicationDto
 import dot.adun.feature.authorized.data.dto.LeaveProjectReviewParamsDto
 import dot.adun.feature.authorized.data.dto.MyApplicationDto
+import dot.adun.feature.authorized.data.dto.SearchParamsDto
+import dot.adun.feature.authorized.data.dto.SearchVacancyDto
 import dot.adun.feature.authorized.data.dto.VacancyDto
 import dot.adun.feature.authorized.data.mappers.toDomainModel
 import dot.adun.feature.authorized.data.mappers.toNetworkModel
@@ -64,6 +66,18 @@ class VacanciesApi @Inject constructor(
             parameters = params.toNetworkModel()
         )
             .decodeList<GetClientActiveProjectsResponse.Value>()
+    }
+
+    suspend fun searchVacancies(query: String, limit: Int, offset: Int): List<Vacancy> = apiRequest(
+        onSuccess = { it },
+        onEmptyOrNull = { emptyList() }
+    ) {
+        client.postgrest.rpc(
+            function = MainRpc.SEARCH_VACANCIES,
+            parameters = SearchParamsDto(query = query, limit = limit, offset = offset)
+        )
+            .decodeList<SearchVacancyDto>()
+            .map { it.toDomainModel() }
     }
 
     suspend fun getVacancyById(id: String): Vacancy? = apiRequest(

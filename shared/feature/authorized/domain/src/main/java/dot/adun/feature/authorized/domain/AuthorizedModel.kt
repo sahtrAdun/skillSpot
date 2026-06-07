@@ -32,6 +32,12 @@ class AuthorizedModel @Inject constructor(
     suspend fun getResumeById(id: String) =
         repository.getResumeById(id)
 
+    suspend fun searchVacancies(query: String, params: PagingParams) =
+        repository.searchVacancies(query, params)
+
+    suspend fun searchResumes(query: String, params: PagingParams) =
+        repository.searchResumes(query, params)
+
     suspend fun getProfileById(id: String) =
         repository.getProfileById(id)
 

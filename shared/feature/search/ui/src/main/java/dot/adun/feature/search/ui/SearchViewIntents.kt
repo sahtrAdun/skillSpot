@@ -3,7 +3,10 @@ package dot.adun.feature.search.ui
 import dot.adun.core.ui.core.BaseViewIntents
 
 class SearchViewIntents : BaseViewIntents() {
-    val updateText = typedIntent<String>("updateText")
-    val validateText = intent("validateText")
-    val navigateBack = intent("navigateBack")
+    val updateQuery = typedIntent<String>("updateQuery")
+    val cancel = intent("cancel")
+    val loadMore = intent("loadMore")
+
+    /** [Pair.first] = isVacancy, [Pair.second] = id of the vacancy/resume to open. */
+    val openDetails = typedIntent<Pair<Boolean, String>>("openDetails")
 }
