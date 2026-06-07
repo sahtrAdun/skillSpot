@@ -30,6 +30,8 @@
     <string name="password">Пароль</string>
     <string name="auth_error_email_exists">Такой email уже существует</string>
     <string name="auth_error_email_invalid">Неверный email</string>
+    <string name="auth_error_invalid_credentials_title">Не удалось войти</string>
+    <string name="auth_error_invalid_credentials_desc">Неверный email или пароль. Пожалуйста, попробуйте снова.</string>
     <string name="screen_registration_title">Регистрация</string>
     <string name="screen_registration_desc">Введите ваш email и придумайте пароль для начала работы.</string>
     <string name="screen_registration_alredy_have_account">Уже есть аккаунт?</string>

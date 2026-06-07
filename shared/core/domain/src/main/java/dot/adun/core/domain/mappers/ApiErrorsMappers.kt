@@ -40,7 +40,7 @@ private fun AuthRestException.toApiError(): ApiError {
         AuthErrorCode.UserAlreadyExists -> AuthError.EmailExists
         AuthErrorCode.EmailExists -> AuthError.EmailExists
         AuthErrorCode.EmailAddressInvalid -> AuthError.InvalidEmail
-        AuthErrorCode.InvalidCredentials -> ApiError.Unauthorized
+        AuthErrorCode.InvalidCredentials -> AuthError.InvalidCredentials
         else -> AppError.Unknown(this)
     }
 }
