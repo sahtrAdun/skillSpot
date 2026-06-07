@@ -21,6 +21,8 @@ interface AuthorizedRepository {
 
     suspend fun getVacancyById(id: String): Vacancy
     suspend fun getResumeById(id: String): Resume
+    suspend fun searchVacancies(query: String, params: PagingParams): PagingState<Vacancy>
+    suspend fun searchResumes(query: String, params: PagingParams): PagingState<Resume>
     suspend fun getProfileById(id: String): PublicProfile?
     suspend fun updateVacancy(vacancy: Vacancy)
     suspend fun updateResume(resume: Resume)

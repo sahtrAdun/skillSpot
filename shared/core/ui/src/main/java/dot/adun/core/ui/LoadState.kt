@@ -3,7 +3,6 @@ package dot.adun.core.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -27,15 +26,15 @@ fun LoadState(
     loadState: LoadState,
     modifier: Modifier = Modifier,
     onError: @Composable (LoadState.Error) -> Unit = { LoadStateContent.ErrorState(it) },
-    onLoading: @Composable () -> Unit = { LoadStateContent.LoadState() },
+    onLoading: @Composable (() -> Unit)? = { LoadStateContent.LoadState() },
     onDone: @Composable () -> Unit,
 ) {
     Box(modifier = modifier) {
         when (loadState) {
             is LoadState.Error -> onError(loadState)
-            LoadState.Loading -> onLoading()
-            LoadState.Done -> onDone()
-            LoadState.NotStarted -> Unit
+            LoadState.Loading -> onLoading?.invoke() ?: onDone()
+            LoadState.Done,
+            LoadState.NotStarted -> onDone()
         }
     }
 }

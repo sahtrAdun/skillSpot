@@ -101,7 +101,11 @@ class HomeNavFlow(
     }
 
     private fun NavFlowScope.onSearchScreenResult(result: SearchScreenResult) = when (result) {
-        else -> navigateBack()
+        SearchScreenResult.Finish -> navigateBack()
+        is SearchScreenResult.Details -> {
+            if (result.isVacancy) push(VacancyDetailsRoute(result.id))
+            else push(ResumeDetailsRoute(result.id))
+        }
     }
 
     private fun NavFlowScope.onSettingsScreenResult(result: SettingsScreenResult) = when (result) {

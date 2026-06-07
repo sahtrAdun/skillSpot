@@ -58,4 +58,7 @@
     <string name="in_progress">В процессе</string>
     <string name="for_you">Специально для вас</string>
     <string name="applications">Отклики</string>
+    <string name="search_hint">Поиск…</string>
+    <string name="search_empty">Ничего не найдено</string>
+    <string name="load_more">Загрузить ещё</string>
 </resources>

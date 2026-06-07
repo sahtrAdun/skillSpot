@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dot.adun.common.resources.Res
 import dot.adun.core.domain.validation.Explanation
@@ -63,6 +64,7 @@ fun BaseTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     maxLines: Int = 1,
     minLines: Int = 1,
+    height: Dp = TextFieldDefaults.height,
     contentPaddings: PaddingValues = PaddingValues(12.dp),
     borderVisibility: BorderVisibility = BorderVisibility.Newer,
     colorPreset: TextFieldsColorPresets.AdunTextFieldColors = AppTheme.presets.textFields.common
@@ -105,7 +107,7 @@ fun BaseTextField(
             },
             modifier = modifier
                 .then(
-                    if (maxLines == 1) Modifier.height(TextFieldDefaults.height) else Modifier
+                    if (maxLines == 1) Modifier.height(height) else Modifier
                 )
                 .onFocusChanged { focusState -> isFocused = focusState.isFocused },
         )

@@ -9,7 +9,7 @@ data class PagingState<V>(
     val pageSize: Int = defaultPageSize,
 ) {
     companion object {
-        fun <T> empty(): PagingState<T> = PagingState(emptyList<T>(), false)
+        fun <T> empty(): PagingState<T> = PagingState(emptyList(), false)
         val defaultPageSize: Int get() = 20
         fun hasMore(
             dataSize: Int,
