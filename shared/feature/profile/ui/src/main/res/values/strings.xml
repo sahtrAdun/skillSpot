@@ -30,4 +30,13 @@
     <string name="profile_from">from %s</string>
     <string name="profile_active">Active</string>
     <string name="profile_inactive">Inactive</string>
+
+    <string name="profile_edit_title">Edit profile</string>
+    <string name="profile_save">Save</string>
+    <string name="profile_full_name">Full name</string>
+    <string name="profile_bio">About</string>
+    <string name="profile_country">Country</string>
+    <string name="profile_city">City</string>
+    <string name="profile_updated">Profile updated</string>
+    <string name="profile_avatar_upload_failed">Couldn\'t upload avatar, other changes were saved</string>
 </resources>

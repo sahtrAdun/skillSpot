@@ -23,6 +23,7 @@ data class ProfileViewState(
 sealed interface ProfileScreenResult {
     data object Finish : ProfileScreenResult
     data object Logout : ProfileScreenResult
+    data object EditProfile : ProfileScreenResult
     data class Details(val isVacancy: Boolean, val id: String) : ProfileScreenResult
     data class OtherProfile(val profileId: String) : ProfileScreenResult
 }

@@ -11,6 +11,7 @@ import dot.adun.feature.profile.domain.ProfileRepository
 import dot.adun.feature.profile.domain.entity.Profile
 import dot.adun.feature.profile.domain.entity.ProfileContent
 import dot.adun.feature.profile.domain.entity.ProfileResult
+import dot.adun.feature.profile.domain.entity.ProfileUpdate
 import dot.adun.feature.profile.domain.entity.PublicProfile
 import dot.adun.feature.profile.domain.entity.Review
 import io.github.aakira.napier.Napier
@@ -44,6 +45,14 @@ class ProfileDataRepository @Inject constructor(
 
     override suspend fun updateProfile(profile: Profile): ProfileResult {
         return profileApi.updateProfile(profile.toNetworkModel())
+    }
+
+    override suspend fun updateMyProfile(update: ProfileUpdate) {
+        profileApi.updateMyProfile(update)
+    }
+
+    override suspend fun uploadAvatar(bytes: ByteArray): String {
+        return profileApi.uploadAvatar(bytes)
     }
 
     override suspend fun cacheProfile(profile: Profile) {

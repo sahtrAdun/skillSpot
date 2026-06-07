@@ -18,7 +18,8 @@ fun ProfileDto.toDomainModel(): Profile = Profile(
     ratingAvg = ratingAvg,
     tasksCompleted = tasksCompleted,
     avatarUrl = avatarUrl,
-    createdAt = createdAt.toLocalDateTime()
+    createdAt = createdAt.toLocalDateTime(),
+    updatedAt = updatedAt.toLocalDateTime()
 )
 
 fun Profile.toNetworkModel(): ProfileDto = ProfileDto(
@@ -35,6 +36,7 @@ fun Profile.toNetworkModel(): ProfileDto = ProfileDto(
     city = personalInfo.city,
     avatarUrl = avatarUrl,
     createdAt = createdAt.toNetwork(),
+    updatedAt = updatedAt.toNetwork()
 )
 
 fun PublicProfileDto.toDomainModel(): PublicProfile = PublicProfile(

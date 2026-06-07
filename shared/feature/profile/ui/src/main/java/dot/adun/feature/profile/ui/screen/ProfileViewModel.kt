@@ -23,6 +23,8 @@ class ProfileViewModel @AssistedInject constructor(
 
     override val intents = ProfileViewIntents()
 
+    private var loadedOnce = false
+
     init {
         onIntent(intents.navigateBack) {
             emitResult(ProfileScreenResult.Finish)
@@ -40,12 +42,22 @@ class ProfileViewModel @AssistedInject constructor(
             emitResult(ProfileScreenResult.OtherProfile(otherProfileId))
         }
 
+        onIntent(intents.editProfile) {
+            emitResult(ProfileScreenResult.EditProfile)
+        }
+
         onIntent(intents.logout) {
             logout()
         }
 
         on(model.profile) { current ->
-            update { state -> state.copy(isOwnProfile = current?.id == profileId) }
+            val isOwn = current?.id == profileId
+            update { state -> state.copy(isOwnProfile = isOwn) }
+            // The cached own-profile changed after the first load (e.g. returning
+            // from the edit screen) — reload the public profile to reflect it.
+            if (isOwn && loadedOnce) {
+                loadProfile()
+            }
         }
 
         loadProfile()
@@ -66,6 +78,7 @@ class ProfileViewModel @AssistedInject constructor(
         ) {
             job { model.getProfileById(profileId) }
             onSuccess { profile ->
+                loadedOnce = true
                 update { state -> state.copy(profile = profile) }
                 loadReviews()
                 loadContent()
