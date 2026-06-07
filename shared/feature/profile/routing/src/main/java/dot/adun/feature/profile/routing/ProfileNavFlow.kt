@@ -9,6 +9,7 @@ import dot.adun.core.routing.nav3.route
 import dot.adun.feature.authorized.routing.routes.ResumeDetailsRoute
 import dot.adun.feature.authorized.routing.routes.VacancyDetailsRoute
 import dot.adun.feature.profile.ui.screen.ProfileScreenResult
+import dot.adun.feature.profile.ui.screen.edit.ProfileEditScreenResult
 
 @Immutable
 class ProfileNavFlow(
@@ -25,11 +26,18 @@ class ProfileNavFlow(
                 is ProfileScreenResult -> onProfileScreenResult(result)
             }
         }
+
+        route<ProfileEditRoute> { result ->
+            when (result) {
+                is ProfileEditScreenResult -> navigateBack()
+            }
+        }
     }
 
     private fun NavFlowScope.onProfileScreenResult(result: ProfileScreenResult) = when (result) {
         ProfileScreenResult.Finish -> navigateBack()
         ProfileScreenResult.Logout -> onFinish(ProfileFlowResult.Logout)
+        ProfileScreenResult.EditProfile -> push(ProfileEditRoute())
         is ProfileScreenResult.Details -> {
             if (result.isVacancy) push(VacancyDetailsRoute(result.id))
             else push(ResumeDetailsRoute(result.id))

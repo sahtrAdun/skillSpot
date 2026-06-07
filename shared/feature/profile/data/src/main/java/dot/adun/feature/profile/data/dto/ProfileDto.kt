@@ -31,4 +31,6 @@ data class ProfileDto(
     val avatarUrl: String? = null,
     @SerialName("created_at")
     val createdAt: String,
+    @SerialName("updated_at")
+    val updatedAt: String
 )

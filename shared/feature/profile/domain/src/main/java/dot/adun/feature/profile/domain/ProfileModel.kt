@@ -3,6 +3,7 @@ package dot.adun.feature.profile.domain
 import androidx.datastore.preferences.core.longPreferencesKey
 import dot.adun.core.domain.store.AppPreferences
 import dot.adun.feature.profile.domain.entity.Profile
+import dot.adun.feature.profile.domain.entity.ProfileUpdate
 import kotlinx.coroutines.flow.lastOrNull
 import java.time.Duration
 import javax.inject.Inject
@@ -34,6 +35,31 @@ class ProfileModel @Inject constructor(
     suspend fun logout() {
         repository.logout()
         preferences.remove(longPreferencesKey(LAST_PROFILE_UPDATE_TIME_KEY))
+    }
+
+    suspend fun uploadAvatar(bytes: ByteArray): String =
+        repository.uploadAvatar(bytes)
+
+    /**
+     * Updates the current user's profile via RPC and keeps the locally cached
+     * [Profile] in sync so observers (home, profile screens) reflect the change.
+     */
+    suspend fun updateMyProfile(update: ProfileUpdate) {
+        repository.updateMyProfile(update)
+
+        val current = repository.readProfile() ?: return
+        repository.cacheProfile(
+            current.copy(
+                personalInfo = current.personalInfo.copy(
+                    fullName = update.fullName,
+                    bio = update.bio,
+                    age = update.age,
+                    country = update.country,
+                    city = update.city,
+                ),
+                avatarUrl = update.avatarUrl,
+            )
+        )
     }
 
     suspend fun getProfileById(id: String) =

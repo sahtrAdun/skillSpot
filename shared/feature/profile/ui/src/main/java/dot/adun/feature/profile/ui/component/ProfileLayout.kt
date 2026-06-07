@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -90,6 +91,7 @@ fun ProfileLayout(
             ProfileHeader(
                 profile = profile,
                 topPadding = padding.top,
+                onEditClick = intents.editProfile
             )
 
             Column(
@@ -135,6 +137,7 @@ fun ProfileLayout(
 private fun ProfileHeader(
     profile: PublicProfile?,
     topPadding: Dp,
+    onEditClick: () -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -153,13 +156,30 @@ private fun ProfileHeader(
     ) {
         ProfileAvatar(name = profile?.fullName)
         VSpacer(12.dp)
-        Text(
-            text = profile?.fullName?.takeIf { it.isNotBlank() }
-                ?: stringResource(R.string.profile_unnamed),
-            style = AppTheme.typography.subhead1,
-            color = AppTheme.colors.text.primary,
-            textAlign = TextAlign.Center,
-        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = profile?.fullName?.takeIf { it.isNotBlank() }
+                    ?: stringResource(R.string.profile_unnamed),
+                style = AppTheme.typography.subhead1,
+                color = AppTheme.colors.text.primary,
+                textAlign = TextAlign.Center,
+            )
+            IcButton(
+                vector = Icons.Default.Edit,
+                colors = AppTheme.presets.buttons.icon.transparent,
+                onClick = onEditClick,
+                iconModifier = Modifier.requiredSize(16.dp),
+                modifier = Modifier
+                    .surface(
+                        color = AppTheme.colors.layer.surface,
+                        shape = CircleShape,
+                        padding = 4.dp
+                    ),
+            )
+        }
         profile?.role?.label()?.let { role ->
             VSpacer(4.dp)
             Text(

@@ -22,6 +22,7 @@ dependencies {
     api(libs.supabase.postgrest)
     api(libs.supabase.auth)
     api(libs.supabase.realtime)
+    api(libs.supabase.storage)
 
     implementation("com.squareup.okhttp3:logging-interceptor:5.3.2")
 }

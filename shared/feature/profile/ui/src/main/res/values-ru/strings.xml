@@ -30,4 +30,13 @@
     <string name="profile_from">от %s</string>
     <string name="profile_active">Активен</string>
     <string name="profile_inactive">Неактивен</string>
+
+    <string name="profile_edit_title">Редактировать профиль</string>
+    <string name="profile_save">Сохранить</string>
+    <string name="profile_full_name">Имя</string>
+    <string name="profile_bio">О себе</string>
+    <string name="profile_country">Страна</string>
+    <string name="profile_city">Город</string>
+    <string name="profile_updated">Профиль обновлён</string>
+    <string name="profile_avatar_upload_failed">Не удалось загрузить аватар, остальные изменения сохранены</string>
 </resources>

@@ -9,10 +9,12 @@ import dot.adun.feature.profile.data.dto.ProfileContentWrapperDto
 import dot.adun.feature.profile.data.dto.ProfileDto
 import dot.adun.feature.profile.data.dto.PublicProfileDto
 import dot.adun.feature.profile.data.dto.ReviewWithSenderDto
+import dot.adun.feature.profile.data.dto.UpdateMyProfileParamsDto
 import dot.adun.feature.profile.data.mappers.toDomainModel
 import dot.adun.feature.profile.data.mappers.toProfileContent
 import dot.adun.feature.profile.domain.entity.ProfileContent
 import dot.adun.feature.profile.domain.entity.ProfileResult
+import dot.adun.feature.profile.domain.entity.ProfileUpdate
 import dot.adun.feature.profile.domain.entity.PublicProfile
 import dot.adun.feature.profile.domain.entity.Review
 import io.github.jan.supabase.SupabaseClient
@@ -20,6 +22,10 @@ import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.rpc
+import io.github.jan.supabase.storage.storage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -49,6 +55,33 @@ class ProfileApi @Inject constructor(
         } catch (_: Exception) {
             ProfileResult.UpdateFailed
         }
+    }
+
+    suspend fun uploadAvatar(bytes: ByteArray): String = withContext(Dispatchers.IO) {
+        val userId = authUser(true).id
+        val fileName = "$userId-${UUID.randomUUID()}.jpg"
+        val bucket = client.storage.from(AVATARS_BUCKET)
+
+        bucket.upload(path = fileName, data = bytes) {
+            upsert = true
+        }
+
+        bucket.publicUrl(fileName)
+    }
+
+    suspend fun updateMyProfile(update: ProfileUpdate) = withContext(Dispatchers.IO) {
+        client.postgrest.rpc(
+            function = Functions.UPDATE_MY_PROFILE,
+            parameters = UpdateMyProfileParamsDto(
+                fullName = update.fullName,
+                bio = update.bio,
+                age = update.age?.toInt(),
+                country = update.country,
+                city = update.city,
+                avatarUrl = update.avatarUrl,
+            )
+        )
+        Unit
     }
 
     suspend fun getProfileById(id: String): PublicProfile? = apiRequest(
@@ -104,6 +137,8 @@ private object Functions {
     const val GET_USER_PROFILE_BY_ID = "get_user_profile_by_id"
     const val GET_REVIEWS_BY_PROFILE_ID = "get_reviews_by_profile_id"
     const val GET_USER_CONTENT_BY_PROFILE_ID = "get_user_content_by_profile_id"
+    const val UPDATE_MY_PROFILE = "update_my_profile"
 }
 
 private const val PROFILE_TABLE = "profiles"
+private const val AVATARS_BUCKET = "avatars"

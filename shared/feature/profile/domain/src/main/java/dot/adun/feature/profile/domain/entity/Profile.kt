@@ -15,6 +15,7 @@ data class Profile(
     val tasksCompleted: Int,
     val avatarUrl: String?,
     val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime,
 ) {
     @Immutable
     data class PersonalInfo(
