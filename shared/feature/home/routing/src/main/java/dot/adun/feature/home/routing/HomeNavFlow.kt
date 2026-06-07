@@ -14,6 +14,8 @@ import dot.adun.feature.authorized.routing.routes.ResumeDetailsRoute
 import dot.adun.feature.authorized.routing.routes.ResumeEditRoute
 import dot.adun.feature.authorized.routing.routes.VacancyDetailsRoute
 import dot.adun.feature.authorized.routing.routes.VacancyEditRoute
+import dot.adun.feature.chat.routing.ChatRoute
+import dot.adun.feature.chat.ui.ChatScreenResult
 import dot.adun.feature.authorized.ui.screen.active.ActiveScreenResult
 import dot.adun.feature.authorized.ui.screen.applications.ApplicationsScreenResult
 import dot.adun.feature.authorized.ui.screen.create.resume.CreateResumeScreenResult
@@ -105,6 +107,12 @@ class HomeNavFlow(
             }
         }
 
+        route<ChatRoute> { result ->
+            when (result) {
+                is ChatScreenResult -> navigateBack()
+            }
+        }
+
         profileFlow { result ->
             when (result) {
                 ProfileFlowResult.Logout -> onFinish(HomeFlowResult.Logout)
@@ -144,6 +152,7 @@ class HomeNavFlow(
             if (result.isVacancy) push(VacancyDetailsRoute(result.id))
             else push(ResumeDetailsRoute(result.id))
         }
+        is ActiveScreenResult.Chat -> push(ChatRoute(result.projectId))
         ActiveScreenResult.Finish -> navigateBack()
     }
 

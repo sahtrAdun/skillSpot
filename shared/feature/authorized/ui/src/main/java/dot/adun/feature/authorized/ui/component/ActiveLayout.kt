@@ -91,7 +91,7 @@ fun ActiveLayout(
                             attachment = {
                                 ChatActionButton(
                                     modifier = Modifier.fillMaxWidth(),
-                                    onClick = { intents.openChat(vacancy.id) },
+                                    onClick = { vacancy.projectId?.let(intents.openChat) },
                                 )
                             },
                         )

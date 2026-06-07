@@ -44,6 +44,11 @@
             <option value="$PROJECT_DIR$/shared/feature/authorized/domain" />
             <option value="$PROJECT_DIR$/shared/feature/authorized/routing" />
             <option value="$PROJECT_DIR$/shared/feature/authorized/ui" />
+            <option value="$PROJECT_DIR$/shared/feature/chat" />
+            <option value="$PROJECT_DIR$/shared/feature/chat/data" />
+            <option value="$PROJECT_DIR$/shared/feature/chat/domain" />
+            <option value="$PROJECT_DIR$/shared/feature/chat/routing" />
+            <option value="$PROJECT_DIR$/shared/feature/chat/ui" />
             <option value="$PROJECT_DIR$/shared/feature/home" />
             <option value="$PROJECT_DIR$/shared/feature/home/data" />
             <option value="$PROJECT_DIR$/shared/feature/home/domain" />

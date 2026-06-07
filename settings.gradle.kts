@@ -71,5 +71,10 @@ include(
     ":shared:feature:authorized:domain",
     ":shared:feature:authorized:ui",
     ":shared:feature:authorized:routing",
+
+    ":shared:feature:chat:data",
+    ":shared:feature:chat:domain",
+    ":shared:feature:chat:ui",
+    ":shared:feature:chat:routing",
 )
  

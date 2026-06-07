@@ -24,13 +24,16 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun Modifier.shimmer(
-    cornerRadius: Dp = 0.dp
+    cornerRadius: Dp = 0.dp,
+    autoHide: Boolean = false
 ): Modifier {
     var visible by remember { mutableStateOf(true) }
 
-    LaunchedEffect(Unit) {
-        delay(DURATION.toLong())
-        visible = false
+    LaunchedEffect(Unit, autoHide) {
+        if (autoHide) {
+            delay(DURATION.toLong())
+            visible = false
+        }
     }
 
     return this.shimmer(

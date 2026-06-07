@@ -32,5 +32,7 @@ data class VacancyDto(
     @SerialName("created_at")
     val createdAt: String,
     @SerialName("updated_at")
-    val updatedAt: String
+    val updatedAt: String,
+    @SerialName("project_id")
+    val projectId: String? = null,
 )

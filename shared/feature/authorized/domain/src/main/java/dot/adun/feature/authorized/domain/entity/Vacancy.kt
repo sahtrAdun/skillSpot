@@ -13,7 +13,9 @@ data class Vacancy(
     val status: Status,
     val viewsCount: Int,
     val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime
+    val updatedAt: LocalDateTime,
+    /** Present only for active working vacancies — the related project's id. */
+    val projectId: String? = null,
 ) {
     @Immutable
     data class Info(
