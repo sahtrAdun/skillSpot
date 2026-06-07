@@ -63,4 +63,23 @@
     <string name="apply_send">Отправить отклик</string>
     <string name="apply_no_resumes">Создайте резюме, чтобы откликнуться</string>
     <string name="apply_success">Отклик отправлен</string>
+
+    <string name="applications_title">Отклики</string>
+    <string name="applications_empty">Откликов пока нет</string>
+    <string name="application_decline">Отказаться</string>
+    <string name="application_approve">Одобрить</string>
+    <string name="application_approved">Отклик одобрен</string>
+    <string name="application_cancelled">Отклик отозван</string>
+
+    <string name="action_chat">Чат</string>
+    <string name="action_complete">Завершить</string>
+    <string name="review_title">Оставьте отзыв</string>
+    <string name="review_comment_hint">Комментарий (необязательно)</string>
+    <string name="review_submit">Отправить отзыв</string>
+    <string name="review_success">Отзыв отправлен</string>
+    <string name="application_status_pending">На рассмотрении</string>
+    <string name="application_status_interview">Собеседование</string>
+    <string name="application_status_accepted">Принято</string>
+    <string name="application_status_declined">Отклонено</string>
+    <string name="application_status_canceled">Отменено</string>
 </resources>

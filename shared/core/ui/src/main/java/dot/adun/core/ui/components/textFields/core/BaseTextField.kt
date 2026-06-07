@@ -62,6 +62,7 @@ fun BaseTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = keyboardType),
     visualTransformation: VisualTransformation = VisualTransformation.None,
     maxLines: Int = 1,
+    minLines: Int = 1,
     contentPaddings: PaddingValues = PaddingValues(12.dp),
     borderVisibility: BorderVisibility = BorderVisibility.Newer,
     colorPreset: TextFieldsColorPresets.AdunTextFieldColors = AppTheme.presets.textFields.common
@@ -79,6 +80,7 @@ fun BaseTextField(
             enabled = enabled,
             readOnly = readOnly,
             maxLines = maxLines,
+            minLines = minLines,
             singleLine = maxLines == 1,
             visualTransformation = visualTransformation,
             textStyle = AppTheme.typography.body1.copy(color = colors.text),
@@ -94,6 +96,7 @@ fun BaseTextField(
                     tint = tint,
                     placeholder = placeholder,
                     isFocused = isFocused,
+                    singleLine = maxLines == 1,
                     innerTextField = innerTextField,
                     trailingContent = trailingContent,
                     leadingContent = leadingContent,
@@ -101,7 +104,9 @@ fun BaseTextField(
                 )
             },
             modifier = modifier
-                .height(TextFieldDefaults.height)
+                .then(
+                    if (maxLines == 1) Modifier.height(TextFieldDefaults.height) else Modifier
+                )
                 .onFocusChanged { focusState -> isFocused = focusState.isFocused },
         )
         TextFieldExplanation(data)
@@ -117,6 +122,7 @@ private fun TextFieldDecoration(
     tint: Color,
     placeholder: String?,
     isFocused: Boolean,
+    singleLine: Boolean,
     innerTextField: @Composable (() -> Unit),
     trailingContent: @Composable ((Color) -> Unit)?,
     leadingContent: @Composable ((Color) -> Unit)?,
@@ -124,7 +130,7 @@ private fun TextFieldDecoration(
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = if (singleLine) Alignment.CenterVertically else Alignment.Top,
         modifier = Modifier
             .surface(
                 color = animateColorAsState(colors.background).value,
@@ -142,7 +148,7 @@ private fun TextFieldDecoration(
         }
         Box(
             modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.CenterStart
+            contentAlignment = if (singleLine) Alignment.CenterStart else Alignment.TopStart
         ) {
             if (data.value.isEmpty() && placeholder != null) {
                 Text(

@@ -6,16 +6,19 @@ import dot.adun.core.routing.nav3.NavFlow
 import dot.adun.core.routing.nav3.navigateBack
 import dot.adun.core.routing.nav3.route
 import dot.adun.feature.authorized.routing.routes.ActiveRoute
+import dot.adun.feature.authorized.routing.routes.ApplicationsRoute
 import dot.adun.feature.authorized.routing.routes.ResumeDetailsRoute
 import dot.adun.feature.authorized.routing.routes.ResumeEditRoute
 import dot.adun.feature.authorized.routing.routes.VacancyDetailsRoute
 import dot.adun.feature.authorized.routing.routes.VacancyEditRoute
 import dot.adun.feature.authorized.ui.screen.active.ActiveScreenResult
+import dot.adun.feature.authorized.ui.screen.applications.ApplicationsScreenResult
 import dot.adun.feature.authorized.ui.screen.details.resume.ResumeDetailsScreenResult
 import dot.adun.feature.authorized.ui.screen.details.vacancy.VacancyDetailsScreenResult
 import dot.adun.feature.home.routing.routes.HomeRoute
 import dot.adun.feature.home.ui.screen.HomeScreenResult
 import dot.adun.feature.profile.routing.ProfileFlow
+import dot.adun.feature.profile.routing.ProfileFlowResult
 import dot.adun.feature.profile.routing.ProfileRoute
 import dot.adun.feature.profile.routing.profileFlow
 import dot.adun.feature.search.routing.SearchRoute
@@ -72,7 +75,17 @@ class HomeNavFlow(
         route<VacancyEditRoute> { _ -> navigateBack() }
         route<ResumeEditRoute> { _ -> navigateBack() }
 
-        profileFlow { navigateBack() }
+        route<ApplicationsRoute> { result ->
+            when (result) {
+                is ApplicationsScreenResult -> onApplicationsScreenResult(result)
+            }
+        }
+
+        profileFlow { result ->
+            when (result) {
+                ProfileFlowResult.Logout -> onFinish(HomeFlowResult.Logout)
+            }
+        }
     }
 
     private fun NavFlowScope.onHomeScreenResult(result: HomeScreenResult) = when (result) {
@@ -84,6 +97,7 @@ class HomeNavFlow(
             else push(ResumeDetailsRoute(result.id))
         }
         is HomeScreenResult.Profile -> push(ProfileFlow.create(result.id))
+        HomeScreenResult.Applications -> push(ApplicationsRoute())
     }
 
     private fun NavFlowScope.onSearchScreenResult(result: SearchScreenResult) = when (result) {
@@ -106,6 +120,16 @@ class HomeNavFlow(
         is VacancyDetailsScreenResult.Edit -> push(VacancyEditRoute(result.id))
         is VacancyDetailsScreenResult.OpenAuthorProfile -> push(ProfileRoute(result.profileId))
         VacancyDetailsScreenResult.Finish -> navigateBack()
+    }
+
+    private fun NavFlowScope.onApplicationsScreenResult(result: ApplicationsScreenResult) = when (result) {
+        ApplicationsScreenResult.Finish -> navigateBack()
+        is ApplicationsScreenResult.Details -> {
+            if (result.isVacancy) push(VacancyDetailsRoute(result.id))
+            else push(ResumeDetailsRoute(result.id))
+        }
+        // TODO: navigate to the created project screen once it exists (result.projectId).
+        is ApplicationsScreenResult.OpenProject -> Unit
     }
 
     private fun NavFlowScope.onResumeDetailsScreenResult(result: ResumeDetailsScreenResult) = when (result) {

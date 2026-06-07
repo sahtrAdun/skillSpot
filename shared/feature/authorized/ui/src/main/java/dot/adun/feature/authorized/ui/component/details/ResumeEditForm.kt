@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -29,7 +30,6 @@ import dot.adun.core.domain.entity.resRef
 import dot.adun.core.domain.mappers.isLoading
 import dot.adun.core.ui.components.ContentLabel
 import dot.adun.core.ui.components.FloatingAppBar
-import dot.adun.core.ui.components.FullScreenLoader
 import dot.adun.core.ui.components.MaterialShape
 import dot.adun.core.ui.components.VSpacer
 import dot.adun.core.ui.components.base.AdunScaffold
@@ -37,6 +37,7 @@ import dot.adun.core.ui.components.base.BorderVisibility
 import dot.adun.core.ui.components.buttons.PrimaryButton
 import dot.adun.core.ui.components.buttons.rememberButtonState
 import dot.adun.core.ui.components.textFields.SimpleTextField
+import dot.adun.core.ui.components.textFields.core.TextFieldDefaults
 import dot.adun.core.ui.entity.MaterialDecorator
 import dot.adun.core.ui.entity.TextFieldData
 import dot.adun.core.ui.modifiers.click.Clickable
@@ -136,6 +137,8 @@ fun ResumeEditForm(
                         data = bioField,
                         onValueChange = intents.changeBio,
                         enabled = !loadState.isLoading,
+                        minLines = 5,
+                        maxLines = 5,
                         modifier = Modifier.focusRequester(bioRequester),
                         borderVisibility = BorderVisibility.Always
                     )
@@ -332,42 +335,49 @@ private fun SkillInputSection(
     enabled: Boolean,
     focusRequester: FocusRequester? = null,
 ) {
+    val fieldModifier = if (focusRequester != null) {
+        Modifier.fillMaxWidth().focusRequester(focusRequester)
+    } else {
+        Modifier.fillMaxWidth()
+    }
+
     Row(
-        horizontalArrangement = Arrangement.spacedBy(AppTheme.paddings.space.xs),
-        modifier = Modifier.fillMaxWidth()
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.fillMaxWidth(),
     ) {
-        val modifier = if (focusRequester != null) {
-            Modifier.weight(1f).focusRequester(focusRequester)
-        } else {
-            Modifier.weight(1f)
+        Box(
+            modifier = Modifier.weight(1f)
+        ) {
+            SimpleTextField(
+                data = TextFieldData(value = input),
+                onValueChange = onInputChange,
+                placeholder = stringResource(R.string.skill_input_hint),
+                enabled = enabled,
+                borderVisibility = BorderVisibility.Always,
+                modifier = fieldModifier,
+            )
         }
 
-        SimpleTextField(
-            data = TextFieldData(value = input),
-            onValueChange = onInputChange,
-            placeholder = stringResource(R.string.skill_input_hint),
-            enabled = enabled,
-            borderVisibility = BorderVisibility.Always,
-            colorPreset = AppTheme.presets.textFields.accent,
-            modifier = modifier,
-        )
-        Text(
-            text = stringResource(R.string.add),
-            color = AppTheme.colors.text.accent,
-            style = AppTheme.typography.body1,
+        Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
+                .height(TextFieldDefaults.height)
                 .surface(
                     color = AppTheme.colors.layer.primaryTranslucent,
                     shape = AppTheme.shapes.small,
-                    padding = AppTheme.paddings.full.small,
                 )
                 .clickableEffect(Clickable.of(onAdd))
-                .padding(horizontal = 12.dp, vertical = 12.dp),
-        )
+                .padding(AppTheme.paddings.full.small)
+        ) {
+            Text(
+                text = stringResource(R.string.add),
+                color = AppTheme.colors.text.accent,
+                style = AppTheme.typography.body1,
+            )
+        }
     }
 
     if (skills.isNotEmpty()) {
-        VSpacer(AppTheme.paddings.space.xs)
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(AppTheme.paddings.space.xs),
             verticalArrangement = Arrangement.spacedBy(AppTheme.paddings.space.xs),

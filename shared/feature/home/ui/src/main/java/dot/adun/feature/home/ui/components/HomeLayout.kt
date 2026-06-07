@@ -20,7 +20,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.History
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -82,19 +81,7 @@ fun HomeLayout(
                         )
                     )
                 },
-                trailingContent = {
-                    IcButton(
-                        vector = Icons.Default.History,
-                        contentDescription = null,
-                        onClick = {},
-                        colors = AppTheme.presets.buttons.icon.regular,
-                        modifier = Modifier.border(
-                            color = AppTheme.colors.border.primary,
-                            shape = CircleShape,
-                            width = 1.dp
-                        )
-                    )
-                }
+                trailingContent = {}
             ) {
                 DummySearchField(intents.navToSearch)
             }
@@ -120,6 +107,9 @@ fun HomeLayout(
                     itemsSize = itemsSize,
                     resumes = resumes
                 )
+            }
+            item {
+                Block(resRef(Res.strings.applications), intents.openApplications)
             }
             item {
                 Block(strRef("My resumes"), {})

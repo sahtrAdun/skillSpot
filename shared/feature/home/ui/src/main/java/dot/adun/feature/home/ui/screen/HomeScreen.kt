@@ -12,17 +12,9 @@ fun HomeScreen(
     HomeLayout(
         loadState = state.loadState,
         refreshing = state.refreshing,
-        vacancies = state.recommendedVacancies.repeat(6),
-        resumes = state.recommendedResumes.repeat(6),
-        itemsSize = state.itemsSize * 6,
+        vacancies = state.recommendedVacancies,
+        resumes = state.recommendedResumes,
+        itemsSize = state.itemsSize,
         intents = intents
     )
-}
-
-fun <T> List<T>.repeat(times: Int): List<T> {
-    val list = mutableListOf<T>()
-    repeat(times) {
-        list.addAll(this)
-    }
-    return list
 }

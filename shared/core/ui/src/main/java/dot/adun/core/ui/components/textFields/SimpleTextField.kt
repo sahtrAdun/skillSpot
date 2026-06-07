@@ -31,6 +31,8 @@ fun SimpleTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = keyboardType),
     visualTransformation: VisualTransformation = VisualTransformation.None,
     colorPreset: TextFieldsColorPresets.AdunTextFieldColors = AppTheme.presets.textFields.common,
+    maxLines: Int = 1,
+    minLines: Int = 1,
 ) {
     BaseTextField(
         modifier = modifier,
@@ -45,6 +47,8 @@ fun SimpleTextField(
         visualTransformation = visualTransformation,
         borderVisibility = borderVisibility,
         colorPreset = colorPreset,
+        maxLines = maxLines,
+        minLines = minLines,
         leadingContent = leadingIcon?.let {
             { tint ->
                 TextFieldButton(

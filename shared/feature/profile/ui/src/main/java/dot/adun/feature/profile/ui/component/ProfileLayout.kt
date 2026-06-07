@@ -9,9 +9,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,6 +35,7 @@ import dot.adun.core.ui.components.VSpacer
 import dot.adun.core.ui.components.VerticalList
 import dot.adun.core.ui.components.base.AdunScaffold
 import dot.adun.core.ui.components.base.ScaffoldPaddings
+import dot.adun.core.ui.components.buttons.IcButton
 import dot.adun.core.ui.components.loaders.Loader
 import dot.adun.core.ui.components.loaders.LoaderAppearance
 import dot.adun.core.ui.modifiers.surface
@@ -51,6 +56,7 @@ fun ProfileLayout(
     reviews: List<Review>,
     content: ProfileContent,
     selectedTab: ProfileTab,
+    isOwnProfile: Boolean,
     reviewsLoadState: LoadState,
     contentLoadState: LoadState,
     intents: ProfileViewIntents,
@@ -61,6 +67,22 @@ fun ProfileLayout(
             FloatingAppBar(
                 label = stringResource(R.string.profile_title),
                 onBackClick = intents.navigateBack,
+                trailingContent = if (isOwnProfile) {
+                    {
+                        IcButton(
+                            vector = Icons.AutoMirrored.Filled.Logout,
+                            colors = AppTheme.presets.buttons.icon.transparent,
+                            onClick = intents.logout,
+                            iconModifier = Modifier.requiredSize(16.dp),
+                            modifier = Modifier
+                                .surface(
+                                    color = AppTheme.colors.layer.surface,
+                                    shape = CircleShape,
+                                    padding = 4.dp
+                                ),
+                        )
+                    }
+                } else null,
             )
         }
     ) { padding ->

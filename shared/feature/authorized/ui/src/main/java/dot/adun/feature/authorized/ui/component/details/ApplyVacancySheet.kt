@@ -5,8 +5,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -105,12 +108,20 @@ fun ApplyVacancySheet(
                         style = AppTheme.typography.body2,
                         color = AppTheme.colors.text.secondary,
                     )
-                    resumes.forEach { resume ->
-                        ResumeOption(
-                            title = resume.title,
-                            selected = resume.id == selectedResumeId,
-                            onClick = { selectedResumeId = resume.id },
-                        )
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(AppTheme.paddings.space.xs),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(max = 280.dp)
+                            .verticalScroll(rememberScrollState()),
+                    ) {
+                        resumes.forEach { resume ->
+                            ResumeOption(
+                                title = resume.title,
+                                selected = resume.id == selectedResumeId,
+                                onClick = { selectedResumeId = resume.id },
+                            )
+                        }
                     }
 
                     SimpleTextField(

@@ -19,9 +19,13 @@ data class ProfileFlow(
 }
 
 fun NavFlowScope.profileFlow(
-    onFinish: (Unit) -> Unit
+    onFinish: (ProfileFlowResult) -> Unit
 ) = ProfileNavFlow(this, onFinish)
     .content()
+
+sealed interface ProfileFlowResult {
+    data object Logout : ProfileFlowResult
+}
 
 @Immutable
 @Serializable
