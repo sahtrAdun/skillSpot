@@ -27,8 +27,8 @@ class ActiveViewModel @Inject constructor(
             emitResult(ActiveScreenResult.Details(isVacancy, id))
         }
 
-        onIntent(intents.openChat) { _ ->
-            // TODO: chat is not implemented yet.
+        onIntent(intents.openChat) { projectId ->
+            emitResult(ActiveScreenResult.Chat(projectId))
         }
 
         onIntent(intents.complete) { projectId ->
@@ -175,6 +175,9 @@ sealed interface ActiveScreenResult {
         val isVacancy: Boolean,
         val id: String
     ) : ActiveScreenResult
+
+    @Immutable
+    data class Chat(val projectId: String) : ActiveScreenResult
 
     data object Finish : ActiveScreenResult
 }

@@ -13,4 +13,6 @@ dependencies {
     api(projects.shared.feature.authorized.ui)
     api(projects.shared.feature.authorized.domain)
     api(projects.shared.feature.authorized.data)
+
+    api(projects.shared.feature.chat.routing)
 }

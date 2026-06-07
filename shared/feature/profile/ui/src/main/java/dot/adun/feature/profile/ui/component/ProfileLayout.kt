@@ -91,6 +91,7 @@ fun ProfileLayout(
             ProfileHeader(
                 profile = profile,
                 topPadding = padding.top,
+                isOwnProfile = isOwnProfile,
                 onEditClick = intents.editProfile
             )
 
@@ -137,6 +138,7 @@ fun ProfileLayout(
 private fun ProfileHeader(
     profile: PublicProfile?,
     topPadding: Dp,
+    isOwnProfile: Boolean,
     onEditClick: () -> Unit,
 ) {
     Column(
@@ -167,18 +169,20 @@ private fun ProfileHeader(
                 color = AppTheme.colors.text.primary,
                 textAlign = TextAlign.Center,
             )
-            IcButton(
-                vector = Icons.Default.Edit,
-                colors = AppTheme.presets.buttons.icon.transparent,
-                onClick = onEditClick,
-                iconModifier = Modifier.requiredSize(16.dp),
-                modifier = Modifier
-                    .surface(
-                        color = AppTheme.colors.layer.surface,
-                        shape = CircleShape,
-                        padding = 4.dp
-                    ),
-            )
+            if (isOwnProfile) {
+                IcButton(
+                    vector = Icons.Default.Edit,
+                    colors = AppTheme.presets.buttons.icon.transparent,
+                    onClick = onEditClick,
+                    iconModifier = Modifier.requiredSize(16.dp),
+                    modifier = Modifier
+                        .surface(
+                            color = AppTheme.colors.layer.surface,
+                            shape = CircleShape,
+                            padding = 4.dp
+                        ),
+                )
+            }
         }
         profile?.role?.label()?.let { role ->
             VSpacer(4.dp)

@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dot.adun.core.domain.entity.LoadState
 import dot.adun.core.ui.mappers.toUiError
@@ -62,14 +63,16 @@ object LoadStateContent {
             Text(
                 text = error.title.display(),
                 color = AppTheme.colors.text.secondary,
-                style = AppTheme.typography.body1
+                style = AppTheme.typography.body1,
+                textAlign = TextAlign.Center
             )
 
             error.description?.let { desc ->
                 Text(
                     text = desc.display(),
                     color = AppTheme.colors.text.tertiary,
-                    style = AppTheme.typography.body3
+                    style = AppTheme.typography.body3,
+                    textAlign = TextAlign.Center
                 )
             }
         }

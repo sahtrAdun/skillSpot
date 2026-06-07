@@ -74,6 +74,7 @@ fun ApplyVacancySheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
+                .padding(bottom = 12.dp)
                 .navigationBarsPadding()
         ) {
             Text(

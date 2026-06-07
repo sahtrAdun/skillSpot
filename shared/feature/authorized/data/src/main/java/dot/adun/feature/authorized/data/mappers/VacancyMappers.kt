@@ -37,7 +37,8 @@ fun VacancyDto.toDomainModel(): Vacancy = Vacancy(
     status = status.toVacancyStatus(),
     viewsCount = viewsCount,
     createdAt = createdAt.toLocalDateTime(),
-    updatedAt = updatedAt.toLocalDateTime()
+    updatedAt = updatedAt.toLocalDateTime(),
+    projectId = projectId,
 )
 
 fun Vacancy.toNetworkModel(): VacancyDto = VacancyDto(

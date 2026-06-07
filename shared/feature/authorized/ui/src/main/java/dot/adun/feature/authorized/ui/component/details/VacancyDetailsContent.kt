@@ -80,7 +80,8 @@ fun VacancyDetailsContent(
                     modifier = Modifier
                         .imePadding()
                         .fillMaxWidth()
-                        .padding(horizontal =  16.dp),
+                        .padding(horizontal =  16.dp)
+                        .padding(bottom = 12.dp),
                 ) {
                     Text(
                         text = stringResource(
