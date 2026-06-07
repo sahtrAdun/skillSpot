@@ -1,5 +1,6 @@
 package dot.adun.feature.authorized.data.mappers
 
+import dot.adun.core.domain.mappers.toLocalDateTime
 import dot.adun.feature.authorized.data.api.response.GetClientActiveProjectsResponse
 import dot.adun.feature.authorized.domain.entity.ActiveProject
 import dot.adun.feature.authorized.domain.entity.AvailabilityType
@@ -51,8 +52,18 @@ fun GetClientActiveProjectsResponse.toDomainModel(): List<ActiveProject> {
     return when (this) {
         is GetClientActiveProjectsResponse.Ok -> values.map { value ->
             ActiveProject(
-                vacancy = value.vacancy.toDomainModel(),
-                executorResume = value.executorResume.toDomainModel()
+                projectId = value.projectId,
+                status = value.projectStatus,
+                createdAt = value.projectCreatedAt.toLocalDateTime(),
+                vacancyId = value.vacancyId,
+                vacancyTitle = value.vacancyTitle,
+                vacancyBudget = value.vacancyBudget,
+                vacancyCurrency = value.vacancyCurrency.toCurrencyType(),
+                freelancerId = value.freelancerId,
+                freelancerName = value.freelancerName,
+                freelancerAvatar = value.freelancerAvatar,
+                resumeId = value.resumeId,
+                resumeTitle = value.resumeTitle,
             )
         }
         else -> emptyList()

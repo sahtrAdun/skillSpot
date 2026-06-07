@@ -3,12 +3,21 @@ package dot.adun.feature.authorized.data.api
 import dot.adun.core.data.apiRequest
 import dot.adun.feature.authorized.data.MainRpc
 import dot.adun.feature.authorized.data.api.response.GetClientActiveProjectsResponse
+import dot.adun.feature.authorized.data.dto.AcceptApplicationParamsDto
+import dot.adun.feature.authorized.data.dto.CancelApplicationParamsDto
 import dot.adun.feature.authorized.data.dto.ApplicationDto
 import dot.adun.feature.authorized.data.dto.ApplyForVacancyParamsDto
+import dot.adun.feature.authorized.data.dto.CompleteProjectParamsDto
+import dot.adun.feature.authorized.data.dto.GetMyApplicationsParamsDto
+import dot.adun.feature.authorized.data.dto.IncomingApplicationDto
+import dot.adun.feature.authorized.data.dto.LeaveProjectReviewParamsDto
+import dot.adun.feature.authorized.data.dto.MyApplicationDto
 import dot.adun.feature.authorized.data.dto.VacancyDto
 import dot.adun.feature.authorized.data.mappers.toDomainModel
 import dot.adun.feature.authorized.data.mappers.toNetworkModel
 import dot.adun.feature.authorized.domain.entity.Application
+import dot.adun.feature.authorized.domain.entity.IncomingApplication
+import dot.adun.feature.authorized.domain.entity.MyApplication
 import dot.adun.feature.authorized.domain.entity.PagingParams
 import dot.adun.feature.authorized.domain.entity.Vacancy
 import io.github.jan.supabase.SupabaseClient
@@ -97,6 +106,86 @@ class VacanciesApi @Inject constructor(
             .decodeList<ApplicationDto>()
             .firstOrNull()
             ?.toDomainModel()
+    }
+
+    suspend fun getMyApplications(params: PagingParams): List<MyApplication> = apiRequest(
+        onSuccess = { it },
+        onEmptyOrNull = { emptyList() }
+    ) {
+        client.postgrest.rpc(
+            function = MainRpc.GET_MY_APPLICATIONS,
+            parameters = GetMyApplicationsParamsDto(
+                isActive = true,
+                limit = params.limit,
+                offset = params.offset,
+            )
+        )
+            .decodeList<MyApplicationDto>()
+            .map { it.toDomainModel() }
+    }
+
+    suspend fun getClientIncomingApplications(
+        params: PagingParams
+    ): List<IncomingApplication> = apiRequest(
+        onSuccess = { it },
+        onEmptyOrNull = { emptyList() }
+    ) {
+        client.postgrest.rpc(
+            function = MainRpc.GET_CLIENT_INCOMING_APPLICATIONS,
+            parameters = params.toNetworkModel()
+        )
+            .decodeList<IncomingApplicationDto>()
+            .map { it.toDomainModel() }
+    }
+
+    /** Accepts an incoming application and returns the id of the created project. */
+    suspend fun acceptApplication(applicationId: String): String = apiRequest(
+        onSuccess = { it },
+        onEmptyOrNull = { error("Project was not created") }
+    ) {
+        client.postgrest.rpc(
+            function = MainRpc.ACCEPT_APPLICATION,
+            parameters = AcceptApplicationParamsDto(applicationId = applicationId)
+        )
+            .decodeAs<String>()
+    }
+
+    suspend fun cancelApplication(applicationId: String) = apiRequest(
+        onSuccess = {},
+        onEmptyOrNull = {}
+    ) {
+        client.postgrest.rpc(
+            function = MainRpc.CANCEL_APPLICATION,
+            parameters = CancelApplicationParamsDto(applicationId = applicationId)
+        )
+    }
+
+    suspend fun completeProject(projectId: String) = apiRequest(
+        onSuccess = {},
+        onEmptyOrNull = {}
+    ) {
+        client.postgrest.rpc(
+            function = MainRpc.COMPLETE_PROJECT,
+            parameters = CompleteProjectParamsDto(projectId = projectId)
+        )
+    }
+
+    suspend fun leaveProjectReview(
+        projectId: String,
+        rating: Int,
+        comment: String,
+    ) = apiRequest(
+        onSuccess = {},
+        onEmptyOrNull = {}
+    ) {
+        client.postgrest.rpc(
+            function = MainRpc.LEAVE_PROJECT_REVIEW,
+            parameters = LeaveProjectReviewParamsDto(
+                projectId = projectId,
+                rating = rating,
+                comment = comment,
+            )
+        )
     }
 }
 

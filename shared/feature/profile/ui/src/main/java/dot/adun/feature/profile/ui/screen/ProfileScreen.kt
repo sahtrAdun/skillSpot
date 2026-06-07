@@ -15,6 +15,7 @@ fun ProfileScreen(
         reviews = state.reviews,
         content = state.content,
         selectedTab = state.selectedTab,
+        isOwnProfile = state.isOwnProfile,
         reviewsLoadState = state.reviewsLoadState,
         contentLoadState = state.contentLoadState,
         intents = intents,

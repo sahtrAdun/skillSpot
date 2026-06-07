@@ -5,6 +5,7 @@ import androidx.compose.ui.res.stringResource
 import dot.adun.common.resources.Res
 import dot.adun.core.domain.entity.TextRef
 import dot.adun.core.domain.entity.resRef
+import dot.adun.feature.authorized.domain.entity.ApplicationStatus
 import dot.adun.feature.authorized.domain.entity.AvailabilityType
 import dot.adun.feature.authorized.domain.entity.Currency
 import dot.adun.feature.authorized.domain.entity.PaymentType
@@ -70,6 +71,15 @@ val PaymentType.label: TextRef
     get() = when (this) {
         PaymentType.Hourly -> resRef(R.string.hourly)
         PaymentType.Fixed -> resRef(R.string.fixed)
+    }
+
+val ApplicationStatus.label: TextRef
+    get() = when (this) {
+        ApplicationStatus.Pending -> resRef(R.string.application_status_pending)
+        ApplicationStatus.Interview -> resRef(R.string.application_status_interview)
+        ApplicationStatus.Accepted -> resRef(R.string.application_status_accepted)
+        ApplicationStatus.Declined -> resRef(R.string.application_status_declined)
+        ApplicationStatus.Canceled -> resRef(R.string.application_status_canceled)
     }
 
 val Vacancy.Status.label: TextRef

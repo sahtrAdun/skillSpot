@@ -48,6 +48,10 @@ class HomeViewModel @Inject constructor(
             }
         }
 
+        onIntent(intents.openApplications) {
+            emitResult(HomeScreenResult.Applications)
+        }
+
         onIntent(intents.refresh) {
             action { _ -> resolveUserRoleActions(true) }
         }
@@ -148,6 +152,7 @@ sealed interface HomeScreenResult {
     data object Search : HomeScreenResult
     data object Finish : HomeScreenResult
     data object Logout : HomeScreenResult
+    data object Applications : HomeScreenResult
 
     @Immutable
     data class Details(val isVacancy: Boolean, val id: String) : HomeScreenResult

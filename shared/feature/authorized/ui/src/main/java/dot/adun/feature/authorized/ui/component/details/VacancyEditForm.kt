@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -29,7 +30,6 @@ import dot.adun.core.domain.entity.resRef
 import dot.adun.core.domain.mappers.isLoading
 import dot.adun.core.ui.components.ContentLabel
 import dot.adun.core.ui.components.FloatingAppBar
-import dot.adun.core.ui.components.FullScreenLoader
 import dot.adun.core.ui.components.MaterialShape
 import dot.adun.core.ui.components.VSpacer
 import dot.adun.core.ui.components.base.AdunScaffold
@@ -37,6 +37,7 @@ import dot.adun.core.ui.components.base.BorderVisibility
 import dot.adun.core.ui.components.buttons.PrimaryButton
 import dot.adun.core.ui.components.buttons.rememberButtonState
 import dot.adun.core.ui.components.textFields.SimpleTextField
+import dot.adun.core.ui.components.textFields.core.TextFieldDefaults
 import dot.adun.core.ui.entity.MaterialDecorator
 import dot.adun.core.ui.entity.TextFieldData
 import dot.adun.core.ui.modifiers.click.Clickable
@@ -135,6 +136,8 @@ fun VacancyEditForm(
                         keyboardOptions = KeyboardOptions(
                             imeAction = ImeAction.Next,
                         ),
+                        minLines = 5,
+                        maxLines = 5,
                         actions = KeyboardActions(
                             onNext = { skillRequester.requestFocus() }
                         ),
@@ -147,37 +150,44 @@ fun VacancyEditForm(
                     label = resRef(R.string.skills),
                 ) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(AppTheme.paddings.space.xs),
-                        modifier = Modifier.fillMaxWidth()
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
-                        SimpleTextField(
-                            data = TextFieldData(value = skillInput),
-                            onValueChange = intents.changeSkillInput,
-                            placeholder = stringResource(R.string.skill_input_hint),
-                            enabled = !loadState.isLoading,
-                            borderVisibility = BorderVisibility.Always,
-                            colorPreset = AppTheme.presets.textFields.accent,
+                        Box(
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            SimpleTextField(
+                                data = TextFieldData(value = skillInput),
+                                onValueChange = intents.changeSkillInput,
+                                placeholder = stringResource(R.string.skill_input_hint),
+                                enabled = !loadState.isLoading,
+                                borderVisibility = BorderVisibility.Always,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .focusRequester(skillRequester),
+                            )
+                        }
+
+                        Box(
+                            contentAlignment = Alignment.Center,
                             modifier = Modifier
-                                .weight(1f)
-                                .focusRequester(skillRequester),
-                        )
-                        Text(
-                            text = stringResource(R.string.add),
-                            color = AppTheme.colors.text.accent,
-                            style = AppTheme.typography.body1,
-                            modifier = Modifier
+                                .height(TextFieldDefaults.height)
                                 .surface(
                                     color = AppTheme.colors.layer.primaryTranslucent,
                                     shape = AppTheme.shapes.small,
-                                    padding = AppTheme.paddings.full.small,
                                 )
                                 .clickableEffect(Clickable.of(intents.addSkill))
-                                .padding(horizontal = 12.dp, vertical = 12.dp),
-                        )
+                                .padding(AppTheme.paddings.full.small)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.add),
+                                color = AppTheme.colors.text.accent,
+                                style = AppTheme.typography.body1,
+                            )
+                        }
                     }
 
                     if (skills.isNotEmpty()) {
-                        VSpacer(AppTheme.paddings.space.xs)
                         FlowRow(
                             horizontalArrangement = Arrangement.spacedBy(AppTheme.paddings.space.xs),
                             verticalArrangement = Arrangement.spacedBy(AppTheme.paddings.space.xs),

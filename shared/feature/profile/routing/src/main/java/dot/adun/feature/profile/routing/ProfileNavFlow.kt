@@ -13,8 +13,8 @@ import dot.adun.feature.profile.ui.screen.ProfileScreenResult
 @Immutable
 class ProfileNavFlow(
     scope: NavFlowScope,
-    onFinish: (Unit) -> Unit
-) : NavFlow<ProfileFlow, Unit>(
+    onFinish: (ProfileFlowResult) -> Unit
+) : NavFlow<ProfileFlow, ProfileFlowResult>(
     flow = scope.profile(),
     navFlowScope = scope,
     onFinish = onFinish
@@ -29,6 +29,7 @@ class ProfileNavFlow(
 
     private fun NavFlowScope.onProfileScreenResult(result: ProfileScreenResult) = when (result) {
         ProfileScreenResult.Finish -> navigateBack()
+        ProfileScreenResult.Logout -> onFinish(ProfileFlowResult.Logout)
         is ProfileScreenResult.Details -> {
             if (result.isVacancy) push(VacancyDetailsRoute(result.id))
             else push(ResumeDetailsRoute(result.id))

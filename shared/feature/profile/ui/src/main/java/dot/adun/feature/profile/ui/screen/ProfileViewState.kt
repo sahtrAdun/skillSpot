@@ -14,6 +14,7 @@ data class ProfileViewState(
     val reviews: List<Review> = emptyList(),
     val content: ProfileContent = ProfileContent.Empty,
     val selectedTab: ProfileTab = ProfileTab.Info,
+    val isOwnProfile: Boolean = false,
     val loadState: LoadState = LoadState.NotStarted,
     val reviewsLoadState: LoadState = LoadState.NotStarted,
     val contentLoadState: LoadState = LoadState.NotStarted,
@@ -21,6 +22,7 @@ data class ProfileViewState(
 
 sealed interface ProfileScreenResult {
     data object Finish : ProfileScreenResult
+    data object Logout : ProfileScreenResult
     data class Details(val isVacancy: Boolean, val id: String) : ProfileScreenResult
     data class OtherProfile(val profileId: String) : ProfileScreenResult
 }

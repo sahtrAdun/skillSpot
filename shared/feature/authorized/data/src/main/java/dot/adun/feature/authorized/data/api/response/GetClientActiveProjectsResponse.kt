@@ -1,7 +1,5 @@
 package dot.adun.feature.authorized.data.api.response
 
-import dot.adun.feature.authorized.data.dto.ResumeDto
-import dot.adun.feature.authorized.data.dto.VacancyDto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -14,8 +12,18 @@ sealed interface GetClientActiveProjectsResponse {
 
     @Serializable
     data class Value(
-        @SerialName("vacancy") val vacancy: VacancyDto,
-        @SerialName("executor_resume") val executorResume: ResumeDto
+        @SerialName("project_id") val projectId: String,
+        @SerialName("project_status") val projectStatus: String,
+        @SerialName("project_created_at") val projectCreatedAt: String,
+        @SerialName("vacancy_id") val vacancyId: String,
+        @SerialName("vacancy_title") val vacancyTitle: String,
+        @SerialName("vacancy_budget") val vacancyBudget: Double = 0.0,
+        @SerialName("vacancy_currency") val vacancyCurrency: String,
+        @SerialName("freelancer_id") val freelancerId: String,
+        @SerialName("freelancer_name") val freelancerName: String? = null,
+        @SerialName("freelancer_avatar") val freelancerAvatar: String? = null,
+        @SerialName("resume_id") val resumeId: String,
+        @SerialName("resume_title") val resumeTitle: String,
     )
 }
 

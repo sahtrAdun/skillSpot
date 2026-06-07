@@ -63,4 +63,23 @@
     <string name="apply_send">Send application</string>
     <string name="apply_no_resumes">Create a resume to apply</string>
     <string name="apply_success">Application sent</string>
+
+    <string name="applications_title">Applications</string>
+    <string name="applications_empty">No applications yet</string>
+    <string name="application_decline">Decline</string>
+    <string name="application_approve">Approve</string>
+    <string name="application_approved">Application approved</string>
+    <string name="application_cancelled">Application withdrawn</string>
+
+    <string name="action_chat">Chat</string>
+    <string name="action_complete">Complete</string>
+    <string name="review_title">Leave a review</string>
+    <string name="review_comment_hint">Comment (optional)</string>
+    <string name="review_submit">Submit review</string>
+    <string name="review_success">Review sent</string>
+    <string name="application_status_pending">Pending</string>
+    <string name="application_status_interview">Interview</string>
+    <string name="application_status_accepted">Accepted</string>
+    <string name="application_status_declined">Declined</string>
+    <string name="application_status_canceled">Canceled</string>
 </resources>

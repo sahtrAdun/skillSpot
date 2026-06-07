@@ -32,6 +32,7 @@ import dot.adun.core.ui.components.FloatingAppBar
 import dot.adun.core.ui.components.MaterialShape
 import dot.adun.core.ui.components.VSpacer
 import dot.adun.core.ui.components.base.AdunScaffold
+import dot.adun.core.ui.components.base.BorderVisibility
 import dot.adun.core.ui.components.buttons.PrimaryButton
 import dot.adun.core.ui.components.buttons.rememberButtonState
 import dot.adun.core.ui.components.textFields.PasswordTextField
@@ -168,7 +169,8 @@ private fun CenterContent(
                 ),
                 actions = KeyboardActions(
                     onNext = { passwordRequester.requestFocus() }
-                )
+                ),
+                borderVisibility = BorderVisibility.Newer
             )
         }
 

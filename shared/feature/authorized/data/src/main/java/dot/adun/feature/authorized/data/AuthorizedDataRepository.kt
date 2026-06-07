@@ -7,12 +7,15 @@ import dot.adun.feature.authorized.data.mappers.toNetworkModel
 import dot.adun.feature.authorized.domain.AuthorizedRepository
 import dot.adun.feature.authorized.domain.entity.ActiveProject
 import dot.adun.feature.authorized.domain.entity.Application
+import dot.adun.feature.authorized.domain.entity.IncomingApplication
+import dot.adun.feature.authorized.domain.entity.MyApplication
 import dot.adun.feature.authorized.domain.entity.PagingParams
 import dot.adun.feature.authorized.domain.entity.PagingState
 import dot.adun.feature.authorized.domain.entity.Resume
 import dot.adun.feature.authorized.domain.entity.Vacancy
 import dot.adun.feature.profile.data.api.ProfileApi
 import dot.adun.feature.profile.domain.entity.PublicProfile
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,6 +24,7 @@ class AuthorizedDataRepository @Inject constructor(
     private val vacanciesApi: VacanciesApi,
     private val resumesApi: ResumesApi,
     private val profileApi: ProfileApi,
+    private val realtime: ProjectRealtimeDataSource,
 ) : AuthorizedRepository {
     override suspend fun getAllVacancies(params: PagingParams): PagingState<Vacancy> {
         TODO("Not yet implemented")
@@ -40,7 +44,12 @@ class AuthorizedDataRepository @Inject constructor(
     }
 
     override suspend fun getAllRecommendedResumes(params: PagingParams): PagingState<Resume> {
-        TODO("Not yet implemented")
+        val response = resumesApi.getAllRecommendedResumes(params)
+
+        return PagingState(
+            data = response,
+            hasMore = PagingState.hasMore(response.size)
+        )
     }
 
     override suspend fun getUserActiveVacancies(params: PagingParams): PagingState<Vacancy> {
@@ -89,5 +98,35 @@ class AuthorizedDataRepository @Inject constructor(
         coverLetter: String?,
     ): Application {
         return vacanciesApi.applyForVacancy(vacancyId, resumeId, coverLetter)
+    }
+
+    override suspend fun getMyApplications(params: PagingParams): List<MyApplication> {
+        return vacanciesApi.getMyApplications(params)
+    }
+
+    override suspend fun getClientIncomingApplications(
+        params: PagingParams
+    ): List<IncomingApplication> {
+        return vacanciesApi.getClientIncomingApplications(params)
+    }
+
+    override suspend fun acceptApplication(applicationId: String): String {
+        return vacanciesApi.acceptApplication(applicationId)
+    }
+
+    override suspend fun cancelApplication(applicationId: String) {
+        vacanciesApi.cancelApplication(applicationId)
+    }
+
+    override suspend fun completeProject(projectId: String) {
+        vacanciesApi.completeProject(projectId)
+    }
+
+    override suspend fun leaveProjectReview(projectId: String, rating: Int, comment: String) {
+        vacanciesApi.leaveProjectReview(projectId, rating, comment)
+    }
+
+    override fun observeCompletedProjects(freelancerId: String): Flow<String> {
+        return realtime.observeCompletedProjects(freelancerId)
     }
 }

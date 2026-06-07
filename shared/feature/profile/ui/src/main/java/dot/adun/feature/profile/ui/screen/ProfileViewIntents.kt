@@ -9,4 +9,5 @@ class ProfileViewIntents : BaseViewIntents() {
     /** [Pair.first] = isVacancy, [Pair.second] = content id. */
     val openDetails = typedIntent<Pair<Boolean, String>>("openDetails")
     val openProfile = typedIntent<String>("openProfile")
+    val logout = intent("logout")
 }

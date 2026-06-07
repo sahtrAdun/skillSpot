@@ -40,7 +40,23 @@ class ProfileViewModel @AssistedInject constructor(
             emitResult(ProfileScreenResult.OtherProfile(otherProfileId))
         }
 
+        onIntent(intents.logout) {
+            logout()
+        }
+
+        on(model.profile) { current ->
+            update { state -> state.copy(isOwnProfile = current?.id == profileId) }
+        }
+
         loadProfile()
+    }
+
+    private fun logout() {
+        task {
+            job { model.logout() }
+            onSuccess { emitResult(ProfileScreenResult.Logout) }
+            onError { errorSnack(it) }
+        }
     }
 
     private fun loadProfile() {

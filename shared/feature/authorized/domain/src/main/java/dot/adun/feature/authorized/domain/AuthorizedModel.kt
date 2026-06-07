@@ -46,4 +46,25 @@ class AuthorizedModel @Inject constructor(
         resumeId: String,
         coverLetter: String?,
     ) = repository.applyForVacancy(vacancyId, resumeId, coverLetter)
+
+    suspend fun getMyApplications(params: PagingParams) =
+        repository.getMyApplications(params)
+
+    suspend fun getClientIncomingApplications(params: PagingParams) =
+        repository.getClientIncomingApplications(params)
+
+    suspend fun acceptApplication(applicationId: String) =
+        repository.acceptApplication(applicationId)
+
+    suspend fun cancelApplication(applicationId: String) =
+        repository.cancelApplication(applicationId)
+
+    suspend fun completeProject(projectId: String) =
+        repository.completeProject(projectId)
+
+    suspend fun leaveProjectReview(projectId: String, rating: Int, comment: String) =
+        repository.leaveProjectReview(projectId, rating, comment)
+
+    fun observeCompletedProjects(freelancerId: String) =
+        repository.observeCompletedProjects(freelancerId)
 }
