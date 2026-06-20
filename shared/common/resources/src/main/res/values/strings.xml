@@ -4,7 +4,7 @@
     <string name="validation_text_len_min">The minimum length is %d characters</string>
     <string name="validation_text_len_max">The maximum length is %d characters</string>
 
-    <string name="validation_text_len_full">The allowed length is from %d to %d characters</string>
+    <string name="validation_text_len_full">The allowed length is from %1$d to %2$d characters</string>
 
     <string name="validation_no_letters">Input must contain letters</string>
     <string name="validation_no_digits">Input must contain digits</string>
