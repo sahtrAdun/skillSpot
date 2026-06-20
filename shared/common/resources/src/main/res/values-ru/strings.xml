@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="example">Example text</string>
-    <string name="validation_text_len_full">Допустимая длина составляет от %d до %d символов</string>
+    <string name="validation_text_len_full">Допустимая длина составляет от %1$d до %2$d символов</string>
     <string name="validation_no_letters">Текст должен содержать буквы</string>
     <string name="validation_text_len_min">Минимальная длина %d символов</string>
     <string name="validation_text_len_max">Максимальная длина %d символов</string>
